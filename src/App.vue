@@ -4,8 +4,15 @@
     <router-link to="/about">About</router-link>
   </div>
   <router-view />
+  <CBEMainFooter />
 </template>
-
+<script>
+import CBEMainFooter from "@/components/CBEMainFooter/CBEMainFooter.vue";
+export default {
+  name: "App",
+  components: { CBEMainFooter },
+};
+</script>
 <style lang="scss">
 * {
   box-sizing: border-box;
