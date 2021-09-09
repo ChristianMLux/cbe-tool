@@ -7,24 +7,48 @@
 </template>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+}
+:root {
+  --primary-color: #6a1cc3;
+  --secondary-color: #a161e9;
+  --background-color: #fafafa;
+  --success-color: #a3db33;
+  --fail-color: #ed3221;
+  --font-color: #121212;
+  --placeholder-color: rgba(18, 18, 18, 0.7);
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  line-height: 1.5rem;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+html {
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+  background-color: var(--background-color);
+  color: var(--font-color);
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.8rem;
+  }
+}
+body {
+  max-width: 150ch;
+  margin: 0 auto;
+  min-width: 350px;
+}
+@media screen and (max-width: 669px) {
+  body {
+    width: 95%;
   }
 }
 </style>
