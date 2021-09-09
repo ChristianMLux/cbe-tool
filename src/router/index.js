@@ -42,7 +42,7 @@ const routes = [
     name: "Lesson-Recordings",
     component: () =>
       import(
-        /* webpackChunkName: "lessionrecordings" */ "../views/LessionRecordings/LR-main-view.vue"
+        /* webpackChunkName: "lessonrecordings" */ "../views/LessonRecordings/LR-main-view.vue"
       ),
   },
   {
