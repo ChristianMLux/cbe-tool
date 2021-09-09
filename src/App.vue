@@ -1,18 +1,20 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <CBEMainHeader />
+  <CBEMainNavigation />
   <router-view />
   <CBEMainFooter />
 </template>
+
 <script>
 import CBEMainFooter from "@/components/CBEMainFooter/CBEMainFooter.vue";
+import CBEMainHeader from "@/components/CBEMainHeader/CBEMainHeader.vue";
+import CBEMainNavigation from "@/components/CBEMainNavigation/CBEMainNavigation.vue";
 export default {
   name: "App",
-  components: { CBEMainFooter },
+  components: { CBEMainNavigation, CBEMainHeader, CBEMainFooter },
 };
 </script>
+
 <style lang="scss">
 * {
   box-sizing: border-box;
