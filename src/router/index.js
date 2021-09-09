@@ -46,11 +46,11 @@ const routes = [
       ),
   },
   {
-    path: "/learnprogress",
-    name: "Learn-Progress",
+    path: "/lessonrecordings",
+    name: "Lesson-Recordings",
     component: () =>
       import(
-        /* webpackChunkName: "learnprogress" */ "../views/LearnProgress/LP-main-view.vue"
+        /* webpackChunkName: "lessionrecordings" */ "../views/LessionRecordings/LR-main-view.vue"
       ),
   },
   {
