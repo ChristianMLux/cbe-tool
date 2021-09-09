@@ -30,14 +30,6 @@ const routes = [
       ),
   },
   {
-    path: "/recordinglist",
-    name: "Recording-List",
-    component: () =>
-      import(
-        /* webpackChunkName: "recordinglist" */ "../views/RecordingList/RL-main-view.vue"
-      ),
-  },
-  {
     path: "/rotitool",
     name: "ROTI-Tool",
     component: () =>
