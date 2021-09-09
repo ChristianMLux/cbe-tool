@@ -1,17 +1,15 @@
 <template>
   <CBEMainHeader />
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <CBEMainNavigation />
   <router-view />
 </template>
 
 <script>
 import CBEMainHeader from "@/components/CBEMainHeader/CBEMainHeader.vue";
+import CBEMainNavigation from "@/components/CBEMainNavigation/CBEMainNavigation.vue";
 export default {
   name: "App",
-  components: { CBEMainHeader },
+  components: { CBEMainNavigation, CBEMainHeader },
 };
 </script>
 
