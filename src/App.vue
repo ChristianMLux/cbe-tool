@@ -2,14 +2,16 @@
   <CBEMainHeader />
   <CBEMainNavigation />
   <router-view />
+  <CBEMainFooter />
 </template>
 
 <script>
+import CBEMainFooter from "@/components/CBEMainFooter/CBEMainFooter.vue";
 import CBEMainHeader from "@/components/CBEMainHeader/CBEMainHeader.vue";
 import CBEMainNavigation from "@/components/CBEMainNavigation/CBEMainNavigation.vue";
 export default {
   name: "App",
-  components: { CBEMainNavigation, CBEMainHeader },
+  components: { CBEMainNavigation, CBEMainHeader, CBEMainFooter },
 };
 </script>
 
