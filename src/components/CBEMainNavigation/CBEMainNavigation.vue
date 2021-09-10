@@ -17,8 +17,8 @@
         ></router-link>
       </li>
       <li class="cbe__nav-element">
-        <router-link to="/lessionrecordings"
-          >Lession-Recordings <i class="fas fa-video"></i
+        <router-link to="/lessonrecordings"
+          >Lesson-Recordings <i class="fas fa-video"></i
         ></router-link>
       </li>
     </ul>
