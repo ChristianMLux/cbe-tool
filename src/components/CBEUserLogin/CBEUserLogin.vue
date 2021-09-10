@@ -17,7 +17,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import firebase from "@/firebase";
+import firestore from "@/firestore";
 
 export default {
   name: "CBEUserLogin",
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     async signInGit() {
-      firebase;
+      firestore;
       const auth = getAuth();
       const provider = new GithubAuthProvider();
       signInWithPopup(auth, provider).then((result) => {
