@@ -1,6 +1,5 @@
-const firebase = require("firebase/app");
-require("firebase/database");
-require("firebase/auth");
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY_CBE || "secrets.DBKEY",
@@ -13,9 +12,7 @@ const firebaseConfig = {
   appId: "1:230771669778:web:b27562762dac4c765a51cb",
 };
 
-// Initialize Firebase
-firebase.default.initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+const database = getDatabase();
 
-let db = firebase.default.database();
-
-export default db;
+export default { firebaseApp, database };
