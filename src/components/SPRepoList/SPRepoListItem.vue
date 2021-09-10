@@ -1,6 +1,6 @@
 <template>
   <li class="sp_list-item">
-    <p class="sp__repo-name">{{ repoName }}</p>
+    <a :href="repoURL" target="_blank" class="sp__repo-name">{{ repoName }}</a>
     <p class="sp__repo-description">{{ repoDescription }}</p>
   </li>
 </template>
@@ -15,6 +15,9 @@ export default {
     repoDescription: {
       type: String,
     },
+    repoURL: {
+      type: String,
+    },
   },
 };
 </script>
@@ -26,9 +29,11 @@ export default {
   font-weight: bold;
   color: var(--primary-color);
   width: 40%;
+  align-self: center;
 }
 .sp__repo-description {
   width: 60%;
   text-align: left;
+  padding-right: 0.5rem;
 }
 </style>

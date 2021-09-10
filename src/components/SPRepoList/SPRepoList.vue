@@ -7,6 +7,7 @@
         v-bind="repo"
         :repoName="repo.name"
         :repoDescription="repo.description"
+        :repoURL="repo.html_url"
       />
     </ul>
   </section>
@@ -49,7 +50,7 @@ ul {
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  border-top: 1px solid #42b883;
+  border-top: 1px solid var(--primary-color);
   li {
     display: flex;
     justify-content: space-between;
