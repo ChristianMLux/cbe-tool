@@ -6,9 +6,7 @@
         <p class="sp__student-class">{{ studentClass }}</p>
         <a :href="studentGitHubURL">GitHub Profile</a>
       </div>
-      <ul class="sp__repo-list">
-        <li>Ich bin ein Repo</li>
-      </ul>
+      <SPRepoList />
       <ul class="sp__lp-list">
         <li>Ich bin ein LearnProgress Entry</li>
       </ul>
@@ -23,8 +21,12 @@
   </section>
 </template>
 <script>
+import SPRepoList from "@/components/SPRepoList/SPRepoList.vue";
 export default {
   name: "SPStudentProfile",
+  components: {
+    SPRepoList,
+  },
   data() {
     return {
       studentName: "Christian M. Lux",

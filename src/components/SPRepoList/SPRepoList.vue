@@ -1,37 +1,32 @@
 <template>
   <section class="sp__repo-section">
     <ul class="sp__repo-list" id="repos">
-      <BookListItem
-        v-for="(repo, index) in books"
-        :key="repo.isbn"
-        v-bind="book"
-        @read="readBook(index)"
+      <SPRepoListItem
+        v-for="repo in repos"
+        :key="repo.id"
+        v-bind="repo"
+        :repoName="repo.name"
+        :repoDescription="repo.description"
       />
     </ul>
   </section>
 </template>
 
 <script>
-import BookListItem from "@/components/BookList/BookListItem/BookListItem.vue";
+import SPRepoListItem from "@/components/SPRepoList/SPRepoListItem.vue";
 export default {
-  name: "BookList",
+  name: "RepoList",
   components: {
-    BookListItem,
+    SPRepoListItem,
   },
   data() {
     return {
-      books: [],
+      repos: [],
     };
   },
   methods: {
-    readBook(index) {
-      this.books[index] = {
-        ...this.books[index],
-        read: true,
-      };
-    },
-    async updateBooks() {
-      const url = "http://localhost:4730/books";
+    async updateRepos() {
+      const url = "https://api.github.com/users/ChristianMLux/repos";
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
@@ -39,20 +34,26 @@ export default {
         },
         method: "GET",
       });
-      this.books = await httpElement.json();
+      this.repos = await httpElement.json();
+      console.log(this.repos);
     },
   },
   created() {
-    this.updateBooks();
+    this.updateRepos();
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 ul {
   list-style: none;
   margin: 0 auto;
   padding: 0;
   border-top: 1px solid #42b883;
+  li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--secondary-color);
+  }
 }
 </style>
