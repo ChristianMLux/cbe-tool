@@ -5,12 +5,12 @@
         <p class="sp__student-name">{{ studentName }}</p>
         <p class="sp__student-class">{{ studentClass }}</p>
         <a :href="studentGitHubURL">GitHub Profile</a>
+        <SPIssueCounter />
       </div>
       <SPRepoList />
       <ul class="sp__lp-list">
         <li>Ich bin ein LearnProgress Entry</li>
       </ul>
-      <p class="sp__user-issues">{{ studentIssues }}</p>
       <ul class="sp__student-question-list">
         <li>Ich bin eine Frage</li>
       </ul>
@@ -22,10 +22,12 @@
 </template>
 <script>
 import SPRepoList from "@/components/SPRepoList/SPRepoList.vue";
+import SPIssueCounter from "@/components/SPIssueCounter/SPIssueCounter.vue";
 export default {
   name: "SPStudentProfile",
   components: {
     SPRepoList,
+    SPIssueCounter,
   },
   data() {
     return {
