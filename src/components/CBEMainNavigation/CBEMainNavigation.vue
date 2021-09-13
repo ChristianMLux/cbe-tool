@@ -67,4 +67,15 @@ nav {
     }
   }
 }
+@media only screen and (max-width: 814px) {
+  nav {
+    .cbe__nav-list {
+      margin: 1rem 2rem 1rem 2.5rem;
+      padding: 0.5em 0;
+    }
+    .cbe__nav-list > * {
+      font-size: 0.8em;
+    }
+  }
+}
 </style>
