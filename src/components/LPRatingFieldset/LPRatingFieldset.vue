@@ -137,27 +137,34 @@ export default {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
-  min-width: 50vw;
-  max-width: 50vw;
+  width: 35vw;
   margin: 0 auto;
 }
-.lp__fieldset {
-  margin: 1rem 0;
-  border: 1px solid var(--primary-color);
-  border-radius: 0.25rem;
-}
+
 label {
   display: flex;
   flex-flow: column;
+}
+legend,
+label {
+  font-size: 0.8em;
+}
+legend {
+  text-align: left;
+  padding: 0 0.25rem;
+  margin: 0.5rem;
+  border: 0.25px dotted var(--secondary-color);
+  border-radius: 0.25rem;
 }
 input {
   accent-color: var(--primary-color);
 }
 .lp__progress-message-input {
-  min-width: 50vw;
+  width: 35vw;
   margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid var(--secondary-color);
   border-radius: 0.25rem;
+  font-size: 0.7em;
 }
 </style>
