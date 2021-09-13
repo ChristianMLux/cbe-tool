@@ -91,6 +91,12 @@
           lp__placeholder="Beschreibe was du am Kurs verbessern würdest..."
         />
       </div>
+      <div class="lp__btn-wrapper">
+        <cbe-main-btn buttonClass="primary" class="btn">ABBRECHEN</cbe-main-btn>
+        <cbe-main-btn buttonClass="secondary" class="btn"
+          >ABSCHICKEN</cbe-main-btn
+        >
+      </div>
     </form>
   </section>
 </template>
@@ -132,6 +138,12 @@ export default {
 }
 .lp_what-improve-in-course-fs {
   grid-column: 1 / span 2;
+}
+
+.lp__btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row;
 }
 
 @media only screen and (max-width: 814px) {
