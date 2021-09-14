@@ -4,7 +4,7 @@
       <div class="lp__fieldset-wrapper">
         <LPRatingFieldset
           lpLegend="Bewerte deinen allgemeinen Lernfortschritt"
-          lp__labelGroupName="lp__general-progress"
+          lp__labelGroupName="generalProgress"
           lp__idOne="generalProgressOne"
           lp__idTwo="generalProgressTwo"
           lp__idThree="generalProgressThree"
@@ -15,7 +15,8 @@
           lp__idEight="generalProgressEight"
           lp__idNine="generalProgressNine"
           lp__idTen="generalProgressTen"
-          lp_messageID="Gebe bitte noch einen zusätzlichen Kommentar ab."
+          lp__messageID="generalProgressMessage"
+          lp__vModelGroupName="generalProgress"
         />
         <LPRatingFieldset
           lpLegend="Wie fit und wohl fühlst du dich in HTML?"
@@ -30,7 +31,7 @@
           lp__idEight="htmlProgressEight"
           lp__idNine="htmlProgressNine"
           lp__idTen="htmlProgressTen"
-          lp_messageID="Gebe bitte noch einen zusätzlichen Kommentar ab."
+          lp__messageID="htmlProgressMessage"
         />
         <LPRatingFieldset
           lpLegend="Wie fit und wohl fühlst du dich in CSS?"
@@ -45,7 +46,7 @@
           lp__idEight="cssProgressEight"
           lp__idNine="cssProgressNine"
           lp__idTen="cssProgressTen"
-          lp_messageID="Gebe bitte noch einen zusätzlichen Kommentar ab."
+          lp__messageID="cssProgressMessage"
         />
         <LPRatingFieldset
           lpLegend="Wie fit und wohl fühlst du dich in JavaScript?"
@@ -60,7 +61,7 @@
           lp__idEight="jsProgressEight"
           lp__idNine="jsProgressNine"
           lp__idTen="jsProgressTen"
-          lp_messageID="Gebe bitte noch einen zusätzlichen Kommentar ab."
+          lp__messageID="jsProgressMessage"
         />
         <LPCommentFieldset
           class="lp_what-went-well-fs"
@@ -93,7 +94,7 @@
       </div>
       <div class="lp__btn-wrapper">
         <cbe-main-btn buttonClass="primary" class="btn">ABBRECHEN</cbe-main-btn>
-        <cbe-main-btn buttonClass="secondary" class="btn"
+        <cbe-main-btn buttonClass="secondary" class="btn" @click="initEntry"
           >ABSCHICKEN</cbe-main-btn
         >
       </div>
@@ -109,6 +110,17 @@ export default {
   components: {
     LPRatingFieldset,
     LPCommentFieldset,
+  },
+  data() {
+    return {
+      currentStudentLPEntry: {},
+      generalProgress: null,
+    };
+  },
+  methods: {
+    initEntry() {
+      console.log(this.generalProgress);
+    },
   },
 };
 </script>

@@ -6,6 +6,7 @@
         >1<input
           type="radio"
           :name="lp__labelGroupName"
+          :v-model="lp__vModelGroupName"
           value="1"
           :id="lp__idOne"
       /></label>
@@ -13,6 +14,7 @@
         >2<input
           type="radio"
           :name="lp__labelGroupName"
+          :v-model="lp__vModelGroupName"
           value="2"
           :id="lp__idTwo"
       /></label>
@@ -77,7 +79,7 @@
       type="text"
       name="lp__labelGroupName-message"
       class="lp__progress-message-input"
-      :id="lp_messageID"
+      :id="lp__messageID"
       placeholder="Bitte gebe einen zusätzlichen Kommentar ab"
     />
   </fieldset>
@@ -94,6 +96,9 @@ export default {
     lp__labelGroupName: {
       type: String,
       required: true,
+    },
+    lp__vModelGroupName: {
+      type: String,
     },
     lp__idOne: {
       type: [String, Number],
