@@ -8,6 +8,6 @@ import CBEMainButton from "./components/CBEMainButton/CBEMainButton.vue";
 
 const app = createApp(App).use(store).use(router);
 
-app.use(CBEMainButton);
+app.component("cbe-main-btn", CBEMainButton);
 
 app.mount("#app");

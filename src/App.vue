@@ -55,6 +55,9 @@ body {
   margin: 0 auto;
   min-width: 350px;
 }
+.btn {
+  margin: 0.5rem 0;
+}
 @media screen and (max-width: 669px) {
   body {
     width: 95%;
