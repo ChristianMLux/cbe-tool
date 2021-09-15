@@ -1,7 +1,9 @@
 <template>
   <CBEMainHeader />
   <CBEMainNavigation />
-  <router-view />
+  <main>
+    <router-view />
+  </main>
   <CBEMainFooter />
 </template>
 

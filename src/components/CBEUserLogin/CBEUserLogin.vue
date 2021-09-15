@@ -4,9 +4,11 @@
       <button @click="signOut" class="btn-git-logout">Logout</button>
       <p class="user-name">{{ userName }}</p>
     </div>
-    <button v-show="!user" @click="signInGit" class="btn-git-login">
-      Login with GitHub <i class="fa fa-github"></i>
-    </button>
+    <div class="user-logged-out" v-show="!user">
+      <button @click="signInGit" class="btn-git-login">
+        Login with GitHub <i class="fa fa-github"></i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -102,6 +104,16 @@ export default {
 .user-logged-in {
   display: flex;
   flex-flow: row;
+  justify-content: center;
+  align-items: baseline;
+  .user-name {
+    margin-left: 0.5rem;
+  }
+}
+.user-logged-out {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
   align-items: baseline;
   .user-name {
     margin-left: 0.5rem;
