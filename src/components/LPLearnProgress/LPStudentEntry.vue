@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     initEntry() {
-      console.log(this.generalProgress);
+      //console.log(this.generalProgress);
     },
   },
 };

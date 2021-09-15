@@ -30,16 +30,28 @@
 <script>
 import SPRepoList from "@/components/SPRepoList/SPRepoList.vue";
 import SPIssueCounter from "@/components/SPIssueCounter/SPIssueCounter.vue";
+
+import { useStore } from "vuex";
+import { computed } from "vue";
+
 export default {
   name: "SPStudentProfile",
   components: {
     SPRepoList,
     SPIssueCounter,
   },
+  setup() {
+    const store = useStore();
+
+    const currentUserName = computed(() => store.state.currentUserName);
+
+    return {
+      currentUserName,
+    };
+  },
   data() {
     return {
       currentUser: "",
-      currentUserName: "",
       studentName: "Christian M. Lux",
       studentClass: "Class2",
       studentGitHubURL: "https://github.com/ChristianMLux",
@@ -47,9 +59,7 @@ export default {
     };
   },
   mounted() {
-    this.currentUser = this.$store.state.currentUser;
-    this.currentUserName = this.$store.state.currentUserName;
-    console.log("user: ", this.$store.state.currentUser);
+    console.log("user: ", this.currentUserName);
   },
 };
 </script>

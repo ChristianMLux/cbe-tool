@@ -21,11 +21,6 @@
           >
         </li>
         <li data-cy="cbe__footer-element">
-          <router-link to="/team" data-cy="cbe__footer-element-team"
-            >Team</router-link
-          >
-        </li>
-        <li data-cy="cbe__footer-element">
           <router-link to="/about" data-cy="cbe__footer-element-about"
             >About</router-link
           >

@@ -36,7 +36,7 @@ export default {
         method: "GET",
       });
       this.repos = await httpElement.json();
-      console.log(this.repos);
+      //console.log(this.repos);
     },
   },
   created() {
