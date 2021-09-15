@@ -1,10 +1,10 @@
 <template>
   <div class="login">
-    <div class="user-logged-in" v-show="user">
+    <div class="user-logged-in" v-show="isUserLoggedIn">
       <button @click="signOut" class="btn-git-logout">Logout</button>
       <p class="user-name">{{ userName }}</p>
     </div>
-    <div class="user-logged-out" v-show="!user">
+    <div class="user-logged-out" v-show="!isUserLoggedIn">
       <button @click="signInGit" class="btn-git-login">
         Login with GitHub <i class="fa fa-github"></i>
       </button>
@@ -20,11 +20,21 @@ import {
   signOut,
 } from "firebase/auth";
 import firestore from "@/firestore";
-
+import { useStore } from "vuex";
+import { computed } from "vue";
 import Cookies from "js-cookie";
 
 export default {
   name: "CBEUserLogin",
+  setup() {
+    const store = useStore();
+
+    const isUserLoggedIn = computed(() => store.state.isUserLoggedIn);
+
+    return {
+      isUserLoggedIn,
+    };
+  },
   data() {
     return {
       user: sessionStorage.getItem("user"),
@@ -40,12 +50,18 @@ export default {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        const user = result.user;
         this.$store.commit("setCurrentUser", result.user);
-        this.$store.commit({
-          type: "setCurrentUserName",
-          userName: result.user.displayName,
-        });
+        if (result.user.displayName != null) {
+          this.$store.commit({
+            type: "setCurrentUserName",
+            userName: result.user.displayName,
+          });
+        } else {
+          this.$store.commit({
+            type: "setCurrentUserName",
+            userName: result.additionalUserInfo.username,
+          });
+        }
         this.$store.commit({
           type: "setCurrentUserID",
           userID: result.user.uid,
@@ -62,21 +78,11 @@ export default {
           type: "setUserLoginState",
           isLoggedIn: true,
         });
-        sessionStorage.setItem("user", user);
-        sessionStorage.setItem("userToken", token);
-        sessionStorage.setItem("userID", result.user.uid);
-        if (result.user.displayName != null) {
-          sessionStorage.setItem("userName", result.user.displayName);
-        } else {
-          sessionStorage.setItem(
-            "userName",
-            result.additionalUserInfo.username
-          );
-        }
+
         this.user = result.user;
         this.userID = result.user.uid;
         this.userName = result.user.displayName;
-        this.$router.replace("/");
+        this.$router.push("/");
       });
     },
     signOut() {
@@ -85,9 +91,11 @@ export default {
         .then(() => {
           this.user = null;
           Cookies.remove("vuex");
-          sessionStorage.clear();
-          this.$router.replace("/");
-          location.reload();
+          this.$router.push("/loggedout");
+          this.$store.commit({
+            type: "setUserLoginState",
+            isLoggedIn: false,
+          });
         })
         .catch((error) => {
           console.error("Error: ", error);
@@ -99,7 +107,7 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-  margin: 0 2rem 0 0;
+  margin: 0 0 0 0;
 }
 .user-logged-in {
   display: flex;
@@ -126,7 +134,7 @@ export default {
   border: 2.5px solid;
   border-radius: 0.25rem;
   cursor: pointer;
-  padding: 0.4rem;
+  padding: 0.529rem;
 }
 .btn-ggl-login {
   font-size: 1.2rem;

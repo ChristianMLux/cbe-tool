@@ -1,6 +1,6 @@
 <template>
   <nav class="cbe__main-nav">
-    <ul class="cbe__nav-list">
+    <ul class="cbe__nav-list" v-show="isUserLoggedIn">
       <li class="cbe__nav-element">
         <router-link to="/studentprofile"
           >Your Profile <i class="fas fa-user-circle"></i
@@ -21,12 +21,32 @@
           >Lesson-Recordings <i class="fas fa-video"></i
         ></router-link>
       </li>
+      <li class="cbe__nav-element">
+        <CBEUserLogin />
+      </li>
     </ul>
   </nav>
 </template>
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+import CBEUserLogin from "@/components/CBEUserLogin/CBEUserLogin.vue";
+
 export default {
   name: "CBEMainNavigation",
+  components: {
+    CBEUserLogin,
+  },
+  setup() {
+    const store = useStore();
+
+    const isUserLoggedIn = computed(() => store.state.isUserLoggedIn);
+
+    return {
+      isUserLoggedIn,
+    };
+  },
 };
 </script>
 <style lang="scss" scoped>
