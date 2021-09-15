@@ -44,14 +44,15 @@ export default {
     const store = useStore();
 
     const currentUserName = computed(() => store.state.currentUserName);
+    const currentUser = computed(() => store.state.currentUser);
 
     return {
       currentUserName,
+      currentUser,
     };
   },
   data() {
     return {
-      currentUser: "",
       studentName: "Christian M. Lux",
       studentClass: "Class2",
       studentGitHubURL: "https://github.com/ChristianMLux",
@@ -60,6 +61,7 @@ export default {
   },
   mounted() {
     console.log("user: ", this.currentUserName);
+    console.log("UserObj: ", this.currentUser);
   },
 };
 </script>
