@@ -34,10 +34,8 @@ export default {
       const auth = getAuth();
       const provider = new GithubAuthProvider();
       signInWithPopup(auth, provider).then((result) => {
-        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
         this.$store.commit("setCurrentUser", result.user);
         this.$store.commit({
@@ -47,6 +45,18 @@ export default {
         this.$store.commit({
           type: "setCurrentUserID",
           userID: result.user.uid,
+        });
+        this.$store.commit({
+          type: "setCurrentUserToken",
+          userToken: token,
+        });
+        this.$store.commit({
+          type: "setCurrentUser",
+          userToken: result.user,
+        });
+        this.$store.commit({
+          type: "setUserLoginState",
+          isLoggedIn: true,
         });
         sessionStorage.setItem("user", user);
         sessionStorage.setItem("userToken", token);
@@ -63,7 +73,6 @@ export default {
         this.userID = result.user.uid;
         this.userName = result.user.displayName;
         this.$router.replace("/");
-        //location.reload();
       });
     },
     signOut() {
