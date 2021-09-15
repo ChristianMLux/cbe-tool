@@ -2,7 +2,7 @@
   <section class="sp__profile-section">
     <div class="sp__profile-wrapper">
       <div class="sp__student-info-wrapper">
-        <p class="sp__student-name">{{ studentName }}</p>
+        <p class="sp__student-name">{{ currentUserName }}</p>
         <p class="sp__student-class">{{ studentClass }}</p>
         <a :href="studentGitHubURL">GitHub Profile</a>
         <SPIssueCounter />
@@ -38,11 +38,18 @@ export default {
   },
   data() {
     return {
+      currentUser: "",
+      currentUserName: "",
       studentName: "Christian M. Lux",
       studentClass: "Class2",
       studentGitHubURL: "https://github.com/ChristianMLux",
       studentIssues: 14,
     };
+  },
+  mounted() {
+    this.currentUser = this.$store.state.currentUser;
+    this.currentUserName = this.$store.state.currentUserName;
+    console.log("user: ", this.$store.state.currentUser);
   },
 };
 </script>
