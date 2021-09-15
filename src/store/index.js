@@ -21,11 +21,19 @@ export default createStore({
       state.isUserLoggedIn = payload;
     },
   },
-  actions: {},
+  actions: {
+    setCurrentUserName(state, payload) {
+      state.currentUserName = payload.userName;
+      console.log(state.currentUserName);
+    },
+  },
   modules: {},
   getters: {
-    getCurrentUser: (state) => {
-      state.currentUser;
+    getCurrentUser(state) {
+      return state.currentUser;
+    },
+    getCurrentUserName(state) {
+      return state.currentUserName;
     },
   },
 });

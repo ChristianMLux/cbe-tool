@@ -39,12 +39,15 @@ export default {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        this.$store.commit("setCurrentUser", result.user);
         this.$store.commit({
           type: "setCurrentUserName",
           userName: result.user.displayName,
         });
-        this.$store.commit("setCurrentUser", result.user);
-        this.$store.commit("setCurrentUserName", result.user.displayName);
+        this.$store.commit({
+          type: "setCurrentUserID",
+          userID: result.user.uid,
+        });
         sessionStorage.setItem("user", user);
         sessionStorage.setItem("userToken", token);
         sessionStorage.setItem("userID", result.user.uid);
@@ -60,7 +63,7 @@ export default {
         this.userID = result.user.uid;
         this.userName = result.user.displayName;
         this.$router.replace("/");
-        location.reload();
+        //location.reload();
       });
     },
     signOut() {
