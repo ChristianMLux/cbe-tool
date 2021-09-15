@@ -19,6 +19,8 @@ import {
 } from "firebase/auth";
 import firestore from "@/firestore";
 
+import Cookies from "js-cookie";
+
 export default {
   name: "CBEUserLogin",
   data() {
@@ -80,6 +82,7 @@ export default {
       signOut(auth)
         .then(() => {
           this.user = null;
+          Cookies.remove("vuex");
           sessionStorage.clear();
           this.$router.replace("/");
           location.reload();
