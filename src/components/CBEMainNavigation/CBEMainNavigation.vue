@@ -7,6 +7,11 @@
         ></router-link>
       </li>
       <li class="cbe__nav-element">
+        <router-link to="/teacherhub"
+          >Teacher-Hub <i class="fas fa-school"></i
+        ></router-link>
+      </li>
+      <li class="cbe__nav-element">
         <router-link to="/amatool"
           >AMA-Tool <i class="fas fa-question-circle"></i
         ></router-link>

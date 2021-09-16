@@ -69,6 +69,10 @@ export default {
           userID: result.user.uid,
         });
         this.$store.commit({
+          type: "setCurrentUserScreenname",
+          userID: result.user.reloadUserInfo.screenName,
+        });
+        this.$store.commit({
           type: "setCurrentUserToken",
           userToken: token,
         });
