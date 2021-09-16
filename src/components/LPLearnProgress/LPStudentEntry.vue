@@ -117,11 +117,6 @@ export default {
       generalProgress: null,
     };
   },
-  methods: {
-    initEntry() {
-      //console.log(this.generalProgress);
-    },
-  },
 };
 </script>
 

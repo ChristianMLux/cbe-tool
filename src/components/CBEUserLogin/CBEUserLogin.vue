@@ -2,7 +2,7 @@
   <div class="login">
     <div class="user-logged-in" v-show="isUserLoggedIn">
       <button @click="signOut" class="btn-git-logout">Logout</button>
-      <p class="user-name">{{ userName }}</p>
+      <p class="user-name">{{ currentUserName }}</p>
     </div>
     <div class="user-logged-out" v-show="!isUserLoggedIn">
       <button @click="signInGit" class="btn-git-login">
@@ -30,16 +30,18 @@ export default {
     const store = useStore();
 
     const isUserLoggedIn = computed(() => store.state.isUserLoggedIn);
+    const currentUserName = computed(() => store.state.currentUserName);
 
     return {
       isUserLoggedIn,
+      currentUserName,
     };
   },
   data() {
     return {
-      user: sessionStorage.getItem("user"),
-      userID: sessionStorage.getItem("userID"),
-      userName: sessionStorage.getItem("userName"),
+      user: {},
+      userID: "",
+      userName: "",
     };
   },
   methods: {
@@ -59,7 +61,7 @@ export default {
         } else {
           this.$store.commit({
             type: "setCurrentUserName",
-            userName: result.additionalUserInfo.username,
+            userName: result.user.reloadUserInfo.screenName,
           });
         }
         this.$store.commit({

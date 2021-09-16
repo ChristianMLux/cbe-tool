@@ -25,7 +25,6 @@ export default {
       this.repoIssues.forEach(() => {
         this.issueCount++;
       });
-      //console.log(this.bootcampRepo);
     },
   },
   created() {
