@@ -32,3 +32,18 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+li {
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+.th__list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+</style>

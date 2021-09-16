@@ -1,13 +1,13 @@
 <template>
-  <section
-    class="th__classlist-section"
-    v-for="codingClass in classCollection"
-    :key="codingClass.classID"
-    v-bind="codingClass"
-  >
-    <ul>
+  <section class="th__classlist-section">
+    <ul
+      v-for="codingClass in classCollection"
+      :key="codingClass.classID"
+      v-bind="codingClass"
+    >
+      <p>{{ codingClass.className }}</p>
       <THClassListElement
-        v-for="classMember in codingClass"
+        v-for="classMember in codingClass.classMembers"
         :key="classMember.id"
         v-bind="classMember"
         :studentName="classMember.login"
@@ -49,7 +49,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -75,7 +75,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -91,7 +91,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -119,3 +119,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+ul {
+  padding: 0;
+  border: 1px solid var(--primary-color);
+  border-radius: 0.25rem;
+}
+li {
+  display: flex;
+  flex-flow: row;
+}
+</style>

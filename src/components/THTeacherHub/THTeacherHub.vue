@@ -1,6 +1,5 @@
 <template>
   <section class="th__section">
-    Bin 1 teacherhub
     <THClassList />
   </section>
 </template>
@@ -14,3 +13,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.th__section {
+  margin: 0 4rem 0 2.5rem;
+}
+</style>
