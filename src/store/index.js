@@ -18,11 +18,23 @@ export default createStore({
     currentUserName: "",
     currentUserID: "",
     currentUserToken: "",
+    currentUserScreenname: "",
     isUserLoggedIn: false,
+    cbeClasses: [],
+    currentClassMembers: [],
   },
   mutations: {
+    setCurrentClassMembers(state, payload) {
+      state.currentClassMembers = payload;
+    },
+    setCBEClasses(state, payload) {
+      state.cbeClasses = payload;
+    },
     setCurrentUser(state, payload) {
       state.currentUser = payload;
+    },
+    setCurrentUserScreenname(state, payload) {
+      state.currentUserScreenname = payload.userScreenname;
     },
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
@@ -44,11 +56,20 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getCBEClasses(state) {
+      return state.cbeClasses;
+    },
+    getCurrentClassMembers(state) {
+      return state.currentClassMembers;
+    },
     getCurrentUser(state) {
       return state.currentUser;
     },
     getCurrentUserName(state) {
       return state.currentUserName;
+    },
+    getCurrentUserScreenname(state) {
+      return state.currentUserScreenname;
     },
     getCurrentUserID(state) {
       return state.currentUserID;
