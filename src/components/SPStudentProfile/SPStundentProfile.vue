@@ -6,6 +6,7 @@
         <p class="sp__student-class">{{ studentClass }}</p>
         <a :href="studentGitHubURL">GitHub Profile</a>
         <SPIssueCounter />
+        <SPStudentClass />
       </div>
       <div class="lp__link-wrapper">
         <router-link class="lp__entry-link" to="/learnprogress"
@@ -29,6 +30,7 @@
 </template>
 <script>
 import SPRepoList from "@/components/SPRepoList/SPRepoList.vue";
+import SPStudentClass from "@/components/SPStudentClass/SPStudentClass.vue";
 import SPIssueCounter from "@/components/SPIssueCounter/SPIssueCounter.vue";
 
 import { useStore } from "vuex";
@@ -39,6 +41,7 @@ export default {
   components: {
     SPRepoList,
     SPIssueCounter,
+    SPStudentClass,
   },
   setup() {
     const store = useStore();
@@ -58,10 +61,6 @@ export default {
       studentGitHubURL: "https://github.com/ChristianMLux",
       studentIssues: 14,
     };
-  },
-  mounted() {
-    console.log("user: ", this.currentUserName);
-    console.log("UserObj: ", this.currentUser);
   },
 };
 </script>

@@ -40,7 +40,6 @@ export default createStore({
   actions: {
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
-      console.log(state.currentUserName);
     },
   },
   modules: {},
