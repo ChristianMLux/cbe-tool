@@ -1,12 +1,13 @@
 <template>
-  <section class="th__classlist-section">
-    <ul
-      v-for="cbeClass in cbeClasses.cbeClasses"
-      :key="cbeClass.classID"
-      v-bind="cbeClass"
-    >
+  <section
+    class="th__classlist-section"
+    v-for="codingClass in classCollection"
+    :key="codingClass.classID"
+    v-bind="codingClass"
+  >
+    <ul>
       <THClassListElement
-        v-for="classMember in classMembers"
+        v-for="classMember in codingClass"
         :key="classMember.id"
         v-bind="classMember"
         :studentName="classMember.login"
@@ -38,7 +39,7 @@ export default {
       allClasses: [],
       cleanedClassList: [],
       singleClass: [],
-      classMembers: [],
+      classCollection: [],
       finalClassList: [],
     };
   },
@@ -48,7 +49,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -74,7 +75,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -90,14 +91,19 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
       });
-      this.classMembers = await httpElement.json();
-
-      console.log("members of class: ", className, " are: ", this.classMembers);
+      let _classMembers = await httpElement.json();
+      this.classCollection.push({
+        className: className,
+        classID: classID,
+        classMembers: _classMembers,
+      });
+      console.log("classCollection: ", this.classCollection);
+      console.log("_classMembers: ", _classMembers, className);
     },
   },
   mounted() {
@@ -105,14 +111,11 @@ export default {
     this.cbeClasses.cbeClasses.forEach((cbeClass) => {
       this.getClassMembers(cbeClass.classID, cbeClass.className);
       this.getSingleClass(cbeClass.classID);
-      console.log("ClassMembers in Created: ", this.classMembers);
-      this.finalClassList.push({
-        className: cbeClass.className,
-        classID: cbeClass.classID,
-        classMembers: this.classMembers,
-      });
     });
-    console.log("Final Class List: ", this.finalClassList);
+    console.log(
+      "DAS IST CLassCollection Class Members: ",
+      this.classCollection.classMembers
+    );
   },
 };
 </script>
