@@ -59,6 +59,14 @@ const routes = [
         /* webpackChunkName: "studentprofile" */ "../views/StudentProfile/SP-main-view.vue"
       ),
   },
+  {
+    path: "/teacherhub",
+    name: "Teacher-Hub",
+    component: () =>
+      import(
+        /* webpackChunkName: "teacherhub" */ "../views/TeacherHub/TH-main-view.vue"
+      ),
+  },
 ];
 
 const router = createRouter({

@@ -53,7 +53,6 @@ export default {
   },
   created() {
     this.getAllClasses();
-    this.getCurrentUserClass();
   },
 };
 </script>
