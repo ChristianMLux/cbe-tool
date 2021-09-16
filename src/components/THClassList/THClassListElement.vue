@@ -18,13 +18,13 @@ export default {
       type: String,
     },
     issuesCounter: {
-      type: String,
+      type: [String, Number],
     },
     commitCounter: {
-      type: String,
+      type: [String, Number],
     },
     repoCounter: {
-      type: String,
+      type: [String, Number],
     },
     studentGitURL: {
       type: String,
