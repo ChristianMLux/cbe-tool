@@ -21,9 +21,17 @@ export default createStore({
     currentUserScreenname: "",
     isUserLoggedIn: false,
     cbeClasses: [],
+    cbeClassCollection: [],
     currentClassMembers: [],
+    currentCounter: 0,
   },
   mutations: {
+    setCBEClassCollection(state, payload) {
+      state.cbeClassCollection = payload.classCollection;
+    },
+    setCurrentCounter(state, payload) {
+      state.currentCounter = payload.currentCounter;
+    },
     setCurrentClassMembers(state, payload) {
       state.currentClassMembers = payload;
     },
@@ -56,6 +64,12 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getCBEClassCollection(state) {
+      return state.cbeClassCollection;
+    },
+    getCurrentCounter(state) {
+      return state.currentCounter;
+    },
     getCBEClasses(state) {
       return state.cbeClasses;
     },

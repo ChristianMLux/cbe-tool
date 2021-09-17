@@ -1,17 +1,18 @@
 <template>
   <section class="th__classlist-section">
     <ul
-      v-for="codingClass in classCollection"
+      v-for="codingClass in cbeClassCollection"
       :key="codingClass.classID"
       v-bind="codingClass"
     >
       <p>{{ codingClass.className }}</p>
       <THClassListElement
         v-for="classMember in codingClass.classMembers"
-        :key="classMember.id"
+        :key="classMember.studentGitID"
         v-bind="classMember"
-        :studentName="classMember.login"
-        :studentGitURL="classMember.html_url"
+        :studentName="classMember.studentScreenName"
+        :studentGitURL="classMember.studentGitURL"
+        :issuesCounter="classMember.issuesCounter"
       />
     </ul>
   </section>
@@ -22,6 +23,8 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 
 import THClassListElement from "@/components/THClassList/THClassListElement.vue";
+import GitAPIService from "@/services/GitAPIService.js";
+
 export default {
   name: "THClassList",
   components: { THClassListElement },
@@ -29,9 +32,15 @@ export default {
     const store = useStore();
 
     const cbeClasses = computed(() => store.state.cbeClasses);
+    const currentUserToken = computed(() => store.state.currentUserToken);
+    const currentCounter = computed(() => store.state.currentCounter);
+    const cbeClassCollection = computed(() => store.state.cbeClassCollection);
 
     return {
       cbeClasses,
+      currentUserToken,
+      currentCounter,
+      cbeClassCollection,
     };
   },
   data() {
@@ -40,10 +49,17 @@ export default {
       cleanedClassList: [],
       singleClass: [],
       classCollection: [],
-      finalClassList: [],
+      counter: 0,
     };
   },
   methods: {
+    async initCBEClasses() {
+      await this.getAllClasses();
+      this.cbeClasses.cbeClasses.forEach(async (cbeClass) => {
+        await this.getClassMembers(cbeClass.classID, cbeClass.className);
+        await this.getSingleClass(cbeClass.classID);
+      });
+    },
     async getAllClasses() {
       const url = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
       const httpElement = await fetch(url, {
@@ -67,7 +83,6 @@ export default {
         type: "setCBEClasses",
         cbeClasses: this.cleanedClassList,
       });
-      console.log("cleaned ClassList: ", this.cbeClasses.cbeClasses);
     },
     async getSingleClass(teamID) {
       const url =
@@ -81,7 +96,7 @@ export default {
         method: "GET",
       });
       this.singleClass = await httpElement.json();
-      console.log("single class: ", this.singleClass);
+      //console.log("single class: ", this.singleClass);
     },
     async getClassMembers(classID, className) {
       const url =
@@ -97,25 +112,43 @@ export default {
         method: "GET",
       });
       let _classMembers = await httpElement.json();
+      let _cleanClassMembers = [];
+      _classMembers.forEach((student) => {
+        GitAPIService.printIssues(student.login).then((result) => {
+          this.$store.commit({
+            type: "setCurrentCounter",
+            currentCounter: result,
+          });
+          _cleanClassMembers.push({
+            studentScreenName: student.login,
+            studentGitURL: student.html_url,
+            studentGitID: student.id,
+            issuesCounter: this.currentCounter,
+          });
+        });
+      });
+      //console.log("CLEAN CLASS MEMBERS: ", _cleanClassMembers);
       this.classCollection.push({
         className: className,
         classID: classID,
-        classMembers: _classMembers,
+        classMembers: _cleanClassMembers,
       });
-      console.log("classCollection: ", this.classCollection);
-      console.log("_classMembers: ", _classMembers, className);
+      this.$store.commit({
+        type: "setCBEClassCollection",
+        classCollection: this.classCollection,
+      });
+      //console.log("classCollection: ", this.classCollection);
+      //console.log("_classMembers: ", _classMembers, className);
     },
   },
-  mounted() {
+  created() {
+    this.initCBEClasses();
+    /*
     this.getAllClasses();
     this.cbeClasses.cbeClasses.forEach((cbeClass) => {
       this.getClassMembers(cbeClass.classID, cbeClass.className);
       this.getSingleClass(cbeClass.classID);
-    });
-    console.log(
-      "DAS IST CLassCollection Class Members: ",
-      this.classCollection.classMembers
-    );
+    });*/
   },
 };
 </script>
