@@ -2,6 +2,13 @@ import { createStore } from "vuex";
 import Cookies from "js-cookie";
 import createPersistedState from "vuex-persistedstate";
 
+const headerWithAuth = {
+  Accept: "application/json",
+  authorization: "token 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",
+  "Content-Type": "application/json",
+};
+const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
+const methodGET = "GET";
 export default createStore({
   plugins: [
     createPersistedState({
@@ -22,6 +29,7 @@ export default createStore({
     currentUserToken: "",
     currentUserScreenname: "",
     isUserLoggedIn: false,
+    cbeTeams: [],
     cbeClasses: [],
     cbeClassCollection: [],
     currentClassMembers: [],
@@ -62,6 +70,27 @@ export default createStore({
   actions: {
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
+    },
+    async setCBEClasses(state) {
+      const teamsResponse = await fetch(
+        allTeamsURL,
+        { headerWithAuth },
+        methodGET
+      );
+      const allTeams = await teamsResponse.json();
+      let cleanedClassList = [];
+      allTeams.forEach((singleClass) => {
+        if (singleClass.name.includes("Class")) {
+          cleanedClassList.push({
+            className: singleClass.name,
+            classID: singleClass.id,
+          });
+        }
+      });
+      state.commit({
+        type: "setCBEClasses",
+        cbeClasses: cleanedClassList,
+      });
     },
   },
   modules: {},
