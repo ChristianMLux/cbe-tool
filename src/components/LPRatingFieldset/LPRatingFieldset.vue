@@ -1,8 +1,8 @@
 <template>
   <fieldset class="lp__fieldset">
     <legend>{{ lpLegend }}</legend>
-    <div class="lp__label-wrapper">
-      <label
+    <div class="lp__label-wrapper rating-fieldset">
+      <label class="rating-fieldset__grouplabel"
         >1<input
           type="radio"
           :name="lp__labelGroupName"
@@ -10,7 +10,7 @@
           value="1"
           :id="lp__idOne"
       /></label>
-      <label
+      <label class="rating-fieldset__grouplabel"
         >2<input
           type="radio"
           :name="lp__labelGroupName"
@@ -19,6 +19,7 @@
           :id="lp__idTwo"
       /></label>
       <label
+        class="rating-fieldset__grouplabel rating-fieldset__grouplabel--red"
         >3<input
           type="radio"
           :name="lp__labelGroupName"

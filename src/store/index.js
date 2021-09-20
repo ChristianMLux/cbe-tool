@@ -12,6 +12,8 @@ export default createStore({
         removeItem: (key) => Cookies.remove(key),
       },
     }),
+    // python komibinieren mit anderen bekannten sprachen
+    // Firebase / Functions
   ],
   state: {
     currentUser: {},

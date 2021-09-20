@@ -29,18 +29,23 @@ export default {
   name: "THClassList",
   components: { THClassListElement },
   setup() {
+    // optionAPI / composition API
+
+    // MAP STATE MAP GETTERS VUEX
     const store = useStore();
 
     const cbeClasses = computed(() => store.state.cbeClasses);
     const currentUserToken = computed(() => store.state.currentUserToken);
     const currentCounter = computed(() => store.state.currentCounter);
-    const cbeClassCollection = computed(() => store.state.cbeClassCollection);
+    const cbeClassCollection = store.getters.getCBEClassCollection;
+    const cbeCCTest = store.getters.getCBEClasses;
 
     return {
       cbeClasses,
       currentUserToken,
       currentCounter,
       cbeClassCollection,
+      cbeCCTest,
     };
   },
   data() {
@@ -54,11 +59,15 @@ export default {
   },
   methods: {
     async initCBEClasses() {
+      //debugger
       await this.getAllClasses();
-      this.cbeClasses.cbeClasses.forEach(async (cbeClass) => {
-        await this.getClassMembers(cbeClass.classID, cbeClass.className);
-        await this.getSingleClass(cbeClass.classID);
-      });
+
+      for (const cbeClass of this.cbeClasses) {
+        this.getClassMembers(cbeClass.classID, cbeClass.className);
+        this.getSingleClass(cbeClass.classID);
+      }
+
+      console.log("GETTER: ", this.cbeCCTest);
     },
     async getAllClasses() {
       const url = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
@@ -127,6 +136,8 @@ export default {
           });
         });
       });
+      // nochmal zerlegen
+      // Promise All
       //console.log("CLEAN CLASS MEMBERS: ", _cleanClassMembers);
       this.classCollection.push({
         className: className,
@@ -141,14 +152,8 @@ export default {
       //console.log("_classMembers: ", _classMembers, className);
     },
   },
-  created() {
-    this.initCBEClasses();
-    /*
-    this.getAllClasses();
-    this.cbeClasses.cbeClasses.forEach((cbeClass) => {
-      this.getClassMembers(cbeClass.classID, cbeClass.className);
-      this.getSingleClass(cbeClass.classID);
-    });*/
+  async created() {
+    await this.initCBEClasses();
   },
 };
 </script>
