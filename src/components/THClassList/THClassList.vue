@@ -13,6 +13,7 @@
         :studentName="classMember.studentScreenName"
         :studentGitURL="classMember.studentGitURL"
         :issuesCounter="classMember.issuesCounter"
+        :reposCounter="classMember.reposCounter"
       />
     </ul>
   </section>
@@ -48,31 +49,38 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
       });
       let _classMembers = await httpElement.json();
-      let _cleanClassMembers = [];
+      let _membersWithIssues = [];
       _classMembers.forEach((student) => {
+        GitAPIService.printRepos(student.login).then((repos) => {
+          this.$store.commit({
+            type: "setCurrentReposCounter",
+            currentReposCounter: repos,
+          });
+        });
         GitAPIService.printIssues(student.login).then((issues) => {
           this.$store.commit({
             type: "setCurrentIssuesCounter",
             currentIssuesCounter: issues,
           });
-          _cleanClassMembers.push({
+          _membersWithIssues.push({
             studentScreenName: student.login,
             studentGitURL: student.html_url,
             studentGitID: student.id,
             issuesCounter: this.$store.getters.getCurrentIssuesCounter,
+            reposCounter: this.$store.getters.getCurrentReposCounter,
           });
         });
       });
       this.classCollection.push({
         className: className,
         classID: classID,
-        classMembers: _cleanClassMembers,
+        classMembers: _membersWithIssues,
       });
       this.$store.commit({
         type: "setCBEClassCollection",
