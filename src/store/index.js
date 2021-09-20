@@ -31,7 +31,7 @@ export default createStore({
   },
   mutations: {
     setCBEClassCollection(state, payload) {
-      state.cbeClassCollection = payload.classCollection;
+      state.cbeClassCollection = payload.cbeClassCollection;
     },
     setCurrentIssuesCounter(state, payload) {
       state.currentIssuesCounter = payload.currentIssuesCounter;

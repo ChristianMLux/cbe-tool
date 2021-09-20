@@ -76,10 +76,8 @@ export default {
       });
       this.$store.commit({
         type: "setCBEClassCollection",
-        classCollection: this.classCollection,
+        cbeClassCollection: this.classCollection,
       });
-      //console.log("classCollection: ", this.classCollection);
-      //console.log("_classMembers: ", _classMembers, className);
     },
   },
   async created() {
