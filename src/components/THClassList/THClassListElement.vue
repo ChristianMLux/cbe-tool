@@ -39,6 +39,9 @@ li {
   padding: 0.5rem;
   margin: 0.5rem;
 }
+p {
+  text-align: left;
+}
 .th__list-wrapper {
   width: 100%;
   display: flex;

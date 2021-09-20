@@ -14,7 +14,7 @@ class GitAPIService {
     });
     let _repoIssues = await httpElement.json();
     let _counter = await _repoIssues;
-    return _counter.length;
+    return await _counter.length;
   }
   async printIssues(studentScreenName) {
     let printedIssuesCounter = await this.getStudentIssues(
@@ -22,7 +22,7 @@ class GitAPIService {
     ).then(function (value) {
       return value;
     });
-    return printedIssuesCounter;
+    return await printedIssuesCounter;
   }
   async getStudentRepos(studentScreenName) {
     const url = "https://api.github.com/users/" + studentScreenName + "/repos";
@@ -36,7 +36,7 @@ class GitAPIService {
     });
     let _studentRepos = await httpElement.json();
     let _counter = await _studentRepos;
-    return _counter.length;
+    return await _counter.length;
   }
   async printRepos(studentScreenName) {
     let printedRepoCounter = await this.getStudentRepos(studentScreenName).then(
@@ -44,7 +44,7 @@ class GitAPIService {
         return value;
       }
     );
-    return printedRepoCounter;
+    return await printedRepoCounter;
   }
 }
 export default new GitAPIService();

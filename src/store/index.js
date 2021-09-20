@@ -80,7 +80,7 @@ export default createStore({
       const allTeams = await teamsResponse.json();
       let cleanedClassList = [];
       allTeams.forEach((singleClass) => {
-        if (singleClass.name.includes("Class")) {
+        if (singleClass.name.includes("Class #3")) {
           cleanedClassList.push({
             className: singleClass.name,
             classID: singleClass.id,
