@@ -4,7 +4,7 @@
       <p class="th__student-name">{{ studentName }}</p>
       <p class="th__student-open-issues">Issues: {{ issuesCounter }}</p>
       <p class="th__student-commit-counter">{{ commitCounter }}</p>
-      <p class="th__student-repo-counter">Repos: {{ repoCounter }}</p>
+      <p class="th__student-repo-counter">Repos: {{ reposCounter }}</p>
       <a :href="studentGitURL">GitHub-Profil</a>
     </div>
   </li>
@@ -23,7 +23,7 @@ export default {
     commitCounter: {
       type: [String, Number],
     },
-    repoCounter: {
+    reposCounter: {
       type: [String, Number],
     },
     studentGitURL: {
@@ -38,6 +38,9 @@ li {
   border-radius: 0.25rem;
   padding: 0.5rem;
   margin: 0.5rem;
+}
+p {
+  text-align: left;
 }
 .th__list-wrapper {
   width: 100%;
