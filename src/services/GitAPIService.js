@@ -7,7 +7,7 @@ class GitAPIService {
     const httpElement = await fetch(url, {
       headers: {
         Accept: "application/json",
-        authorization: "token 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",
+        authorization: "token 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",
         "Content-Type": "application/json",
       },
       method: "GET",
@@ -23,6 +23,28 @@ class GitAPIService {
       return value;
     });
     return printedIssuesCounter;
+  }
+  async getStudentRepos(studentScreenName) {
+    const url = "https://api.github.com/users/" + studentScreenName + "/repos";
+    const httpElement = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        authorization: "token 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",
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+    let _studentRepos = await httpElement.json();
+    let _counter = await _studentRepos;
+    return _counter.length;
+  }
+  async printRepos(studentScreenName) {
+    let printedRepoCounter = await this.getStudentRepos(studentScreenName).then(
+      function (value) {
+        return value;
+      }
+    );
+    return printedRepoCounter;
   }
 }
 export default new GitAPIService();

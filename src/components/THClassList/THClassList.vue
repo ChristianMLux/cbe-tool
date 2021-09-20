@@ -19,93 +19,26 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { computed } from "vue";
-
 import THClassListElement from "@/components/THClassList/THClassListElement.vue";
 import GitAPIService from "@/services/GitAPIService.js";
 
 export default {
   name: "THClassList",
   components: { THClassListElement },
-  setup() {
-    // optionAPI / composition API
-
-    // MAP STATE MAP GETTERS VUEX
-    const store = useStore();
-
-    const cbeClasses = computed(() => store.state.cbeClasses);
-    const currentUserToken = computed(() => store.state.currentUserToken);
-    const currentCounter = computed(() => store.state.currentCounter);
-    const cbeClassCollection = store.getters.getCBEClassCollection;
-    const cbeCCTest = store.getters.getCBEClasses;
-
-    return {
-      cbeClasses,
-      currentUserToken,
-      currentCounter,
-      cbeClassCollection,
-      cbeCCTest,
-    };
-  },
   data() {
     return {
+      cbeClasses: [],
+      cbeClassCollection: [],
       allClasses: [],
       cleanedClassList: [],
-      singleClass: [],
       classCollection: [],
-      counter: 0,
     };
   },
   methods: {
     async initCBEClasses() {
-      //debugger
-      await this.getAllClasses();
-
-      for (const cbeClass of this.cbeClasses) {
+      await this.cbeClasses.cbeClasses.forEach((cbeClass) => {
         this.getClassMembers(cbeClass.classID, cbeClass.className);
-        this.getSingleClass(cbeClass.classID);
-      }
-
-      console.log("GETTER: ", this.cbeCCTest);
-    },
-    async getAllClasses() {
-      const url = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
-      const httpElement = await fetch(url, {
-        headers: {
-          Accept: "application/json",
-          authorization: "token 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",
-          "Content-Type": "application/json",
-        },
-        method: "GET",
       });
-      this.allClasses = await httpElement.json();
-      this.allClasses.forEach((singleClass) => {
-        if (singleClass.name.includes("Class")) {
-          this.cleanedClassList.push({
-            className: singleClass.name,
-            classID: singleClass.id,
-          });
-        }
-      });
-      this.$store.commit({
-        type: "setCBEClasses",
-        cbeClasses: this.cleanedClassList,
-      });
-    },
-    async getSingleClass(teamID) {
-      const url =
-        "https://api.github.com/organizations/74352698/team/" + teamID;
-      const httpElement = await fetch(url, {
-        headers: {
-          Accept: "application/json",
-          authorization: "token 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",
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-      });
-      this.singleClass = await httpElement.json();
-      //console.log("single class: ", this.singleClass);
     },
     async getClassMembers(classID, className) {
       const url =
@@ -115,7 +48,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -123,22 +56,19 @@ export default {
       let _classMembers = await httpElement.json();
       let _cleanClassMembers = [];
       _classMembers.forEach((student) => {
-        GitAPIService.printIssues(student.login).then((result) => {
+        GitAPIService.printIssues(student.login).then((issues) => {
           this.$store.commit({
-            type: "setCurrentCounter",
-            currentCounter: result,
+            type: "setCurrentIssuesCounter",
+            currentIssuesCounter: issues,
           });
           _cleanClassMembers.push({
             studentScreenName: student.login,
             studentGitURL: student.html_url,
             studentGitID: student.id,
-            issuesCounter: this.currentCounter,
+            issuesCounter: this.$store.getters.getCurrentIssuesCounter,
           });
         });
       });
-      // nochmal zerlegen
-      // Promise All
-      //console.log("CLEAN CLASS MEMBERS: ", _cleanClassMembers);
       this.classCollection.push({
         className: className,
         classID: classID,
@@ -153,7 +83,10 @@ export default {
     },
   },
   async created() {
-    await this.initCBEClasses();
+    this.$store.dispatch("setCBEClasses");
+    this.cbeClasses = this.$store.getters.getCBEClasses;
+    this.initCBEClasses();
+    this.cbeClassCollection = await this.$store.getters.getCBEClassCollection;
   },
 };
 </script>

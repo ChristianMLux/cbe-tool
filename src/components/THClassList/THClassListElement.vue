@@ -4,7 +4,7 @@
       <p class="th__student-name">{{ studentName }}</p>
       <p class="th__student-open-issues">Issues: {{ issuesCounter }}</p>
       <p class="th__student-commit-counter">{{ commitCounter }}</p>
-      <p class="th__student-repo-counter">{{ repoCounter }}</p>
+      <p class="th__student-repo-counter">Repos: {{ repoCounter }}</p>
       <a :href="studentGitURL">GitHub-Profil</a>
     </div>
   </li>
@@ -45,5 +45,14 @@ li {
   flex-flow: row;
   align-items: baseline;
   justify-content: space-between;
+}
+
+.th__list-wrapper > * {
+  width: 20%;
+}
+.th__student-name {
+  width: 25%;
+  font-weight: bold;
+  text-align: justify;
 }
 </style>

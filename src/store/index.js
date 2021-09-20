@@ -2,13 +2,7 @@ import { createStore } from "vuex";
 import Cookies from "js-cookie";
 import createPersistedState from "vuex-persistedstate";
 
-const headerWithAuth = {
-  Accept: "application/json",
-  authorization: "token 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",
-  "Content-Type": "application/json",
-};
 const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
-const methodGET = "GET";
 export default createStore({
   plugins: [
     createPersistedState({
@@ -29,18 +23,21 @@ export default createStore({
     currentUserToken: "",
     currentUserScreenname: "",
     isUserLoggedIn: false,
-    cbeTeams: [],
     cbeClasses: [],
     cbeClassCollection: [],
     currentClassMembers: [],
-    currentCounter: 0,
+    currentIssuesCounter: 0,
+    currentReposCounter: 0,
   },
   mutations: {
     setCBEClassCollection(state, payload) {
       state.cbeClassCollection = payload.classCollection;
     },
-    setCurrentCounter(state, payload) {
-      state.currentCounter = payload.currentCounter;
+    setCurrentIssuesCounter(state, payload) {
+      state.currentIssuesCounter = payload.currentIssuesCounter;
+    },
+    setCurrentReposCounter(state, payload) {
+      state.currentReposCounter = payload.currentReposCounter;
     },
     setCurrentClassMembers(state, payload) {
       state.currentClassMembers = payload;
@@ -72,11 +69,14 @@ export default createStore({
       state.currentUserName = payload.userName;
     },
     async setCBEClasses(state) {
-      const teamsResponse = await fetch(
-        allTeamsURL,
-        { headerWithAuth },
-        methodGET
-      );
+      const teamsResponse = await fetch(allTeamsURL, {
+        headers: {
+          Accept: "application/json",
+          authorization: "token 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",
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+      });
       const allTeams = await teamsResponse.json();
       let cleanedClassList = [];
       allTeams.forEach((singleClass) => {
@@ -98,8 +98,11 @@ export default createStore({
     getCBEClassCollection(state) {
       return state.cbeClassCollection;
     },
-    getCurrentCounter(state) {
-      return state.currentCounter;
+    getCurrentIssuesCounter(state) {
+      return state.currentIssuesCounter;
+    },
+    getCurrentReposCounter(state) {
+      return state.currentReposCounter;
     },
     getCBEClasses(state) {
       return state.cbeClasses;
