@@ -42,6 +42,7 @@ export default {
       });
     },
     async getClassMembers(classID, className) {
+      let _userToken = "token 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";
       const url =
         "https://api.github.com/organizations/74352698/team/" +
         classID +
@@ -49,7 +50,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: _userToken,
           "Content-Type": "application/json",
         },
         method: "GET",

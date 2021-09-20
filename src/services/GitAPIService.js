@@ -1,5 +1,6 @@
 class GitAPIService {
   async getStudentIssues(studentScreenName) {
+    let _userToken = "token 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";
     const url =
       "https://api.github.com/repos/" +
       studentScreenName +
@@ -7,7 +8,7 @@ class GitAPIService {
     const httpElement = await fetch(url, {
       headers: {
         Accept: "application/json",
-        authorization: "token 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",
+        authorization: _userToken,
         "Content-Type": "application/json",
       },
       method: "GET",
@@ -25,11 +26,12 @@ class GitAPIService {
     return await printedIssuesCounter;
   }
   async getStudentRepos(studentScreenName) {
+    let _userToken = "token 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";
     const url = "https://api.github.com/users/" + studentScreenName + "/repos";
     const httpElement = await fetch(url, {
       headers: {
         Accept: "application/json",
-        authorization: "token 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",
+        authorization: _userToken,
         "Content-Type": "application/json",
       },
       method: "GET",

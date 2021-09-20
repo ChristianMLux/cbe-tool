@@ -72,7 +72,7 @@ export default createStore({
       const teamsResponse = await fetch(allTeamsURL, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
