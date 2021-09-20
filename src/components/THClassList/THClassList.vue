@@ -49,7 +49,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token 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",
           "Content-Type": "application/json",
         },
         method: "GET",
