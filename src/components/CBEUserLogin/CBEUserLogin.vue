@@ -49,6 +49,9 @@ export default {
       firestore;
       const auth = getAuth();
       const provider = new GithubAuthProvider();
+      provider.addScope("admin:org");
+      provider.addScope("repo");
+      provider.addScope("user");
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;

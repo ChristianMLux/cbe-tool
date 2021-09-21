@@ -5,7 +5,7 @@
       <p class="th__student-open-issues">Issues: {{ issuesCounter }}</p>
       <p class="th__student-commit-counter">{{ commitCounter }}</p>
       <p class="th__student-repo-counter">Repos: {{ reposCounter }}</p>
-      <a :href="studentGitURL">GitHub-Profil</a>
+      <a :href="studentGitURL"><i class="fa fa-github"></i></a>
     </div>
   </li>
 </template>
@@ -41,12 +41,24 @@ li {
 }
 p {
   text-align: left;
+  margin: 1rem 0;
+}
+a {
+  margin: 1rem 0;
+  align-items: baseline;
+}
+i {
+  font-size: 1.7rem;
+  color: var(--primary-color);
+  &:hover {
+    color: var(--secondary-color);
+  }
 }
 .th__list-wrapper {
   width: 100%;
   display: flex;
   flex-flow: row;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
 }
 

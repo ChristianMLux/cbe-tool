@@ -42,6 +42,7 @@ export default {
       });
     },
     async getClassMembers(classID, className) {
+      let _userToken = this.$store.getters.getCurrentUserToken;
       const url =
         "https://api.github.com/organizations/74352698/team/" +
         classID +
@@ -49,7 +50,7 @@ export default {
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: "token " + _userToken,
           "Content-Type": "application/json",
         },
         method: "GET",
@@ -57,13 +58,19 @@ export default {
       let _classMembers = await httpElement.json();
       let _membersWithIssues = [];
       _classMembers.forEach((student) => {
-        GitAPIService.printRepos(student.login).then((repos) => {
+        GitAPIService.printRepos(
+          student.login,
+          this.$store.getters.getCurrentUserToken
+        ).then((repos) => {
           this.$store.commit({
             type: "setCurrentReposCounter",
             currentReposCounter: repos,
           });
         });
-        GitAPIService.printIssues(student.login).then((issues) => {
+        GitAPIService.printIssues(
+          student.login,
+          this.$store.getCurrentUserToken
+        ).then((issues) => {
           this.$store.commit({
             type: "setCurrentIssuesCounter",
             currentIssuesCounter: issues,

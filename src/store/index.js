@@ -69,10 +69,11 @@ export default createStore({
       state.currentUserName = payload.userName;
     },
     async setCBEClasses(state) {
+      let _token = "token " + this.getters.getCurrentUserToken;
       const teamsResponse = await fetch(allTeamsURL, {
         headers: {
           Accept: "application/json",
-          authorization: "token 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",
+          authorization: _token,
           "Content-Type": "application/json",
         },
         method: "GET",
