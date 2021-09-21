@@ -19,6 +19,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 import firestore from "@/firestore";
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -42,6 +43,7 @@ export default {
       user: {},
       userID: "",
       userName: "",
+      userRole: "student",
     };
   },
   methods: {
@@ -96,6 +98,18 @@ export default {
           isLoggedIn: true,
         });
         console.log(result);
+        // put the user informations in the database
+        addDoc(collection(firestore, "user"), {
+          id: this.$store.getters.getCurrentUserID,
+          gitDisplayName: this.$store.getters.getCurrentUserName,
+          gitScreenName: this.$store.getters.getCurrentUserScreenname,
+          gitToken: this.$store.getters.getCurrentUserToken,
+          gitURL: this.$store.getters.getCurrentUserGitURL,
+          email: this.$store.getters.getCurrentUserEmail,
+          userIssues: 0,
+          userRepos: 0,
+          userRole: this.userRole,
+        });
         this.user = result.user;
         this.userID = result.user.uid;
         this.userName = result.user.displayName;
