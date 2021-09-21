@@ -69,7 +69,7 @@ export default {
         });
         GitAPIService.printIssues(
           student.login,
-          this.$store.getCurrentUserToken
+          "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"
         ).then((issues) => {
           this.$store.commit({
             type: "setCurrentIssuesCounter",
