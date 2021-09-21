@@ -1,6 +1,6 @@
 class GitAPIService {
-  async getStudentIssues(studentScreenName) {
-    let _userToken = "token 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";
+  async getStudentIssues(studentScreenName, userToken) {
+    let _userToken = "token " + userToken;
     const url =
       "https://api.github.com/repos/" +
       studentScreenName +
@@ -17,16 +17,18 @@ class GitAPIService {
     let _counter = await _repoIssues;
     return await _counter.length;
   }
-  async printIssues(studentScreenName) {
+  async printIssues(studentScreenName, userToken) {
     let printedIssuesCounter = await this.getStudentIssues(
-      studentScreenName
+      studentScreenName,
+      userToken
     ).then(function (value) {
       return value;
     });
     return await printedIssuesCounter;
   }
-  async getStudentRepos(studentScreenName) {
-    let _userToken = "token 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";
+  async getStudentRepos(studentScreenName, userToken) {
+    let _userToken = "token " + userToken;
+    console.log(_userToken);
     const url = "https://api.github.com/users/" + studentScreenName + "/repos";
     const httpElement = await fetch(url, {
       headers: {
@@ -40,12 +42,13 @@ class GitAPIService {
     let _counter = await _studentRepos;
     return await _counter.length;
   }
-  async printRepos(studentScreenName) {
-    let printedRepoCounter = await this.getStudentRepos(studentScreenName).then(
-      function (value) {
-        return value;
-      }
-    );
+  async printRepos(studentScreenName, userToken) {
+    let printedRepoCounter = await this.getStudentRepos(
+      studentScreenName,
+      userToken
+    ).then(function (value) {
+      return value;
+    });
     return await printedRepoCounter;
   }
 }
