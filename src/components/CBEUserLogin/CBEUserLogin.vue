@@ -50,8 +50,8 @@ export default {
       const auth = getAuth();
       const provider = new GithubAuthProvider();
       provider.addScope("admin:org");
-      provider.addScope("repo");
-      provider.addScope("user");
+      provider.addScope("public_repo");
+      provider.addScope("read:user");
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
@@ -64,7 +64,7 @@ export default {
         } else {
           this.$store.commit({
             type: "setCurrentUserName",
-            userName: result.user.reloadUserInfo.screenName,
+            userName: result._tokenResponse.screenName,
           });
         }
         this.$store.commit({
@@ -73,7 +73,15 @@ export default {
         });
         this.$store.commit({
           type: "setCurrentUserScreenname",
-          userID: result.user.reloadUserInfo.screenName,
+          userScreenname: result._tokenResponse.screenName,
+        });
+        this.$store.commit({
+          type: "setCurrentUserEmail",
+          mail: result.user.email,
+        });
+        this.$store.commit({
+          type: "setCurrentUserGitURL",
+          gitURL: "https://github.com/" + result._tokenResponse.screenName,
         });
         this.$store.commit({
           type: "setCurrentUserToken",
@@ -87,7 +95,7 @@ export default {
           type: "setUserLoginState",
           isLoggedIn: true,
         });
-
+        console.log(result);
         this.user = result.user;
         this.userID = result.user.uid;
         this.userName = result.user.displayName;

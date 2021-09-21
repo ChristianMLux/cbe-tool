@@ -7,6 +7,9 @@ import store from "./store";
 import CBEMainButton from "./components/CBEMainButton/CBEMainButton.vue";
 
 const app = createApp(App).use(store).use(router);
+if (process.env.NODE_ENV) {
+  require("dotenv").config();
+}
 
 app.component("cbe-main-btn", CBEMainButton);
 
