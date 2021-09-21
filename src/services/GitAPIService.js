@@ -28,7 +28,6 @@ class GitAPIService {
   }
   async getStudentRepos(studentScreenName, userToken) {
     let _userToken = "token " + userToken;
-    console.log(_userToken);
     const url = "https://api.github.com/users/" + studentScreenName + "/repos";
     const httpElement = await fetch(url, {
       headers: {

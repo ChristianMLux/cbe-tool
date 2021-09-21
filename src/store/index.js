@@ -22,6 +22,8 @@ export default createStore({
     currentUserID: "",
     currentUserToken: "",
     currentUserScreenname: "",
+    currentUserEmail: "",
+    currentUserGitURL: "",
     isUserLoggedIn: false,
     cbeClasses: [],
     cbeClassCollection: [],
@@ -50,6 +52,12 @@ export default createStore({
     },
     setCurrentUserScreenname(state, payload) {
       state.currentUserScreenname = payload.userScreenname;
+    },
+    setCurrentUserEmail(state, payload) {
+      state.currentUserEmail = payload.mail;
+    },
+    setCurrentUserGitURL(state, payload) {
+      state.currentUserGitURL = payload.gitURL;
     },
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
@@ -81,7 +89,7 @@ export default createStore({
       const allTeams = await teamsResponse.json();
       let cleanedClassList = [];
       allTeams.forEach((singleClass) => {
-        if (singleClass.name.includes("Class")) {
+        if (singleClass.name.includes("Class #3")) {
           cleanedClassList.push({
             className: singleClass.name,
             classID: singleClass.id,
@@ -119,6 +127,12 @@ export default createStore({
     },
     getCurrentUserScreenname(state) {
       return state.currentUserScreenname;
+    },
+    getCurrentUserEmail(state) {
+      return state.currentUserEmail;
+    },
+    getCurrentUserGitURL(state) {
+      return state.currentUserGitURL;
     },
     getCurrentUserID(state) {
       return state.currentUserID;

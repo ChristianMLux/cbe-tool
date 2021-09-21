@@ -22,7 +22,7 @@
 <script>
 import THClassListElement from "@/components/THClassList/THClassListElement.vue";
 import GitAPIService from "@/services/GitAPIService.js";
-
+require("dotenv").config();
 export default {
   name: "THClassList",
   components: { THClassListElement },
@@ -69,7 +69,7 @@ export default {
         });
         GitAPIService.printIssues(
           student.login,
-          "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"
+          "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"
         ).then((issues) => {
           this.$store.commit({
             type: "setCurrentIssuesCounter",
