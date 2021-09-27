@@ -4,6 +4,24 @@
       <p class="th__student-name">{{ gitDisplayName }}</p>
       <p class="th__student-open-issues">Issues: {{ userIssues }}</p>
       <p class="th__student-repo-counter">Repos: {{ userRepos }}</p>
+      <router-link
+        :to="{
+          name: 'studentDetails',
+          params: {
+            studentKey,
+            email,
+            gitDisplayName,
+            gitScreenName,
+            gitToken,
+            gitURL,
+            id,
+            userIssues,
+            userRepos,
+          },
+        }"
+      >
+        Details</router-link
+      >
       <a :href="gitURL"><i class="fa fa-github"></i></a>
     </div>
   </li>
@@ -13,8 +31,20 @@
 export default {
   name: "StudentListElement",
   props: {
+    email: {
+      type: String,
+    },
     gitDisplayName: {
       type: String,
+    },
+    gitScreenName: {
+      type: String,
+    },
+    gitToken: {
+      type: String,
+    },
+    id: {
+      type: [String, Number],
     },
     userIssues: {
       type: [String, Number],
@@ -24,6 +54,9 @@ export default {
     },
     gitURL: {
       type: String,
+    },
+    studentKey: {
+      required: true,
     },
   },
 };
