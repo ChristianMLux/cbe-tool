@@ -1,15 +1,15 @@
 <template>
   <section class="th__section">
-    <THClassList />
+    <StudentList />
   </section>
 </template>
 
 <script>
-import THClassList from "@/components/THClassList/THClassList.vue";
+import StudentList from "@/components/THStudentList/StudentList.vue";
 export default {
   name: "THTeacherHub",
   components: {
-    THClassList,
+    StudentList,
   },
 };
 </script>

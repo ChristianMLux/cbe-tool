@@ -19,7 +19,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, setDoc, getDocs, getDoc, doc } from "firebase/firestore";
 import firestore from "@/firestore";
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -44,9 +44,41 @@ export default {
       userID: "",
       userName: "",
       userRole: "student",
+      allUser: [],
+      currentTokenId: null,
+      bool: false,
     };
   },
   methods: {
+    async isUserInDB(accessToken) {
+      const docRef = doc(firestore, "all-users", accessToken);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("SNAP:", docSnap.data());
+        return true;
+      } else {
+        return false;
+      }
+    },
+    async getAllUser() {
+      const querySnapshot = await getDocs(collection(firestore, "all-users"));
+      console.log("snap: ", querySnapshot);
+      querySnapshot.forEach((user) => {
+        console.log("user: ", user.key);
+        this.allUser.push({
+          id: user.data().id,
+          gitDisplayName: user.data().gitDisplayName,
+          gitScreenName: user.data().gitScreenName,
+          gitToken: user.data().gitToken,
+          gitURL: user.data().gitURL,
+          email: user.data().email,
+          userIssues: user.data().userIssues,
+          userRepos: user.data().userRepos,
+          userRole: user.data().userRole,
+        });
+        console.log(this.allUser);
+      });
+    },
     async signInGit() {
       firestore;
       const auth = getAuth();
@@ -57,6 +89,24 @@ export default {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
+        this.isUserInDB(result.user.accessToken).then((user) => {
+          if (user === true) {
+            console.log("User exists");
+          } else {
+            console.log("User does not exist", user);
+            setDoc(doc(firestore, "all-users", result.user.accessToken), {
+              id: this.$store.getters.getCurrentUserID,
+              gitDisplayName: this.$store.getters.getCurrentUserName,
+              gitScreenName: this.$store.getters.getCurrentUserScreenname,
+              gitToken: this.$store.getters.getCurrentUserToken,
+              gitURL: this.$store.getters.getCurrentUserGitURL,
+              email: this.$store.getters.getCurrentUserEmail,
+              userIssues: 0,
+              userRepos: 0,
+              userRole: this.userRole,
+            });
+          }
+        });
         this.$store.commit("setCurrentUser", result.user);
         if (result.user.displayName != null) {
           this.$store.commit({
@@ -97,23 +147,12 @@ export default {
           type: "setUserLoginState",
           isLoggedIn: true,
         });
-        console.log(result);
         // put the user informations in the database
-        addDoc(collection(firestore, "user"), {
-          id: this.$store.getters.getCurrentUserID,
-          gitDisplayName: this.$store.getters.getCurrentUserName,
-          gitScreenName: this.$store.getters.getCurrentUserScreenname,
-          gitToken: this.$store.getters.getCurrentUserToken,
-          gitURL: this.$store.getters.getCurrentUserGitURL,
-          email: this.$store.getters.getCurrentUserEmail,
-          userIssues: 0,
-          userRepos: 0,
-          userRole: this.userRole,
-        });
         this.user = result.user;
         this.userID = result.user.uid;
         this.userName = result.user.displayName;
         this.$router.push("/");
+        this.currentTokenId = null;
       });
     },
     signOut() {
