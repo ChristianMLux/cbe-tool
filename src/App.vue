@@ -60,5 +60,25 @@ body {
   margin: 0.5rem 0;
 }
 @media screen and (max-width: 975px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  h3 {
+    font-size: 1.6rem;
+  }
+}
+@media screen and (max-width: 720px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
 }
 </style>
