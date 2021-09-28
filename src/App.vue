@@ -53,7 +53,7 @@ html {
   }
 }
 body {
-  max-width: 150ch;
+  max-width: 80ch;
   margin: 0 auto;
   min-width: 350px;
 }
