@@ -54,7 +54,6 @@ export default {
       const docRef = doc(firestore, "all-users", accessToken);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("SNAP:", docSnap.data());
         return true;
       } else {
         return false;
@@ -62,9 +61,7 @@ export default {
     },
     async getAllUser() {
       const querySnapshot = await getDocs(collection(firestore, "all-users"));
-      console.log("snap: ", querySnapshot);
       querySnapshot.forEach((user) => {
-        console.log("user: ", user.key);
         this.allUser.push({
           id: user.data().id,
           gitDisplayName: user.data().gitDisplayName,
@@ -76,7 +73,6 @@ export default {
           userRepos: user.data().userRepos,
           userRole: user.data().userRole,
         });
-        console.log(this.allUser);
       });
     },
     async signInGit() {

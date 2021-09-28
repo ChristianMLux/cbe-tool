@@ -40,7 +40,6 @@ export default {
         "https://api.github.com/repos/" +
         studentScreenName +
         "/bootcamp-schedule/issues?state=all&per_page=100";
-      console.log(url);
       const httpElement = await fetch(url, {
         headers: {
           Accept: "application/json",
@@ -55,20 +54,16 @@ export default {
         type: "setIssuesInfo",
         issuesInfo: _issuesInfo,
       });
-      console.log(this.issuesInfo);
     },
     async longestIssue() {
       const date = new Date();
       let maxduration = 0;
-      console.log("IN LONGEST: ", this.issuesInfo.length);
       for (let i = 0; i < this.issuesInfo.length; i++) {
         if (this.issuesInfo[i].state === "open") {
           const date2 = new Date(this.issuesInfo[i].created_at);
-          //console.log(date2);
           let diff = date - date2;
-          const diffDay = Math.floor(diff / (1000 * 60 * 60 * 24));
+          //const diffDay = Math.floor(diff / (1000 * 60 * 60 * 24));
           const diffHour = Math.floor(diff / (1000 * 60 * 60));
-          console.log("day:" + diffDay + "hour:" + (diffHour % 24));
           if (maxduration < diffHour) {
             maxduration = diffHour;
           }
@@ -79,8 +74,6 @@ export default {
             duration: diffHour,
           });
           this.allIssues.push(this.$store.getters.getCurrentIssue);
-
-          console.log("ALL ISSUES FIRST: ", this.allIssues);
         } else {
           const dateOpen = new Date(this.issuesInfo[i].created_at);
           const dateClose = new Date(this.issuesInfo[i].closed_at);
@@ -96,7 +89,6 @@ export default {
           this.allIssues.push(this.$store.getters.getCurrentIssue);
         }
       }
-      console.log("max:" + maxduration);
       this.createDiagram(maxduration);
     },
     createDiagram(y) {
@@ -124,14 +116,11 @@ export default {
       var graphMax = y;
       var graphPadding = 2;
       var graphFaktor = (this.canvasHeight - 5 * graphPadding) / graphMax;
-      console.log(graphFaktor);
       var graphWidth =
         (this.canvasWidth - 2 * graphPadding) / (this.allIssues.length + 1);
-      console.log(graphWidth);
       var graphTextcolor = "white";
 
       //Draw Graph
-      console.log("ALLISSUES: ", this.allIssues);
       for (let ik = this.allIssues.length - 1; ik >= 0; ik--) {
         let tmpTop =
           (
@@ -175,7 +164,6 @@ export default {
     var c = document.getElementById("issuesDiagramm");
     var ctx = c.getContext("2d");
     this.vueCanvas = ctx;
-    console.log(this.gitToken);
     this.getIssues(this.gitScreenName, this.gitToken);
     this.longestIssue();
   },

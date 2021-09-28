@@ -48,7 +48,6 @@ export default {
           student.studentData.gitScreenName,
           student.studentData.gitToken
         ).then((userRepos) => {
-          console.log(userRepos);
           setDoc(doc(firestore, "all-users", student.studentKey), {
             email: student.studentData.email,
             gitDisplayName: student.studentData.gitDisplayName,
@@ -69,7 +68,6 @@ export default {
           student.studentData.gitScreenName,
           student.studentData.gitToken
         ).then((userIssues) => {
-          console.log(userIssues);
           setDoc(doc(firestore, "all-users", student.studentKey), {
             email: student.studentData.email,
             gitDisplayName: student.studentData.gitDisplayName,
@@ -89,9 +87,6 @@ export default {
     await this.getAllStudents();
     await this.updateStudentRepos();
     await this.updateStudentIssues();
-  },
-  mounted() {
-    console.log(this.students);
   },
 };
 </script>
