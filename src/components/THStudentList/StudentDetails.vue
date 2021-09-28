@@ -16,11 +16,14 @@
       <a :href="gitURL"><i class="fa fa-github"></i></a>
     </div>
   </section>
+  <IssuesAnalyze :gitScreenName="gitScreenName" :gitToken="gitToken" />
 </template>
 
 <script>
+import IssuesAnalyze from "@/components/IssuesAnalyze/IssuesAnalyze.vue";
 export default {
   name: "StudentDetails",
+  components: { IssuesAnalyze },
   data() {
     return {
       studentKey: this.$route.params.studentKey,
