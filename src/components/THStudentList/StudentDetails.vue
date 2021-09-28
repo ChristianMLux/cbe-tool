@@ -1,22 +1,25 @@
 <template>
-  <h2>StudentDetails</h2>
-  <cbe-main-btn
-    id="button"
-    buttonClass="primary"
-    @click="browseBack"
-    data-cy="back-button"
-    >ZURÜCK
-  </cbe-main-btn>
-
   <section class="sd__section">
-    <div class="section__wrapper">
-      <p v-if="gitDisplayName">{{ gitDisplayName }}</p>
-      <p v-else>{{ gitScreenName }}</p>
+    <div class="heading__wrapper">
+      <h2 v-if="gitDisplayName">{{ gitDisplayName }}</h2>
+      <h2 v-else>{{ gitScreenName }}</h2>
+      <cbe-main-btn
+        id="button"
+        class="btn"
+        buttonClass="primary"
+        @click="browseBack"
+        data-cy="back-button"
+        >ZURÜCK
+      </cbe-main-btn>
+    </div>
+    <div class="detail__wrapper">
+      <p>Offene Issues: {{ userIssues }}</p>
+      <p>Repos: {{ userRepos }}</p>
       <p>{{ email }}</p>
       <a :href="gitURL"><i class="fa fa-github"></i></a>
     </div>
+    <IssuesAnalyze :gitScreenName="gitScreenName" :gitToken="gitToken" />
   </section>
-  <IssuesAnalyze :gitScreenName="gitScreenName" :gitToken="gitToken" />
 </template>
 
 <script>
@@ -47,3 +50,29 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+section {
+  margin: 1rem 4rem 1rem 4rem;
+}
+.heading__wrapper {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin-top: 1rem;
+    padding-top: 0;
+  }
+  .btn {
+    max-height: 2.5rem;
+    margin-top: 0 !important;
+  }
+}
+.detail__wrapper {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

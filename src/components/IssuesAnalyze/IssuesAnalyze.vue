@@ -4,15 +4,16 @@
       <canvas
         id="issuesDiagramm"
         class="issues_diagramm"
-        style="border: 1px solid black; border-radius: 2px"
-        width="1200"
-        height="400"
+        style="border: 1px solid var(--primary-color); border-radius: 0.25rem"
+        :width="canvasWidth"
+        :height="canvasHeight"
       ></canvas>
     </div>
   </section>
 </template>
 
 <script>
+import { computed } from "vue";
 export default {
   name: "IssuesAnalyze",
   props: {
@@ -27,7 +28,7 @@ export default {
     return {
       issuesInfo: this.$store.getters.getIssuesInfo,
       allIssues: [],
-      canvasWidth: 1200,
+      canvasWidth: computed(() => window.innerWidth - 100),
       canvasHeight: 400,
       vueCanvas: undefined,
       currentIssue: this.$store.getters.getCurrentIssue,
@@ -118,7 +119,7 @@ export default {
       var graphFaktor = (this.canvasHeight - 5 * graphPadding) / graphMax;
       var graphWidth =
         (this.canvasWidth - 2 * graphPadding) / (this.allIssues.length + 1);
-      var graphTextcolor = "white";
+      var graphTextcolor = "#fafafa";
 
       //Draw Graph
       for (let ik = this.allIssues.length - 1; ik >= 0; ik--) {
@@ -129,9 +130,9 @@ export default {
           ).toFixed() - graphPadding;
         let tmpHeight = (this.allIssues[ik].duration * graphFaktor).toFixed();
         if (this.allIssues[ik].status === "open") {
-          cv.fillStyle = "#E65858";
+          cv.fillStyle = "#ed3221";
         } else {
-          cv.fillStyle = "green";
+          cv.fillStyle = "#a3db33";
         }
 
         cv.fillRect(
@@ -164,6 +165,7 @@ export default {
     var c = document.getElementById("issuesDiagramm");
     var ctx = c.getContext("2d");
     this.vueCanvas = ctx;
+
     this.getIssues(this.gitScreenName, this.gitToken);
     this.longestIssue();
   },
