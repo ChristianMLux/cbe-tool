@@ -24,6 +24,7 @@ export default createStore({
     currentUserScreenname: "",
     currentUserEmail: "",
     currentUserGitURL: "",
+    currentUserScheduleURL: "",
     isUserLoggedIn: false,
     cbeClasses: [],
     cbeClassCollection: [],
@@ -38,6 +39,9 @@ export default createStore({
     },
   },
   mutations: {
+    setCurrentUserScheduleURL(state, payload) {
+      state.currentUserScheduleURL = payload.userScheduleURL;
+    },
     setCurrentIssue(state, payload) {
       state.currentIssue = {
         name: payload.name,
@@ -120,6 +124,9 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getCurrentUserScheduleURL(state) {
+      return state.currentUserScheduleURL;
+    },
     getCurrentIssue(state) {
       return state.currentIssue;
     },
