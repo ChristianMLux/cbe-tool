@@ -53,16 +53,12 @@ html {
   }
 }
 body {
-  max-width: 80ch;
-  margin: 0 auto;
+  max-width: 100ch;
   min-width: 350px;
 }
 .btn {
   margin: 0.5rem 0;
 }
-@media screen and (max-width: 669px) {
-  body {
-    width: 95%;
-  }
+@media screen and (max-width: 975px) {
 }
 </style>

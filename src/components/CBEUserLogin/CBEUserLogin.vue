@@ -208,6 +208,11 @@ export default {
   border-radius: 0.25rem;
   cursor: pointer;
 }
+@media screen and (max-width: 975px) {
+  .user-name {
+    display: none;
+  }
+}
 @media only screen and (max-width: 741px) {
   .user-name {
     font-size: 0.8em;
