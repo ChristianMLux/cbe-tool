@@ -30,8 +30,24 @@ export default createStore({
     currentClassMembers: [],
     currentIssuesCounter: 0,
     currentReposCounter: 0,
+    issuesInfo: [],
+    currentIssue: {
+      name: "",
+      status: "open",
+      duration: null,
+    },
   },
   mutations: {
+    setCurrentIssue(state, payload) {
+      state.currentIssue = {
+        name: payload.name,
+        status: payload.status,
+        duration: payload.duration,
+      };
+    },
+    setIssuesInfo(state, payload) {
+      state.issuesInfo = payload.issuesInfo;
+    },
     setCBEClassCollection(state, payload) {
       state.cbeClassCollection = payload.cbeClassCollection;
     },
@@ -104,6 +120,12 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getCurrentIssue(state) {
+      return state.currentIssue;
+    },
+    getIssuesInfo(state) {
+      return state.issuesInfo;
+    },
     getCBEClassCollection(state) {
       return state.cbeClassCollection;
     },

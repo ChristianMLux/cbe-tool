@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import Issue from "./Issue";
 export default {
   name: "IssuesAnalyze",
   props: {
@@ -31,6 +30,7 @@ export default {
       canvasWidth: 1200,
       canvasHeight: 400,
       vueCanvas: undefined,
+      currentIssue: this.$store.getters.getCurrentIssue,
     };
   },
   methods: {
@@ -72,14 +72,13 @@ export default {
           if (maxduration < diffHour) {
             maxduration = diffHour;
           }
-
-          const issue = Issue.constructor(
-            this.issuesInfo[i].title,
-            "open",
-            diffHour
-          );
-          console.log(issue);
-          this.allIssues.push(issue);
+          this.$store.commit({
+            type: "setCurrentIssue",
+            name: this.issuesInfo[i].title,
+            status: "open",
+            duration: diffHour,
+          });
+          this.allIssues.push(this.$store.getters.getCurrentIssue);
 
           console.log("ALL ISSUES FIRST: ", this.allIssues);
         } else {
@@ -88,12 +87,13 @@ export default {
           let diff = dateClose - dateOpen;
           //const diffDay = Math.floor(diff / (1000 * 60 * 60 * 24));
           const diffHour = Math.floor(diff / (1000 * 60 * 60));
-          const issue = Issue.constructor(
-            this.issuesInfo[i].title,
-            "close",
-            diffHour
-          );
-          this.allIssues.push(issue);
+          this.$store.commit({
+            type: "setCurrentIssue",
+            name: this.issuesInfo[i].title,
+            status: "close",
+            duration: diffHour,
+          });
+          this.allIssues.push(this.$store.getters.getCurrentIssue);
         }
       }
       console.log("max:" + maxduration);
@@ -125,6 +125,7 @@ export default {
       var graphPadding = 2;
       var graphFaktor = (this.canvasHeight - 5 * graphPadding) / graphMax;
       console.log(graphFaktor);
+      console.log(this.allIssues);
       var graphWidth =
         (this.canvasWidth - 2 * graphPadding) / (this.allIssues.length + 1);
       console.log(graphWidth);
