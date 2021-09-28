@@ -3,10 +3,14 @@
     <StudentListElement
       v-for="student in students"
       :key="student.studentKey"
+      :email="student.studentData.email"
       :gitDisplayName="student.studentData.gitDisplayName"
+      :gitScreenName="student.studentData.gitScreenName"
+      :gitToken="student.studentData.gitToken"
       :userIssues="student.studentData.userIssues"
       :userRepos="student.studentData.userRepos"
       :gitURL="student.studentData.gitURL"
+      :studentKey="student.studentKey"
       v-bind="student"
     />
   </ul>

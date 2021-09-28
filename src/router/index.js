@@ -66,6 +66,16 @@ const routes = [
       import(
         /* webpackChunkName: "teacherhub" */ "../views/TeacherHub/TH-main-view.vue"
       ),
+    children: [],
+  },
+
+  {
+    path: "/teacherhub/student/:studentKey",
+    name: "studentDetails",
+    component: () =>
+      import(
+        /* webpackChunkName: "studentDetails" */ "../views/TeacherHub/StudentDetailView.vue"
+      ),
   },
 ];
 
