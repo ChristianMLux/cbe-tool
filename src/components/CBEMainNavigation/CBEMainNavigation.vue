@@ -3,27 +3,27 @@
     <ul class="cbe__nav-list" v-show="isUserLoggedIn">
       <li class="cbe__nav-element">
         <router-link to="/studentprofile"
-          >Your Profile <i class="fas fa-user-circle"></i
+          >Profile <i class="fas fa-user-circle"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/teacherhub"
-          >Teacher-Hub <i class="fas fa-school"></i
+          >Teacher <i class="fas fa-school"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/amatool"
-          >AMA-Tool <i class="fas fa-question-circle"></i
+          >AMA <i class="fas fa-question-circle"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/rotitool"
-          >ROTI-Tool <i class="fas fa-clock"></i
+          >ROTI <i class="fas fa-clock"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/lessonrecordings"
-          >Lesson-Recordings <i class="fas fa-video"></i
+          >Recordings <i class="fas fa-video"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
