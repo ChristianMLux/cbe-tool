@@ -119,7 +119,7 @@ export default {
       var graphFaktor = (this.canvasHeight - 5 * graphPadding) / graphMax;
       var graphWidth =
         (this.canvasWidth - 2 * graphPadding) / (this.allIssues.length + 1);
-      var graphTextcolor = "#fafafa";
+      var graphTextcolor = "black";
 
       //Draw Graph
       for (let ik = this.allIssues.length - 1; ik >= 0; ik--) {
@@ -163,7 +163,8 @@ export default {
   },
   mounted() {
     var c = document.getElementById("issuesDiagramm");
-    var ctx = c.getContext("2d");
+    var ctx = c.getContext("2d", { alpha: false });
+    ctx.font = "12px Open Sans";
     this.vueCanvas = ctx;
 
     this.getIssues(this.gitScreenName, this.gitToken);
