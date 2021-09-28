@@ -125,7 +125,6 @@ export default {
       var graphPadding = 2;
       var graphFaktor = (this.canvasHeight - 5 * graphPadding) / graphMax;
       console.log(graphFaktor);
-      console.log(this.allIssues);
       var graphWidth =
         (this.canvasWidth - 2 * graphPadding) / (this.allIssues.length + 1);
       console.log(graphWidth);
@@ -137,10 +136,10 @@ export default {
         let tmpTop =
           (
             this.canvasHeight -
-            graphFaktor * this.allIssues[i].duration
+            graphFaktor * this.allIssues[ik].duration
           ).toFixed() - graphPadding;
-        let tmpHeight = (this.allIssues[i].duration * graphFaktor).toFixed();
-        if (this.allIssues[i].status === "open") {
+        let tmpHeight = (this.allIssues[ik].duration * graphFaktor).toFixed();
+        if (this.allIssues[ik].status === "open") {
           cv.fillStyle = "#E65858";
         } else {
           cv.fillStyle = "green";
@@ -148,7 +147,7 @@ export default {
 
         cv.fillRect(
           graphWidth +
-            (this.allIssues.length - i - 1) * graphWidth +
+            (this.allIssues.length - ik - 1) * graphWidth +
             graphPadding,
           tmpTop,
           graphWidth - graphPadding,
@@ -157,13 +156,13 @@ export default {
         cv.fillStyle = graphTextcolor;
 
         if (
-          this.allIssues[i].status === "open" ||
-          this.allIssues[i].duration > 72
+          this.allIssues[ik].status === "open" ||
+          this.allIssues[ik].duration > 72
         ) {
           cv.fillText(
-            this.allIssues.length - i,
+            this.allIssues.length - ik,
             graphWidth +
-              (this.allIssues.length - i - 1) * graphWidth +
+              (this.allIssues.length - ik - 1) * graphWidth +
               graphPadding,
             this.canvasHeight - 2,
             graphWidth
