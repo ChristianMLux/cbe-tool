@@ -213,14 +213,4 @@ export default {
     display: none;
   }
 }
-@media only screen and (max-width: 741px) {
-  .user-name {
-    font-size: 0.8em;
-  }
-}
-@media only screen and (max-width: 700px) {
-  .user-name {
-    display: none;
-  }
-}
 </style>
