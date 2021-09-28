@@ -10,6 +10,7 @@
       :userIssues="student.studentData.userIssues"
       :userRepos="student.studentData.userRepos"
       :gitURL="student.studentData.gitURL"
+      :userScheduleURL="student.studentData.userScheduleURL"
       :studentKey="student.studentKey"
       v-bind="student"
     />
@@ -54,6 +55,7 @@ export default {
             gitScreenName: student.studentData.gitScreenName,
             gitToken: student.studentData.gitToken,
             gitURL: student.studentData.gitURL,
+            userScheduleURL: student.studentData.userScheduleURL,
             id: student.studentData.id,
             userIssues: student.studentData.userIssues,
             userRepos: userRepos,
@@ -74,6 +76,7 @@ export default {
             gitScreenName: student.studentData.gitScreenName,
             gitToken: student.studentData.gitToken,
             gitURL: student.studentData.gitURL,
+            userScheduleURL: student.studentData.userScheduleURL,
             id: student.studentData.id,
             userIssues: userIssues,
             userRepos: student.studentData.userRepos,

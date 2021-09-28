@@ -71,12 +71,14 @@ export default {
             // USER EXISTS
           } else {
             //console.log("User does not exist", user);
+            console.log(this.$store.getters.getCurrentUserScheduleURL);
             setDoc(doc(firestore, "all-users", result.user.uid), {
               id: this.$store.getters.getCurrentUserID,
               gitDisplayName: this.$store.getters.getCurrentUserName,
               gitScreenName: this.$store.getters.getCurrentUserScreenname,
               gitToken: this.$store.getters.getCurrentUserToken,
               gitURL: this.$store.getters.getCurrentUserGitURL,
+              userScheduleURL: this.$store.getters.getCurrentUserScheduleURL,
               email: this.$store.getters.getCurrentUserEmail,
               userIssues: 0,
               userRepos: 0,
@@ -111,6 +113,13 @@ export default {
         this.$store.commit({
           type: "setCurrentUserGitURL",
           gitURL: "https://github.com/" + result._tokenResponse.screenName,
+        });
+        this.$store.commit({
+          type: "setCurrentUserScheduleURL",
+          userScheduleURL:
+            "https://github.com/" +
+            result._tokenResponse.screenName +
+            "/bootcamp-schedule/issues",
         });
         this.$store.commit({
           type: "setCurrentUserToken",

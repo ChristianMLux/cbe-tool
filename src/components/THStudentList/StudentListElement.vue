@@ -2,7 +2,11 @@
   <li>
     <div class="th__list-wrapper">
       <p class="th__student-name">{{ gitDisplayName }}</p>
-      <p class="th__student-open-issues">Issues: {{ userIssues }}</p>
+      <a :href="userScheduleURL" target="_blank">CBE-Schedule</a>
+      <p class="th__student-open-issues">
+        Issues:
+        {{ userIssues }}
+      </p>
       <p class="th__student-repo-counter">Repos: {{ userRepos }}</p>
       <router-link
         :to="{
@@ -14,6 +18,7 @@
             gitScreenName,
             gitToken,
             gitURL,
+            userScheduleURL,
             id,
             userIssues,
             userRepos,
@@ -22,7 +27,7 @@
       >
         Details</router-link
       >
-      <a :href="gitURL"><i class="fa fa-github"></i></a>
+      <a :href="gitURL" target="_blank"><i class="fa fa-github"></i></a>
     </div>
   </li>
 </template>
@@ -53,6 +58,9 @@ export default {
       type: [String, Number],
     },
     gitURL: {
+      type: String,
+    },
+    userScheduleURL: {
       type: String,
     },
     studentKey: {
@@ -98,5 +106,10 @@ i {
   width: 25%;
   font-weight: bold;
   text-align: justify;
+}
+.user__detail-list {
+  list-style-type: none;
+  display: flex;
+  flex-flow: row;
 }
 </style>

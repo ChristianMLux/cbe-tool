@@ -35,6 +35,7 @@ export default {
       gitScreenName: this.$route.params.gitScreenName,
       gitToken: this.$route.params.gitToken,
       gitURL: this.$route.params.gitURL,
+      userScheduleURL: this.$route.params.userScheduleURL,
       id: this.$route.params.id,
       userIssues: this.$route.params.userIssues,
       userRepos: this.$route.params.userRepos,
