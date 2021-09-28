@@ -19,7 +19,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { collection, setDoc, getDocs, getDoc, doc } from "firebase/firestore";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 import firestore from "@/firestore";
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -44,7 +44,6 @@ export default {
       userID: "",
       userName: "",
       userRole: "student",
-      allUser: [],
       currentTokenId: null,
       bool: false,
     };
@@ -59,22 +58,6 @@ export default {
         return false;
       }
     },
-    async getAllUser() {
-      const querySnapshot = await getDocs(collection(firestore, "all-users"));
-      querySnapshot.forEach((user) => {
-        this.allUser.push({
-          id: user.data().id,
-          gitDisplayName: user.data().gitDisplayName,
-          gitScreenName: user.data().gitScreenName,
-          gitToken: user.data().gitToken,
-          gitURL: user.data().gitURL,
-          email: user.data().email,
-          userIssues: user.data().userIssues,
-          userRepos: user.data().userRepos,
-          userRole: user.data().userRole,
-        });
-      });
-    },
     async signInGit() {
       firestore;
       const auth = getAuth();
@@ -83,12 +66,12 @@ export default {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        this.isUserInDB(result.user.accessToken).then((user) => {
+        this.isUserInDB(result.user.uid).then((user) => {
           if (user === true) {
-            console.log("User exists");
+            // USER EXISTS
           } else {
-            console.log("User does not exist", user);
-            setDoc(doc(firestore, "all-users", result.user.accessToken), {
+            //console.log("User does not exist", user);
+            setDoc(doc(firestore, "all-users", result.user.uid), {
               id: this.$store.getters.getCurrentUserID,
               gitDisplayName: this.$store.getters.getCurrentUserName,
               gitScreenName: this.$store.getters.getCurrentUserScreenname,
