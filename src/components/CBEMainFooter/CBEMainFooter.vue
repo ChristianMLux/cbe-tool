@@ -120,7 +120,7 @@ ul {
 }
 @media only screen and (max-width: 814px) {
   .cbe__main-footer {
-    margin: 2.8rem 2rem 1rem 2.5rem;
+    _margin: 2.8rem 2rem 1rem 2.5rem;
   }
   .cbe__main-footer > * {
     font-size: 0.8em;
@@ -128,8 +128,8 @@ ul {
 }
 @media only screen and (max-width: 600px) {
   .cbe__main-footer {
-    margin-left: 1rem;
-    margin-top: 1.5rem;
+    _margin-left: 1rem;
+    _margin-top: 1.5rem;
     justify-content: flex-start;
   }
 }

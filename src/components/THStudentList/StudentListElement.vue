@@ -1,34 +1,50 @@
 <template>
-  <li>
-    <div class="th__list-wrapper">
-      <p class="th__student-name">{{ gitDisplayName }}</p>
-      <a :href="userScheduleURL" target="_blank">CBE-Schedule</a>
-      <p class="th__student-open-issues">
-        Issues:
-        {{ userIssues }}
-      </p>
-      <p class="th__student-repo-counter">Repos: {{ userRepos }}</p>
-      <router-link
-        :to="{
-          name: 'studentDetails',
-          params: {
-            studentKey,
-            email,
-            gitDisplayName,
-            gitScreenName,
-            gitToken,
-            gitURL,
-            userScheduleURL,
-            id,
-            userIssues,
-            userRepos,
-          },
-        }"
-      >
-        Details</router-link
-      >
-      <a :href="gitURL" target="_blank"><i class="fa fa-github"></i></a>
-    </div>
+  <li class="outer-li">
+    <ul class="th__list-wrapper">
+      <li>
+        <p class="th__student-name">{{ gitDisplayName }}</p>
+      </li>
+      <li>
+        <p><a :href="userScheduleURL" target="_blank">CBE-Schedule</a></p>
+      </li>
+      <li>
+        <p class="th__student-open-issues">
+          Issues:
+          {{ userIssues }}
+        </p>
+      </li>
+      <li>
+        <p class="th__student-repo-counter">Repos: {{ userRepos }}</p>
+      </li>
+      <li>
+        <p>
+          <router-link
+            :to="{
+              name: 'studentDetails',
+              params: {
+                studentKey,
+                email,
+                gitDisplayName,
+                gitScreenName,
+                gitToken,
+                gitURL,
+                userScheduleURL,
+                id,
+                userIssues,
+                userRepos,
+              },
+            }"
+          >
+            Details</router-link
+          >
+        </p>
+      </li>
+      <li>
+        <p>
+          <a :href="gitURL" target="_blank"><i class="fa fa-github"></i></a>
+        </p>
+      </li>
+    </ul>
   </li>
 </template>
 
@@ -70,20 +86,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-li {
+.outer-li {
   border: 1px solid var(--secondary-color);
   border-radius: 0.25rem;
-  padding: 0.5rem;
   margin: 0.5rem;
 }
-p {
-  text-align: left;
-  margin: 1rem 0;
-}
-a {
-  margin: 1rem 0;
-  align-items: baseline;
-}
+
 i {
   font-size: 1.7rem;
   color: var(--primary-color);
@@ -92,24 +100,30 @@ i {
   }
 }
 .th__list-wrapper {
+  padding: 0;
+  list-style-type: none;
   width: 100%;
   display: flex;
-  flex-flow: row;
-  align-items: center;
   justify-content: space-between;
 }
-
-.th__list-wrapper > * {
-  width: 20%;
+.th__list-wrapper > li > * {
+  text-align: center;
 }
-.th__student-name {
-  width: 25%;
+li > p > a {
   font-weight: bold;
-  text-align: justify;
+  text-decoration-color: var(--secondary-color);
+  color: var(--font-color);
 }
-.user__detail-list {
-  list-style-type: none;
-  display: flex;
-  flex-flow: row;
+.th__list-wrapper > li {
+  text-align: center;
+  padding: 0 0.5rem;
+}
+.th__list-wrapper > li:nth-child(1n + 1) {
+  height: 100%;
+  background: var(--background-color);
+}
+.th__list-wrapper > li:nth-child(2n + 1) {
+  height: 100%;
+  background: #f3f3f3;
 }
 </style>

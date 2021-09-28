@@ -3,27 +3,32 @@
     <ul class="cbe__nav-list" v-show="isUserLoggedIn">
       <li class="cbe__nav-element">
         <router-link to="/studentprofile"
-          >Your Profile <i class="fas fa-user-circle"></i
+          ><p class="linktext">Profile</p>
+          <i class="fas fa-user-circle"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/teacherhub"
-          >Teacher-Hub <i class="fas fa-school"></i
+          ><p class="linktext">Teacher</p>
+          <i class="fas fa-school"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/amatool"
-          >AMA-Tool <i class="fas fa-question-circle"></i
+          ><p class="linktext">AMA</p>
+          <i class="fas fa-question-circle"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/rotitool"
-          >ROTI-Tool <i class="fas fa-clock"></i
+          ><p class="linktext">ROTI</p>
+          <i class="fas fa-clock"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/lessonrecordings"
-          >Lesson-Recordings <i class="fas fa-video"></i
+          ><p class="linktext">Recordings</p>
+          <i class="fas fa-video"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
@@ -56,6 +61,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 nav {
+  .linktext {
+    margin: 0;
+    padding: 0;
+  }
   .cbe__nav-list {
     margin: 1rem 4rem 1rem 2.5rem;
     padding: 0rem 2rem 1rem 0rem;
@@ -92,14 +101,35 @@ nav {
     }
   }
 }
-@media only screen and (max-width: 814px) {
+@media only screen and (max-width: 840px) {
+  nav {
+    font-size: 0.9em;
+  }
+}
+@media only screen and (max-width: 800px) {
   nav {
     .cbe__nav-list {
-      margin: 1rem 2rem 1rem 2.5rem;
-      padding: 0.5em 0;
+      _margin: 1rem 2rem 1rem 2.5rem;
+      _padding: 0.5em 0;
     }
     .cbe__nav-list > * {
       font-size: 0.8em;
+    }
+  }
+}
+@media only screen and (max-width: 720px) {
+  i {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+    margin-right: 0.4rem;
+  }
+  .linktext {
+    display: none;
+  }
+  nav {
+    .cbe__nav-list {
+      _margin: 1rem 2rem 1rem 2.5rem;
+      padding: 0.5em 0;
     }
   }
 }
