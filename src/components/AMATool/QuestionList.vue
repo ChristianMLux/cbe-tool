@@ -162,9 +162,11 @@ export default {
     },
 
     isUserAllowedToVote(userIDInc) {
-      const voterFound = this.usersVotedQuestionDOM.find((vote) => {
-        vote.userID === userIDInc && vote.hasVoted === true;
-      });
+      const voterFound = this.$store.getters.getUsersVotedQuestion.find(
+        (vote) => {
+          vote.userID === userIDInc && vote.hasVoted === true;
+        }
+      );
       if (voterFound === undefined) {
         return true; // darf wählen
       } else {
@@ -199,7 +201,14 @@ export default {
       }
       this.$store.dispatch("updateAllQuestions");
     },
-
+    /*
+    Wenn der user votet, kommt er ins array. wenn er auf dem array ist, darf er nicht voten
+    wenn er nicht voten darf, wird der knopf rot. wenn man auf den knopf drückt, 
+    darf man wieder voten.
+    die anzahl der votes = usersVoted.length
+    
+    
+    */
     downVote(questionKey, userIDInc) {
       this.createUsersVotedArray(questionKey);
       const questionRef = doc(firestore, "ama-questions", questionKey);

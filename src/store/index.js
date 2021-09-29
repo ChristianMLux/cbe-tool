@@ -41,8 +41,12 @@ export default createStore({
     },
     allQuestions: [],
     usersVotedQuestion: [],
+    questionFilterStatus: "All",
   },
   mutations: {
+    setQuestionFilterStatus(state, payload) {
+      state.questionFilterStatus = payload.questionFilterStatus;
+    },
     setUsersVotedQuestion(state, payload) {
       state.usersVotedQuestion = payload.vote;
     },
@@ -116,7 +120,7 @@ export default createStore({
             questionData: doc.data(),
           });
         });
-        //_questions.slice(0).sort(this.compareVotes);
+        _questions.slice(0).sort(this.compareVotes);
         state.commit({
           type: "setAllQuestions",
           allQuestions: _questions,
@@ -134,7 +138,7 @@ export default createStore({
           questionKey: doc.id,
           questionData: doc.data(),
         });
-        //_questions.slice(0).sort(this.compareVotes);
+        _questions.slice(0).sort(this.compareVotes);
         state.commit({
           type: "setAllQuestions",
           allQuestions: _questions,
@@ -169,13 +173,18 @@ export default createStore({
   },
   methods: {
     compareVotes(a, b) {
-      if (a.questionUpvotes > b.questionUpvotes) return -1;
-      if (a.questionUpvotes < b.questionUpvotes) return 1;
+      if (a.questionData.questionUpvotes > b.questionData.questionUpvotes)
+        return -1;
+      if (a.questionData.questionUpvotes < b.questionData.questionUpvotes)
+        return 1;
       return 0;
     },
   },
   modules: {},
   getters: {
+    getQuestionFilterStatus(state) {
+      return state.questionFilterStatus;
+    },
     getUsersVotedQuestion(state) {
       return state.usersVotedQuestion;
     },

@@ -137,19 +137,18 @@ export default {
         : this.questionIsDone;
     },
     isUserAllowedToVote() {
-      let boolean = false;
-      let _usersVoted = this.$store.getters.getUsersVotedQuestion;
-      _usersVoted.forEach((vote) => {
+      let b = false;
+      this.$store.getters.getUsersVotedQuestion.forEach((vote) => {
         if (
           vote.userID === this.$store.getters.getCurrentUserID &&
           vote.hasVoted === true
         ) {
-          boolean = false;
+          b = false;
         } else {
-          boolean = true;
+          b = true;
         }
       });
-      return boolean;
+      return b;
     },
     isUserLoggedIn() {
       return this.$store.getters.getUserLoginState === null ? false : true;
