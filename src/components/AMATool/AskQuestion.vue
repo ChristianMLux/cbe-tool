@@ -211,6 +211,7 @@ export default {
         addDoc(collection(firestore, "ama-questions"), {
           ...questionToList,
         });
+        this.$store.dispatch("updateAllQuestions");
         this.currentQuestion.questionTitle = "";
         this.currentQuestion.questionDescription = "";
       } else {

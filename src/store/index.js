@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import Cookies from "js-cookie";
 import createPersistedState from "vuex-persistedstate";
+import firestore from "@/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 
 const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
 export default createStore({
@@ -37,8 +39,16 @@ export default createStore({
       status: "open",
       duration: null,
     },
+    allQuestions: [],
+    usersVotedQuestion: [],
   },
   mutations: {
+    setUsersVotedQuestion(state, payload) {
+      state.usersVotedQuestion = payload.vote;
+    },
+    setAllQuestions(state, payload) {
+      state.allQuestions = payload.allQuestions;
+    },
     setCurrentUserScheduleURL(state, payload) {
       state.currentUserScheduleURL = payload.userScheduleURL;
     },
@@ -96,6 +106,39 @@ export default createStore({
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
     },
+    updateAllQuestions(state) {
+      const q = query(collection(firestore, "ama-questions"));
+      onSnapshot(q, (querySnapshot) => {
+        const _questions = [];
+        querySnapshot.forEach((doc) => {
+          _questions.push({
+            questionKey: doc.id,
+            questionData: doc.data(),
+          });
+        });
+        state.commit({
+          type: "setAllQuestions",
+          allQuestions: _questions,
+        });
+      });
+    },
+
+    async setAllQuestions(state) {
+      let _questions = [];
+      const querySnapshot = await getDocs(
+        collection(firestore, "ama-questions")
+      );
+      querySnapshot.forEach((doc) => {
+        _questions.push({
+          questionKey: doc.id,
+          questionData: doc.data(),
+        });
+        state.commit({
+          type: "setAllQuestions",
+          allQuestions: _questions,
+        });
+      });
+    },
     async setCBEClasses(state) {
       let _token = "token " + this.getters.getCurrentUserToken;
       const teamsResponse = await fetch(allTeamsURL, {
@@ -124,6 +167,12 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getUsersVotedQuestion(state) {
+      return state.usersVotedQuestion;
+    },
+    getAllQuestions(state) {
+      return state.allQuestions;
+    },
     getCurrentUserScheduleURL(state) {
       return state.currentUserScheduleURL;
     },
