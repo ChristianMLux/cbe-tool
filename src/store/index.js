@@ -116,6 +116,7 @@ export default createStore({
             questionData: doc.data(),
           });
         });
+        //_questions.slice(0).sort(this.compareVotes);
         state.commit({
           type: "setAllQuestions",
           allQuestions: _questions,
@@ -133,6 +134,7 @@ export default createStore({
           questionKey: doc.id,
           questionData: doc.data(),
         });
+        //_questions.slice(0).sort(this.compareVotes);
         state.commit({
           type: "setAllQuestions",
           allQuestions: _questions,
@@ -163,6 +165,13 @@ export default createStore({
         type: "setCBEClasses",
         cbeClasses: cleanedClassList,
       });
+    },
+  },
+  methods: {
+    compareVotes(a, b) {
+      if (a.questionUpvotes > b.questionUpvotes) return -1;
+      if (a.questionUpvotes < b.questionUpvotes) return 1;
+      return 0;
     },
   },
   modules: {},

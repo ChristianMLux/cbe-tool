@@ -46,6 +46,7 @@
           :questionCategory="question.questionData.questionCategory"
           :questionCreated_at="question.questionData.questionCreated_at"
           :questionUpvotes="question.questionData.questionUpvotes"
+          :questionIsDone="question.questionData.questionIsDone"
           v-bind="question"
           @upvote="voteQuestion(question.questionKey, getUserID())"
           @answer="answerQuestion(question.questionKey)"
@@ -157,6 +158,7 @@ export default {
           });
         }
       });
+      this.$store.dispatch("updateAllQuestions");
     },
 
     isUserAllowedToVote(userIDInc) {
@@ -195,6 +197,7 @@ export default {
           }
         });
       }
+      this.$store.dispatch("updateAllQuestions");
     },
 
     downVote(questionKey, userIDInc) {
@@ -219,6 +222,7 @@ export default {
           console.log("No such document!");
         }
       });
+      this.$store.dispatch("updateAllQuestions");
     },
 
     async answerQuestion(questionKey) {
@@ -226,6 +230,7 @@ export default {
       await updateDoc(questionRef, {
         questionIsDone: true,
       });
+      this.$store.dispatch("updateAllQuestions");
     },
 
     async takebackanswer(questionKey) {
@@ -233,6 +238,7 @@ export default {
       await updateDoc(questionRef, {
         questionIsDone: false,
       });
+      this.$store.dispatch("updateAllQuestions");
     },
     compareVotes(a, b) {
       if (a.questionUpvotes > b.questionUpvotes) return -1;
@@ -244,13 +250,13 @@ export default {
     filteredQuestions: function () {
       let questionFilterStatus = this.questionFilterStatus;
       if (questionFilterStatus === "All") {
-        return this.questionsDOM;
+        return this.$store.getters.getAllQuestions;
       } else if (questionFilterStatus === "false") {
-        return this.questionsDOM.filter((question) => {
+        return this.$store.getters.getAllQuestions.filter((question) => {
           return question.questionIsDone === false;
         });
       } else {
-        return this.questionsDOM.filter((question) => {
+        return this.$store.getters.getAllQuestions.filter((question) => {
           return question.questionIsDone === true;
         });
       }
