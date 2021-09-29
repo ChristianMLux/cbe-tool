@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       lrRecordingsArray: [],
+      questions: [],
     };
   },
   components: { LRListElement },
@@ -37,9 +38,22 @@ export default {
         });
       });
     },
+    async getAllQuestions() {
+      const querySnapshot = await getDocs(
+        collection(firestore, "ama-questions")
+      );
+      querySnapshot.forEach((doc) => {
+        this.questions.push({
+          questionKey: doc.id,
+          questionData: doc.data(),
+        });
+      });
+    },
   },
-  mounted() {
+  async mounted() {
     this.getAllRecordings();
+    await this.getAllQuestions();
+    console.log(this.questions);
   },
 };
 </script>
