@@ -135,12 +135,7 @@ export default {
         questionCreated_at: new Date(),
         questionAuthor: "Kein*e Autor*in",
         questionUpvotes: 0,
-        usersVotedQuestion: [
-          {
-            userID: 0,
-            hasVoted: false,
-          },
-        ],
+        usersVotedQuestion: ["0"],
       },
       previewIsVisible: false,
       text: "Vorschau einblenden",

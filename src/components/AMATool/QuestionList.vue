@@ -68,6 +68,7 @@ import {
   doc,
   getDoc,
   arrayUnion,
+  arrayRemove,
   updateDoc,
 } from "firebase/firestore";
 
@@ -162,15 +163,10 @@ export default {
     },
 
     isUserAllowedToVote(userIDInc) {
-      const voterFound = this.$store.getters.getUsersVotedQuestion.find(
-        (vote) => {
-          vote.userID === userIDInc && vote.hasVoted === true;
-        }
-      );
-      if (voterFound === undefined) {
-        return true; // darf wählen
+      if (this.$store.getters.getUsersVotedQuestion.includes(userIDInc)) {
+        return false;
       } else {
-        return false; // darf nicht wählen
+        return true;
       }
     },
 
@@ -179,12 +175,8 @@ export default {
       if (this.isUserAllowedToVote(userIDInc) === true) {
         const questionRef = doc(firestore, "ama-questions", questionKey);
         updateDoc(questionRef, {
-          usersVotedQuestion: arrayUnion({
-            hasVoted: true,
-            userID: userIDInc,
-          }),
+          usersVotedQuestion: arrayUnion(userIDInc),
         });
-
         const docRef = doc(firestore, "ama-questions", questionKey);
         getDoc(docRef).then((docSnap) => {
           if (docSnap.exists()) {
@@ -203,20 +195,17 @@ export default {
     },
     /*
     Wenn der user votet, kommt er ins array. wenn er auf dem array ist, darf er nicht voten
-    wenn er nicht voten darf, wird der knopf rot. wenn man auf den knopf drückt, 
+    wenn er nicht voten darf, wird der knopf rot. wenn man auf den knopf drückt,
     darf man wieder voten.
     die anzahl der votes = usersVoted.length
-    
-    
+
+
     */
     downVote(questionKey, userIDInc) {
       this.createUsersVotedArray(questionKey);
       const questionRef = doc(firestore, "ama-questions", questionKey);
       updateDoc(questionRef, {
-        usersVotedQuestion: arrayUnion({
-          hasVoted: false,
-          userID: userIDInc,
-        }),
+        usersVotedQuestion: arrayRemove(userIDInc),
       });
       const docRef = doc(firestore, "ama-questions", questionKey);
       getDoc(docRef).then((docSnap) => {
