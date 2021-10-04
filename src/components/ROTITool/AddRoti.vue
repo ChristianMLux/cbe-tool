@@ -20,7 +20,13 @@
 
 <script>
 import firestore from "@/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  arrayUnion,
+  doc,
+} from "firebase/firestore";
 import RotiRating from "./RotiRating.vue";
 export default {
   name: "AddRoti",
@@ -37,6 +43,16 @@ export default {
     };
   },
   methods: {
+    async addRotiToUser(roti) {
+      const studentRef = doc(
+        firestore,
+        "all-users",
+        this.$store.getters.getCurrentUserID
+      );
+      await updateDoc(studentRef, {
+        studentRotis: arrayUnion(roti),
+      });
+    },
     initRoti() {
       firestore;
       let fullDate = new Date();
@@ -47,6 +63,7 @@ export default {
       this.currentRoti.rotiAutor = this.$store.getters.getCurrentUserScreenname;
       this.currentRoti.autorID = this.$store.getters.getCurrentUserID;
       addDoc(collection(firestore, "student-roti"), this.currentRoti);
+      this.addRotiToUser(this.currentRoti);
     },
     setRating(ratingValue) {
       this.currentRoti.rotiRating = ratingValue;
