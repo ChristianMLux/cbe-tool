@@ -9,10 +9,10 @@ import {
   setDoc,
   doc,
   onSnapshot,
+  query,
 } from "firebase/firestore";
 
 import GitAPIService from "@/services/GitAPIService.js";
-
 
 const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
 export default createStore({
@@ -53,7 +53,7 @@ export default createStore({
     studentRepos: 0,
     studentIssues: 0,
     currentStudentRepos: 0,
-      allQuestions: [],
+    allQuestions: [],
     usersVotedQuestion: [],
     questionFilterStatus: "All",
   },
