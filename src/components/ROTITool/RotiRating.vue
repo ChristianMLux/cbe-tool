@@ -49,13 +49,13 @@
           :id="roti__idFive"
       /></label>
     </div>
-    <input
-      type="text"
+    <textarea
       name="roti__labelGroupName-message"
       class="roti__progress-message-input"
       :v-model="rotiMessage"
       :id="roti__messageID"
       @keydown="getRotiMessage"
+      @keyup="getRotiMessage"
       placeholder="Bitte gebe einen zusätzlichen Kommentar ab"
     />
     <cbe-main-btn
@@ -155,7 +155,8 @@ input {
   accent-color: var(--primary-color);
 }
 .roti__progress-message-input {
-  width: 45vw;
+  resize: none;
+  width: 100%;
   height: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;

@@ -54,7 +54,7 @@ const routes = [
     name: "Student-Profile",
     component: () =>
       import(
-        /* webpackChunkName: "studentprofile" */ "../views/TeacherHub/StudentDetailView.vue"
+        /* webpackChunkName: "studentprofile" */ "../views/StudentProfile/StudentProfile.vue"
       ),
   },
   {

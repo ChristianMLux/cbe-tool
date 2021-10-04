@@ -7,13 +7,6 @@
             name: 'Student-Profile',
             params: {
               studentKey: this.$store.getters.getCurrentUserID,
-              email: this.$store.getters.getCurrentUserEmail,
-              gitDisplayName: this.$store.getters.getCurrentUserName,
-              gitScreenName: this.$store.getters.getCurrentUserScreenname,
-              gitToken: this.$store.getters.getCurrentUserToken,
-              gitURL: this.$store.getters.getCurrentUserGitURL,
-              userScheduleURL: this.$store.getters.getCurrentUserScheduleURL,
-              id: this.$store.getters.getCurrentUserID,
             },
           }"
           ><p class="linktext">Profile</p>

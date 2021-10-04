@@ -16,8 +16,6 @@ export default {
   components: { CBEMainNavigation, CBEMainHeader, CBEMainFooter },
   async created() {
     await this.$store.dispatch("setAllStudents");
-    await this.$store.dispatch("setStudentRepos");
-    await this.$store.dispatch("setStudentIssues");
   },
 };
 </script>

@@ -23,6 +23,10 @@ import StudentListElement from "@/components/THStudentList/StudentListElement.vu
 export default {
   name: "StudentList",
   components: { StudentListElement },
+  async created() {
+    await this.$store.dispatch("setStudentRepos");
+    await this.$store.dispatch("setStudentIssues");
+  },
 };
 </script>
 
