@@ -25,12 +25,17 @@
       <p>{{ email }}</p>
       <a :href="gitURL"><i class="fa fa-github"></i></a>
     </div>
-    <ul class="roti-list">
-      <li v-for="(roti, id) in studentRotis" :key="id" v-bind="roti">
-        <p class="roti-rating">{{ roti.rotiRating }}</p>
-        <p class="roti-message">{{ roti.rotiMessage }}</p>
-      </li>
-    </ul>
+    <fieldset class="roti-fieldset">
+      <legend>Student-ROTIs</legend>
+      <ul class="roti-list">
+        <li v-for="(roti, id) in studentRotis" :key="id" v-bind="roti">
+          <p class="roti-rating">Rating: {{ roti.rotiRating }}</p>
+          <p class="roti-message">Message: {{ roti.rotiMessage }}</p>
+          <p class="roti-Date">Date: {{ roti.rotiDate }}</p>
+        </li>
+      </ul>
+    </fieldset>
+
     <IssuesAnalyze :gitScreenName="gitScreenName" :gitToken="gitToken" />
   </section>
 </template>
@@ -79,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  margin: 1rem 4rem 1rem 4rem;
+  margin: 1rem 4rem 1rem 2.5rem;
 }
 .heading__wrapper {
   display: flex;
@@ -100,5 +105,31 @@ section {
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.roti-list > li:nth-child(1n + 1) {
+  color: var(--font-color);
+  background-color: var(--light-grey);
+  border-bottom: 1px solid var(--primary-color);
+}
+.roti-list > li:nth-child(2n + 2) {
+  color: var(--font-color);
+  background-color: snow;
+}
+
+.roti-list {
+  list-style-type: none;
+  padding: 0;
+}
+.roti-list > li {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+.roti-fieldset {
+  text-align: left;
+  border-radius: 0.25rem;
+  border: 1px dotted var(--primary-color);
 }
 </style>
