@@ -1,8 +1,21 @@
 <template>
   <nav class="cbe__main-nav">
-    <ul class="cbe__nav-list" v-show="isUserLoggedIn">
-      <li class="cbe__nav-element">
-        <router-link to="/studentprofile"
+    <ul class="cbe__nav-list" v-show="this.$store.getters.getUserLoginState">
+      <li class="cbe__nav-element" v-if="this.$store.getters.getUserLoginState">
+        <router-link
+          :to="{
+            name: 'Student-Profile',
+            params: {
+              studentKey: this.$store.getters.getCurrentUserID,
+              email: this.$store.getters.getCurrentUserEmail,
+              gitDisplayName: this.$store.getters.getCurrentUserName,
+              gitScreenName: this.$store.getters.getCurrentUserScreenname,
+              gitToken: this.$store.getters.getCurrentUserToken,
+              gitURL: this.$store.getters.getCurrentUserGitURL,
+              userScheduleURL: this.$store.getters.getCurrentUserScheduleURL,
+              id: this.$store.getters.getCurrentUserID,
+            },
+          }"
           ><p class="linktext">Profile</p>
           <i class="fas fa-user-circle"></i
         ></router-link>
@@ -38,9 +51,6 @@
   </nav>
 </template>
 <script>
-import { useStore } from "vuex";
-import { computed } from "vue";
-
 import CBEUserLogin from "@/components/CBEUserLogin/CBEUserLogin.vue";
 
 export default {
@@ -48,15 +58,7 @@ export default {
   components: {
     CBEUserLogin,
   },
-  setup() {
-    const store = useStore();
-
-    const isUserLoggedIn = computed(() => store.state.isUserLoggedIn);
-
-    return {
-      isUserLoggedIn,
-    };
-  },
+  async created() {},
 };
 </script>
 <style lang="scss" scoped>

@@ -1,6 +1,16 @@
 import { createStore } from "vuex";
 import Cookies from "js-cookie";
 import createPersistedState from "vuex-persistedstate";
+import firestore from "@/firestore";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+
+import GitAPIService from "@/services/GitAPIService.js";
 
 const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
 export default createStore({
@@ -37,8 +47,24 @@ export default createStore({
       status: "open",
       duration: null,
     },
+    allStudents: [],
+    studentRepos: 0,
+    studentIssues: 0,
+    currentStudentRepos: 0,
   },
   mutations: {
+    setCurrentStudentRepos(state, payload) {
+      state.currentStudentRepos = payload.currentStudentRepos;
+    },
+    setStudentIssues(state, payload) {
+      state.studentIssues = payload.studentIssues;
+    },
+    setStudentRepos(state, payload) {
+      state.studentRepos = payload.studentRepos;
+    },
+    setAllStudents(state, payload) {
+      state.allStudents = payload.allStudents;
+    },
     setCurrentUserScheduleURL(state, payload) {
       state.currentUserScheduleURL = payload.userScheduleURL;
     },
@@ -93,6 +119,81 @@ export default createStore({
     },
   },
   actions: {
+    async setCurrentStudentRepos(state) {
+      onSnapshot(
+        doc(firestore, "all-users", state.getters.getCurrentUserID),
+        (doc) => {
+          console.log("Current data: ", doc.data());
+        }
+      );
+    },
+    async setStudentIssues(state) {
+      state.getters.getAllStudents.forEach((student) => {
+        GitAPIService.printIssues(
+          student.studentData.gitScreenName,
+          student.studentData.gitToken
+        ).then((userIssues) => {
+          state.commit({
+            type: "setStudentIssues",
+            studentIssues: userIssues,
+          });
+          setDoc(doc(firestore, "all-users", student.studentKey), {
+            email: student.studentData.email,
+            gitDisplayName: student.studentData.gitDisplayName,
+            gitScreenName: student.studentData.gitScreenName,
+            gitToken: student.studentData.gitToken,
+            gitURL: student.studentData.gitURL,
+            userScheduleURL: student.studentData.userScheduleURL,
+            id: student.studentData.id,
+            userIssues: userIssues,
+            userRepos: student.studentData.userRepos,
+            userRole: student.studentData.userRole,
+          });
+        });
+      });
+    },
+    async setStudentRepos(state) {
+      state.getters.getAllStudents.forEach((student) => {
+        GitAPIService.printRepos(
+          student.studentData.gitScreenName,
+          student.studentData.gitToken
+        ).then((userRepos) => {
+          state.commit({
+            type: "setStudentRepos",
+            studentRepos: userRepos,
+          });
+          setDoc(doc(firestore, "all-users", student.studentKey), {
+            email: student.studentData.email,
+            gitDisplayName: student.studentData.gitDisplayName,
+            gitScreenName: student.studentData.gitScreenName,
+            gitToken: student.studentData.gitToken,
+            gitURL: student.studentData.gitURL,
+            userScheduleURL: student.studentData.userScheduleURL,
+            id: student.studentData.id,
+            userIssues: student.studentData.userIssues,
+            userRepos: userRepos,
+            userRole: student.studentData.userRole,
+          });
+        });
+      });
+    },
+    async setAllStudents(state) {
+      let _students = [];
+      const userTableSnapshot = await getDocs(
+        collection(firestore, "all-users")
+      );
+      userTableSnapshot.forEach((student) => {
+        console.log(student.data());
+        _students.push({
+          studentKey: student.id,
+          studentData: student.data(),
+        });
+      });
+      state.commit({
+        type: "setAllStudents",
+        allStudents: _students,
+      });
+    },
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
     },
@@ -124,6 +225,18 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getCurrentStudentRepos(state) {
+      return state.currentStudentRepos;
+    },
+    getStudentIssues(state) {
+      return state.studentIssues;
+    },
+    getStudentRepos(state) {
+      return state.studentRepos;
+    },
+    getAllStudents(state) {
+      return state.allStudents;
+    },
     getCurrentUserScheduleURL(state) {
       return state.currentUserScheduleURL;
     },
