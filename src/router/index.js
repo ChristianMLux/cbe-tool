@@ -50,11 +50,11 @@ const routes = [
       ),
   },
   {
-    path: "/studentprofile",
+    path: "/student/:studentKey",
     name: "Student-Profile",
     component: () =>
       import(
-        /* webpackChunkName: "studentprofile" */ "../views/StudentProfile/SP-main-view.vue"
+        /* webpackChunkName: "studentprofile" */ "../views/TeacherHub/StudentDetailView.vue"
       ),
   },
   {

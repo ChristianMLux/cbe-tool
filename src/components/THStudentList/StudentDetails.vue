@@ -24,6 +24,7 @@
 
 <script>
 import IssuesAnalyze from "@/components/IssuesAnalyze/IssuesAnalyze.vue";
+
 export default {
   name: "StudentDetails",
   components: { IssuesAnalyze },
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     browseBack() {
-      this.$router.replace("/teacherhub");
+      this.$router.go(-1);
     },
   },
   beforeRouteUpdate() {

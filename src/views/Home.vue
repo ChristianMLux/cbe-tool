@@ -9,6 +9,7 @@
       <p class="home__welcome-message-loggedIn" v-show="isUserLoggedIn">
         Du bist nun eingeloggt und kannst alle Funktionen nutzen. Viel Spaß!
       </p>
+
       <CBEUserLogin />
     </div>
   </section>

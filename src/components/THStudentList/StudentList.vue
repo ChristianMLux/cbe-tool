@@ -1,7 +1,7 @@
 <template>
   <ul>
     <StudentListElement
-      v-for="student in students"
+      v-for="student in this.$store.getters.getAllStudents"
       :key="student.studentKey"
       :email="student.studentData.email"
       :gitDisplayName="student.studentData.gitDisplayName"
@@ -18,79 +18,10 @@
 </template>
 
 <script>
-import firestore from "@/firestore";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
-
-import GitAPIService from "@/services/GitAPIService.js";
 import StudentListElement from "@/components/THStudentList/StudentListElement.vue";
 export default {
   name: "StudentList",
   components: { StudentListElement },
-  data() {
-    return {
-      students: [],
-    };
-  },
-  methods: {
-    async getAllStudents() {
-      const userTableSnapshot = await getDocs(
-        collection(firestore, "all-users")
-      );
-      userTableSnapshot.forEach((student) => {
-        this.students.push({
-          studentKey: student.id,
-          studentData: student.data(),
-        });
-      });
-    },
-    async updateStudentRepos() {
-      this.students.forEach((student) => {
-        GitAPIService.printRepos(
-          student.studentData.gitScreenName,
-          student.studentData.gitToken
-        ).then((userRepos) => {
-          setDoc(doc(firestore, "all-users", student.studentKey), {
-            email: student.studentData.email,
-            gitDisplayName: student.studentData.gitDisplayName,
-            gitScreenName: student.studentData.gitScreenName,
-            gitToken: student.studentData.gitToken,
-            gitURL: student.studentData.gitURL,
-            userScheduleURL: student.studentData.userScheduleURL,
-            id: student.studentData.id,
-            userIssues: student.studentData.userIssues,
-            userRepos: userRepos,
-            userRole: student.studentData.userRole,
-          });
-        });
-      });
-    },
-    async updateStudentIssues() {
-      this.students.forEach((student) => {
-        GitAPIService.printIssues(
-          student.studentData.gitScreenName,
-          student.studentData.gitToken
-        ).then((userIssues) => {
-          setDoc(doc(firestore, "all-users", student.studentKey), {
-            email: student.studentData.email,
-            gitDisplayName: student.studentData.gitDisplayName,
-            gitScreenName: student.studentData.gitScreenName,
-            gitToken: student.studentData.gitToken,
-            gitURL: student.studentData.gitURL,
-            userScheduleURL: student.studentData.userScheduleURL,
-            id: student.studentData.id,
-            userIssues: userIssues,
-            userRepos: student.studentData.userRepos,
-            userRole: student.studentData.userRole,
-          });
-        });
-      });
-    },
-  },
-  async created() {
-    await this.getAllStudents();
-    await this.updateStudentRepos();
-    await this.updateStudentIssues();
-  },
 };
 </script>
 
