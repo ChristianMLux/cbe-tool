@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import Cookies from "js-cookie";
 import createPersistedState from "vuex-persistedstate";
 import firestore from "@/firestore";
+
 import {
   collection,
   getDocs,
@@ -11,6 +12,7 @@ import {
 } from "firebase/firestore";
 
 import GitAPIService from "@/services/GitAPIService.js";
+
 
 const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
 export default createStore({
@@ -51,6 +53,9 @@ export default createStore({
     studentRepos: 0,
     studentIssues: 0,
     currentStudentRepos: 0,
+      allQuestions: [],
+    usersVotedQuestion: [],
+    questionFilterStatus: "All",
   },
   mutations: {
     setCurrentStudentRepos(state, payload) {
@@ -64,6 +69,15 @@ export default createStore({
     },
     setAllStudents(state, payload) {
       state.allStudents = payload.allStudents;
+    },
+    setQuestionFilterStatus(state, payload) {
+      state.questionFilterStatus = payload.questionFilterStatus;
+    },
+    setUsersVotedQuestion(state, payload) {
+      state.usersVotedQuestion = payload.vote;
+    },
+    setAllQuestions(state, payload) {
+      state.allQuestions = payload.allQuestions;
     },
     setCurrentUserScheduleURL(state, payload) {
       state.currentUserScheduleURL = payload.userScheduleURL;
@@ -197,6 +211,41 @@ export default createStore({
     setCurrentUserName(state, payload) {
       state.currentUserName = payload.userName;
     },
+    updateAllQuestions(state) {
+      const q = query(collection(firestore, "ama-questions"));
+      onSnapshot(q, (querySnapshot) => {
+        const _questions = [];
+        querySnapshot.forEach((doc) => {
+          _questions.push({
+            questionKey: doc.id,
+            questionData: doc.data(),
+          });
+        });
+        _questions.slice(0).sort(this.compareVotes);
+        state.commit({
+          type: "setAllQuestions",
+          allQuestions: _questions,
+        });
+      });
+    },
+
+    async setAllQuestions(state) {
+      let _questions = [];
+      const querySnapshot = await getDocs(
+        collection(firestore, "ama-questions")
+      );
+      querySnapshot.forEach((doc) => {
+        _questions.push({
+          questionKey: doc.id,
+          questionData: doc.data(),
+        });
+        _questions.slice(0).sort(this.compareVotes);
+        state.commit({
+          type: "setAllQuestions",
+          allQuestions: _questions,
+        });
+      });
+    },
     async setCBEClasses(state) {
       let _token = "token " + this.getters.getCurrentUserToken;
       const teamsResponse = await fetch(allTeamsURL, {
@@ -223,6 +272,15 @@ export default createStore({
       });
     },
   },
+  methods: {
+    compareVotes(a, b) {
+      if (a.questionData.questionUpvotes > b.questionData.questionUpvotes)
+        return -1;
+      if (a.questionData.questionUpvotes < b.questionData.questionUpvotes)
+        return 1;
+      return 0;
+    },
+  },
   modules: {},
   getters: {
     getCurrentStudentRepos(state) {
@@ -236,6 +294,15 @@ export default createStore({
     },
     getAllStudents(state) {
       return state.allStudents;
+    },
+    getQuestionFilterStatus(state) {
+      return state.questionFilterStatus;
+    },
+    getUsersVotedQuestion(state) {
+      return state.usersVotedQuestion;
+    },
+    getAllQuestions(state) {
+      return state.allQuestions;
     },
     getCurrentUserScheduleURL(state) {
       return state.currentUserScheduleURL;

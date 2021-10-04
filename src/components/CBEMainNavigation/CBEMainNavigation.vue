@@ -27,7 +27,7 @@
         ></router-link>
       </li>
       <li class="cbe__nav-element">
-        <router-link to="/amatool"
+        <router-link to="/amaview"
           ><p class="linktext">AMA</p>
           <i class="fas fa-question-circle"></i
         ></router-link>

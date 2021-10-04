@@ -20,12 +20,10 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/amatool",
-    name: "AMA-Tool",
+    path: "/amaview",
+    name: "AMAView",
     component: () =>
-      import(
-        /* webpackChunkName: "amatool" */ "../views/AMATool/AMA-main-view.vue"
-      ),
+      import(/* webpackChunkName: "amaview" */ "../views/AMATool/AMAView.vue"),
   },
   {
     path: "/learnprogress",
