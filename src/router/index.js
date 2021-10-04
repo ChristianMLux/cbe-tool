@@ -38,7 +38,7 @@ const routes = [
     name: "ROTI-Tool",
     component: () =>
       import(
-        /* webpackChunkName: "rotitool" */ "../views/ROTITool/ROTI-main-view.vue"
+        /* webpackChunkName: "rotitool" */ "../views/ROTITool/ROTIView.vue"
       ),
   },
   {

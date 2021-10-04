@@ -33,7 +33,8 @@ export default {
   --success-color: #a3db33;
   --fail-color: #ed3221;
   --font-color: #121212;
-  --placeholder-color: rgba(18, 18, 18, 0.7);
+  --light-grey: rgba(211, 211, 211, 0.493);
+  --placeholder-color: rgba(18, 18, 18, 0.493);
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   line-height: 1.5rem;

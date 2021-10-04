@@ -7,6 +7,7 @@
       :gitDisplayName="student.studentData.gitDisplayName"
       :gitScreenName="student.studentData.gitScreenName"
       :gitToken="student.studentData.gitToken"
+      :studentRotis="student.studentData.studentRotis"
       :userIssues="student.studentData.userIssues"
       :userRepos="student.studentData.userRepos"
       :gitURL="student.studentData.gitURL"
