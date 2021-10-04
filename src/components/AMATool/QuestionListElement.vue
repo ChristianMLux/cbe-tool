@@ -117,9 +117,6 @@ export default {
       type: Number,
     },
     usersVotedQuestion: {
-      hasVoted: {
-        type: Boolean,
-      },
       userID: {
         type: [Number, String],
       },
@@ -136,19 +133,11 @@ export default {
         ? this.takebackanswer(this.questionKey)
         : this.questionIsDone;
     },
-    isUserAllowedToVote() {
-      let b = false;
-      this.$store.getters.getUsersVotedQuestion.forEach((vote) => {
-        if (
-          vote.userID === this.$store.getters.getCurrentUserID &&
-          vote.hasVoted === true
-        ) {
-          b = false;
-        } else {
-          b = true;
-        }
-      });
-      return b;
+    isUserAllowedToVote(userIDInc) {
+      return this.$store.getters.getUsersVotedQuestion.includes(userIDInc) ===
+        null
+        ? false
+        : true;
     },
     isUserLoggedIn() {
       return this.$store.getters.getUserLoginState === null ? false : true;
