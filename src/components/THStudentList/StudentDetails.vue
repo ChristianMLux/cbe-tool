@@ -11,6 +11,13 @@
         data-cy="back-button"
         >ZURÜCK
       </cbe-main-btn>
+      <cbe-main-btn
+        id="updateBTN"
+        class="btn"
+        buttonClass="primary"
+        @click="update"
+        >Update
+      </cbe-main-btn>
     </div>
     <div class="detail__wrapper">
       <p>Offene Issues: {{ userIssues }}</p>
@@ -18,6 +25,12 @@
       <p>{{ email }}</p>
       <a :href="gitURL"><i class="fa fa-github"></i></a>
     </div>
+    <ul class="roti-list">
+      <li v-for="(roti, id) in studentRotis" :key="id" v-bind="roti">
+        <p class="roti-rating">{{ roti.rotiRating }}</p>
+        <p class="roti-message">{{ roti.rotiMessage }}</p>
+      </li>
+    </ul>
     <IssuesAnalyze :gitScreenName="gitScreenName" :gitToken="gitToken" />
   </section>
 </template>
@@ -38,14 +51,25 @@ export default {
       gitURL: this.$route.params.gitURL,
       userScheduleURL: this.$route.params.userScheduleURL,
       id: this.$route.params.id,
+      studentRotis: this.$route.params.studentRotis,
       userIssues: this.$route.params.userIssues,
       userRepos: this.$route.params.userRepos,
     };
   },
   methods: {
+    update() {
+      this.setStudentRotis();
+    },
+    setStudentRotis() {
+      this.studentRotis = JSON.parse(this.$route.params.studentRotis);
+      console.log(this.$route.params.studentRotis);
+    },
     browseBack() {
       this.$router.go(-1);
     },
+  },
+  created() {
+    this.setStudentRotis();
   },
   beforeRouteUpdate() {
     this.studentKey = this.$route.params.studentKey;

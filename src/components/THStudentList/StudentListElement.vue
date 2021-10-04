@@ -30,6 +30,7 @@
                 gitURL,
                 userScheduleURL,
                 id,
+                studentRotis: JSON.stringify(studentRotis),
                 userIssues,
                 userRepos,
               },
@@ -66,6 +67,9 @@ export default {
     },
     id: {
       type: [String, Number],
+    },
+    studentRotis: {
+      type: Array,
     },
     userIssues: {
       type: [String, Number],
