@@ -147,7 +147,6 @@ export default createStore({
   },
   actions: {
     async setspUser(state, payload) {
-      console.log(payload);
       onSnapshot(doc(firestore, "all-users", payload), (doc) => {
         state.commit({
           type: "setspUser",
@@ -169,7 +168,6 @@ export default createStore({
             key: doc.id,
             data: doc.data(),
           });
-          console.log(state.getters.getUserQuestions);
         });
       }
     },
@@ -247,7 +245,6 @@ export default createStore({
         collection(firestore, "all-users")
       );
       userTableSnapshot.forEach((student) => {
-        console.log(student.data());
         _students.push({
           studentKey: student.id,
           studentData: student.data(),

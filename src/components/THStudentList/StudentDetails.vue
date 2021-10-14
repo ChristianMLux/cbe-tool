@@ -67,7 +67,6 @@ export default {
     },
     setStudentRotis() {
       this.studentRotis = JSON.parse(this.$route.params.studentRotis);
-      console.log(this.$route.params.studentRotis);
     },
     browseBack() {
       this.$router.go(-1);

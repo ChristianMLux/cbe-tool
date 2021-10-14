@@ -19,7 +19,14 @@
       <ul class="sp__lp-list">
         <li>Ich bin ein LearnProgress Entry</li>
       </ul>
-      <ul class="list sp__student-question-list">
+      <cbe-main-btn
+        id="showAmaBtn"
+        class="margin-left hidebtn"
+        buttonClass="secondary"
+        @click="showQuestions"
+        >{{ questionBtnText }}
+      </cbe-main-btn>
+      <ul class="list sp__student-question-list" v-if="questionsShown">
         <legend>AMA - Questions</legend>
         <li
           v-for="question in this.$store.getters.getUserQuestions"
@@ -38,7 +45,14 @@
           </p>
         </li>
       </ul>
-      <ul class="list sp__student-roti-list">
+      <cbe-main-btn
+        id="showRotiBtn"
+        class="margin-left hidebtn"
+        buttonClass="secondary"
+        @click="showRotis"
+        >{{ rotiBtnText }}
+      </cbe-main-btn>
+      <ul class="list sp__student-roti-list" v-if="rotisShown">
         <legend>Roti-Liste</legend>
         <li
           class="roti-list-entry"
@@ -60,7 +74,31 @@ export default {
   data() {
     return {
       userID: this.$route.params.studentKey,
+      questionsShown: false,
+      questionBtnTxtShow: "Zeige Fragen",
+      questionBtnTxtHide: "Verstecke Fragen",
+      rotisShown: false,
+      rotisBtnTxtShow: "Zeige Rotis",
+      rotisBtnTxtHide: "Verstecke Rotis",
     };
+  },
+  computed: {
+    questionBtnText() {
+      return this.questionsShown
+        ? this.questionBtnTxtHide
+        : this.questionBtnTxtShow;
+    },
+    rotiBtnText() {
+      return this.rotisShown ? this.rotisBtnTxtHide : this.rotisBtnTxtShow;
+    },
+  },
+  methods: {
+    showQuestions() {
+      this.questionsShown = !this.questionsShown;
+    },
+    showRotis() {
+      this.rotisShown = !this.rotisShown;
+    },
   },
   async created() {
     await this.$store.dispatch("setUserRotis", this.$route.params.studentKey);
@@ -157,5 +195,9 @@ export default {
   text-align: justify;
   padding-left: 1rem;
   padding-bottom: 1rem;
+}
+
+.hidebtn {
+  margin: 1rem;
 }
 </style>
