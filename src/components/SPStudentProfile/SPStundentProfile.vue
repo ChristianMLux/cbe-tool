@@ -2,20 +2,20 @@
   <section class="sp__profile-section">
     <div class="sp__profile-wrapper">
       <div class="sp__student-info-wrapper">
-        <p class="sp__student-name">{{ currentUserName }}</p>
-        <p class="sp__student-class">{{ studentClass }}</p>
-        <a :href="studentGitHubURL">GitHub Profile</a>
-        <SPIssueCounter />
-        <SPStudentClass />
+        <p class="sp__student-name">
+          {{ this.$store.getters.getspUser.gitDisplayName }}
+        </p>
+        <a :href="this.$store.getters.getspUser.gitURL">GitHub Profile</a>
+        <span class="sp__issue-count"
+          >Open Issues: {{ this.$store.getters.getspUser.userIssues }}</span
+        >
       </div>
       <div class="lp__link-wrapper">
         <router-link class="lp__entry-link" to="/learnprogress"
-          >Erstelle einen Lernfortschritt-Eintrag
+          >Erstelle Lernfortschritt-Eintrag
           <i class="fas fa-chalkboard-teacher"></i
         ></router-link>
       </div>
-
-      <SPRepoList />
       <ul class="sp__lp-list">
         <li>Ich bin ein LearnProgress Entry</li>
       </ul>
@@ -23,44 +23,32 @@
         <li>Ich bin eine Frage</li>
       </ul>
       <ul class="sp__student-roti-list">
-        <li>Ich bin ein Roti</li>
+        <legend>Roti-Liste</legend>
+        <li
+          class="roti-list-entry"
+          v-for="roti in this.$store.getters.getUserRotis"
+          :key="roti.key"
+          v-bind="roti"
+        >
+          <p class="roti-rating">{{ roti.rotiRating }}</p>
+          <p class="roti-message">{{ roti.rotiMessage }}</p>
+          <p class="roti-date">{{ roti.rotiDate }}</p>
+        </li>
       </ul>
     </div>
   </section>
 </template>
 <script>
-import SPRepoList from "@/components/SPRepoList/SPRepoList.vue";
-import SPStudentClass from "@/components/SPStudentClass/SPStudentClass.vue";
-import SPIssueCounter from "@/components/SPIssueCounter/SPIssueCounter.vue";
-
-import { useStore } from "vuex";
-import { computed } from "vue";
-
 export default {
   name: "SPStudentProfile",
-  components: {
-    SPRepoList,
-    SPIssueCounter,
-    SPStudentClass,
-  },
-  setup() {
-    const store = useStore();
-
-    const currentUserName = computed(() => store.state.currentUserName);
-    const currentUser = computed(() => store.state.currentUser);
-
-    return {
-      currentUserName,
-      currentUser,
-    };
-  },
   data() {
     return {
-      studentName: "Christian M. Lux",
-      studentClass: "Class2",
-      studentGitHubURL: "https://github.com/ChristianMLux",
-      studentIssues: 14,
+      userID: this.$route.params.studentKey,
     };
+  },
+  async created() {
+    await this.$store.dispatch("setUserRotis", this.$route.params.studentKey);
+    await this.$store.dispatch("setspUser", this.$route.params.studentKey);
   },
 };
 </script>
@@ -94,5 +82,36 @@ export default {
   i {
     color: var(--secondary-color);
   }
+}
+.sp__student-roti-list {
+  border: 0.5px solid var(--secondary-color);
+  border-radius: 0.25rem;
+  padding: 0;
+}
+.sp__student-roti-list > li:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+.sp__student-roti-list > li:last-child {
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.sp__student-roti-list > li:nth-child(1n + 1) {
+  background: snow;
+}
+.sp__student-roti-list > li:nth-child(2n + 2) {
+  background: var(--light-grey);
+}
+
+.roti-list-entry {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+.roti-message {
+  flex-grow: 1;
+  padding-left: 1rem;
+  text-align: left;
 }
 </style>

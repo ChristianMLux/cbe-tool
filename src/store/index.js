@@ -37,7 +37,7 @@ export default createStore({
     currentUserEmail: "",
     currentUserGitURL: "",
     currentUserScheduleURL: "",
-    isUserLoggedIn: false,
+    userLoginState: false,
     cbeClasses: [],
     cbeClassCollection: [],
     currentClassMembers: [],
@@ -56,8 +56,16 @@ export default createStore({
     allQuestions: [],
     usersVotedQuestion: [],
     questionFilterStatus: "All",
+    userRotis: [],
+    spUser: {},
   },
   mutations: {
+    setspUser(state, payload) {
+      state.spUser = payload.user;
+    },
+    setUserRotis(state, payload) {
+      state.userRotis = payload.userRotis;
+    },
     setCurrentStudentRepos(state, payload) {
       state.currentStudentRepos = payload.currentStudentRepos;
     },
@@ -129,10 +137,27 @@ export default createStore({
       state.currentUserToken = payload.userToken;
     },
     setUserLoginState(state, payload) {
-      state.isUserLoggedIn = payload.isLoggedIn;
+      state.userLoginState = payload.isLoggedIn;
     },
   },
   actions: {
+    async setspUser(state, payload) {
+      console.log(payload);
+      onSnapshot(doc(firestore, "all-users", payload), (doc) => {
+        state.commit({
+          type: "setspUser",
+          user: doc.data(),
+        });
+      });
+    },
+    async setUserRotis(state, payload) {
+      onSnapshot(doc(firestore, "all-users", payload), (doc) => {
+        state.commit({
+          type: "setUserRotis",
+          userRotis: doc.data().studentRotis,
+        });
+      });
+    },
     async setCurrentStudentRepos(state) {
       onSnapshot(
         doc(firestore, "all-users", state.getters.getCurrentUserID),
@@ -285,6 +310,12 @@ export default createStore({
   },
   modules: {},
   getters: {
+    getspUser(state) {
+      return state.spUser;
+    },
+    getUserRotis(state) {
+      return state.userRotis;
+    },
     getCurrentStudentRepos(state) {
       return state.currentStudentRepos;
     },
@@ -352,7 +383,7 @@ export default createStore({
       return state.currentUserToken;
     },
     getUserLoginState(state) {
-      return state.isUserLoggedIn;
+      return state.userLoginState;
     },
   },
 });

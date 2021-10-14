@@ -1,10 +1,13 @@
 <template>
   <div class="login">
-    <div class="user-logged-in" v-show="isUserLoggedIn">
+    <div class="user-logged-in" v-show="this.$store.getters.getUserLoginState">
       <button @click="signOut" class="btn-git-logout">Logout</button>
-      <p class="user-name">{{ currentUserName }}</p>
+      <p class="user-name">{{ this.$store.getters.getCurrentUserName }}</p>
     </div>
-    <div class="user-logged-out" v-show="!isUserLoggedIn">
+    <div
+      class="user-logged-out"
+      v-show="!this.$store.getters.getUserLoginState"
+    >
       <button @click="signInGit" class="btn-git-login">
         Login with GitHub <i class="fa fa-github"></i>
       </button>
@@ -21,23 +24,10 @@ import {
 } from "firebase/auth";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 import firestore from "@/firestore";
-import { useStore } from "vuex";
-import { computed } from "vue";
 import Cookies from "js-cookie";
 
 export default {
   name: "CBEUserLogin",
-  setup() {
-    const store = useStore();
-
-    const isUserLoggedIn = computed(() => store.state.isUserLoggedIn);
-    const currentUserName = computed(() => store.state.currentUserName);
-
-    return {
-      isUserLoggedIn,
-      currentUserName,
-    };
-  },
   data() {
     return {
       user: {},
@@ -48,6 +38,7 @@ export default {
       bool: false,
     };
   },
+
   methods: {
     async isUserInDB(accessToken) {
       const docRef = doc(firestore, "all-users", accessToken);
@@ -70,8 +61,6 @@ export default {
           if (user === true) {
             // USER EXISTS
           } else {
-            //console.log("User does not exist", user);
-            console.log(this.$store.getters.getCurrentUserScheduleURL);
             setDoc(doc(firestore, "all-users", result.user.uid), {
               id: this.$store.getters.getCurrentUserID,
               gitDisplayName: this.$store.getters.getCurrentUserName,
@@ -137,6 +126,9 @@ export default {
         this.user = result.user;
         this.userID = result.user.uid;
         this.userName = result.user.displayName;
+        Cookies.set("CurrentUser", result.user);
+        Cookies.set("CurrentUserID", result.user.uid);
+        Cookies.set("CurrentUserName", result.user.displayName);
         this.$router.push("/");
         this.currentTokenId = null;
       });

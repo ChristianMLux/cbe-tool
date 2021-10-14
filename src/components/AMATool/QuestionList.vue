@@ -118,7 +118,6 @@ export default {
       querySnapshot.forEach((doc) => {
         this.usersVotedQuestionDOM.push(doc.data().usersVotedQuestion);
       });
-      console.log(this.usersVotedQuestionDOM);
       this.$store.commit({
         type: "setUsersVotedQuestion",
         vote: this.usersVotedQuestionDOM,
