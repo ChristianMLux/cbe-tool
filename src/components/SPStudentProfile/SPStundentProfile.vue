@@ -19,10 +19,26 @@
       <ul class="sp__lp-list">
         <li>Ich bin ein LearnProgress Entry</li>
       </ul>
-      <ul class="sp__student-question-list">
-        <li>Ich bin eine Frage</li>
+      <ul class="list sp__student-question-list">
+        <legend>AMA - Questions</legend>
+        <li
+          v-for="question in this.$store.getters.getUserQuestions"
+          :key="question.key"
+          v-bind="question"
+        >
+          <div class="question-heading">
+            <p class="question-title">{{ question.data.questionTitle }}</p>
+            <p class="question-cat">
+              Kategorie: {{ question.data.questionCategory }}
+            </p>
+            <p class="question-date">{{ question.data.questionCreated_at }}</p>
+          </div>
+          <p class="question-description">
+            {{ question.data.questionDescription }}
+          </p>
+        </li>
       </ul>
-      <ul class="sp__student-roti-list">
+      <ul class="list sp__student-roti-list">
         <legend>Roti-Liste</legend>
         <li
           class="roti-list-entry"
@@ -48,6 +64,10 @@ export default {
   },
   async created() {
     await this.$store.dispatch("setUserRotis", this.$route.params.studentKey);
+    await this.$store.dispatch(
+      "setUserQuestions",
+      this.$route.params.studentKey
+    );
     await this.$store.dispatch("setspUser", this.$route.params.studentKey);
   },
 };
@@ -83,23 +103,24 @@ export default {
     color: var(--secondary-color);
   }
 }
-.sp__student-roti-list {
+.list {
   border: 0.5px solid var(--secondary-color);
   border-radius: 0.25rem;
   padding: 0;
+  list-style-type: none;
 }
-.sp__student-roti-list > li:first-child {
+.list > li:first-child {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
-.sp__student-roti-list > li:last-child {
+.list > li:last-child {
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-.sp__student-roti-list > li:nth-child(1n + 1) {
+.list > li:nth-child(1n + 1) {
   background: snow;
 }
-.sp__student-roti-list > li:nth-child(2n + 2) {
+.list > li:nth-child(2n + 2) {
   background: var(--light-grey);
 }
 
@@ -113,5 +134,28 @@ export default {
   flex-grow: 1;
   padding-left: 1rem;
   text-align: left;
+}
+
+.question-heading {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row;
+}
+.question-title {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 1rem;
+}
+.question-cat {
+  padding-right: 2rem;
+}
+.question-date {
+  padding-right: 0.5rem;
+}
+.question-description {
+  line-height: 1.5rem;
+  text-align: justify;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
 }
 </style>

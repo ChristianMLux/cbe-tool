@@ -110,7 +110,13 @@
 import Markdown from "vue3-markdown-it";
 import "highlight.js/styles/github.css";
 import firestore from "@/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  arrayUnion,
+  updateDoc,
+} from "firebase/firestore";
 
 import RadioButton from "./RadioButton.vue";
 export default {
@@ -134,6 +140,7 @@ export default {
         questionIsDone: false,
         questionCreated_at: new Date(),
         questionAuthor: "Kein*e Autor*in",
+        questionAuthorID: "",
         questionUpvotes: 0,
         usersVotedQuestion: ["0"],
       },
@@ -146,12 +153,15 @@ export default {
     document.title = "AMA-Frage stellen";
   },
   methods: {
-    isUserLoggedIn() {
-      if (sessionStorage.getItem("userID") != null) {
-        return true;
-      } else {
-        return false;
-      }
+    async addQuestionToUser(question) {
+      const studentRef = doc(
+        firestore,
+        "all-users",
+        this.$store.getters.getCurrentUserID
+      );
+      await updateDoc(studentRef, {
+        studentQuestions: arrayUnion(question),
+      });
     },
     validateQuestion() {
       if (
@@ -191,6 +201,7 @@ export default {
         let year = fullDate.getFullYear();
         this.questionCreated_at = `${day}.${month}.${year}`;
         this.questionAuthor = this.$store.getters.getCurrentUserScreenname;
+        this.questionAuthorID = this.$store.getters.getCurrentUserID;
         const questionToList = {
           questionTitle: this.currentQuestion.questionTitle,
           questionDescription: this.currentQuestion.questionDescription,
@@ -198,6 +209,7 @@ export default {
           questionIsDone: this.currentQuestion.questionIsDone,
           questionCreated_at: this.questionCreated_at,
           questionAuthor: this.questionAuthor,
+          questionAuthorID: this.questionAuthorID,
           questionUpvotes: this.currentQuestion.questionUpvotes,
           usersVotedQuestion: this.currentQuestion.usersVotedQuestion,
         };
@@ -206,6 +218,7 @@ export default {
         addDoc(collection(firestore, "ama-questions"), {
           ...questionToList,
         });
+        this.addQuestionToUser(questionToList);
         this.$store.dispatch("updateAllQuestions");
         this.currentQuestion.questionTitle = "";
         this.currentQuestion.questionDescription = "";

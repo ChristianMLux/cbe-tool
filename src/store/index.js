@@ -10,6 +10,7 @@ import {
   doc,
   onSnapshot,
   query,
+  where,
 } from "firebase/firestore";
 
 import GitAPIService from "@/services/GitAPIService.js";
@@ -58,8 +59,12 @@ export default createStore({
     questionFilterStatus: "All",
     userRotis: [],
     spUser: {},
+    spUserQuestions: [],
   },
   mutations: {
+    setspUserQuestions(state, payload) {
+      state.spUserQuestions.push(payload);
+    },
     setspUser(state, payload) {
       state.spUser = payload.user;
     },
@@ -149,6 +154,24 @@ export default createStore({
           user: doc.data(),
         });
       });
+    },
+    async setUserQuestions(state, payload) {
+      const q = query(
+        collection(firestore, "ama-questions"),
+        where("questionAuthorID", "==", payload)
+      );
+      const querySnapshot = await getDocs(q);
+      if (state.getters.getUserQuestions[0] ?? null) {
+        console.error("Questions allready loaded");
+      } else {
+        querySnapshot.forEach((doc) => {
+          state.commit("setspUserQuestions", {
+            key: doc.id,
+            data: doc.data(),
+          });
+          console.log(state.getters.getUserQuestions);
+        });
+      }
     },
     async setUserRotis(state, payload) {
       onSnapshot(doc(firestore, "all-users", payload), (doc) => {
@@ -312,6 +335,9 @@ export default createStore({
   getters: {
     getspUser(state) {
       return state.spUser;
+    },
+    getUserQuestions(state) {
+      return state.spUserQuestions;
     },
     getUserRotis(state) {
       return state.userRotis;
