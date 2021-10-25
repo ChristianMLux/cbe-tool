@@ -6,7 +6,7 @@
         :key="recording.recordingKey"
         :date="recording.recordingData.date"
         :topic="recording.recordingData.topic"
-        :playURL="recording.recordingData.playURL"
+        :playURL="recording.recordingData['recording-files-play-url']"
         v-bind="recording"
       />
     </ul>
@@ -28,7 +28,7 @@ export default {
   methods: {
     async getAllRecordings() {
       const querySnapshot = await getDocs(
-        collection(firestore, "zoom-recordings-test")
+        collection(firestore, "zoom-recordings")
       );
       querySnapshot.forEach((doc) => {
         this.lrRecordingsArray.push({

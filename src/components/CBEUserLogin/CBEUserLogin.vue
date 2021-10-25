@@ -129,6 +129,7 @@ export default {
         Cookies.set("CurrentUser", result.user);
         Cookies.set("CurrentUserID", result.user.uid);
         Cookies.set("CurrentUserName", result.user.displayName);
+        Cookies.set("userLoginState", true);
         this.$router.push("/");
         this.currentTokenId = null;
       });
@@ -138,6 +139,7 @@ export default {
       signOut(auth)
         .then(() => {
           this.user = null;
+          Cookies.set("userLoginState", false);
           Cookies.remove("vuex");
           this.$router.push("/loggedout");
           this.$store.commit({

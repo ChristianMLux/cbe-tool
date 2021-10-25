@@ -46,12 +46,21 @@
 <script>
 import CBEUserLogin from "@/components/CBEUserLogin/CBEUserLogin.vue";
 
+import Cookies from "js-cookie";
+
 export default {
   name: "CBEMainNavigation",
+  data() {
+    return {
+      userLoginState: Cookies.get("userLoginState"),
+    };
+  },
   components: {
     CBEUserLogin,
   },
-  async created() {},
+  mounted() {
+    console.log(this.userLoginState);
+  },
 };
 </script>
 <style lang="scss" scoped>
