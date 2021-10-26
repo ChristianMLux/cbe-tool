@@ -151,10 +151,11 @@ export default {
   }
 }
 .list {
-  border: 0.5px dotted var(--secondary-color);
   border-radius: 0.25rem;
   padding: 0;
   list-style-type: none;
+  display: grid;
+  gap: 1.5rem;
   p {
     margin-bottom: 0;
   }
@@ -172,15 +173,15 @@ li {
 }
 .list > li:nth-child(1n + 1) {
   background: var(--background-color);
-  p {
+  div {
+    border-bottom: 0.5px dotted var(--secondary-color);
     background: whitesmoke;
-    margin-top: 0;
-    padding: 1rem 0.25rem;
   }
 }
 .list > li:nth-child(2n + 2) {
   background: whitesmoke;
   div {
+    border-bottom: 0.5px dotted var(--secondary-color);
     background: var(--background-color);
   }
 }
@@ -206,6 +207,7 @@ li {
   flex-grow: 1;
   text-align: left;
   padding-left: 1rem;
+  font-weight: bold;
 }
 .question-cat {
   padding-right: 2rem;

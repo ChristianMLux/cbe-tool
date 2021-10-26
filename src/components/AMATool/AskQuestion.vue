@@ -429,10 +429,6 @@ textarea {
 }
 
 @media screen and (max-width: 720px) {
-  .wrapper {
-    align-items: flex-start;
-  }
-
   .question-title,
   .question-description,
   .question-preview,
@@ -457,7 +453,7 @@ textarea {
 
 @media screen and (max-width: 555px) {
   .wrapper {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
   }
 }
 </style>
