@@ -133,4 +133,11 @@ ul {
     justify-content: flex-start;
   }
 }
+@media screen and (max-width: 555px) {
+  .cbe__main-footer {
+    z-index: -1;
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
 </style>

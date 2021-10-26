@@ -52,4 +52,10 @@ h1 {
     font-size: 1.8rem;
   }
 }
+@media screen and (max-width: 555px) {
+  .header-wrapper {
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
 </style>

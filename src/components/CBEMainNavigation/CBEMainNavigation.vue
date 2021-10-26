@@ -9,31 +9,79 @@
               studentKey: this.$store.getters.getCurrentUserID,
             },
           }"
-          ><p class="linktext">Profile</p>
+          ><p class="link-text">Profile</p>
           <i class="fas fa-user-circle"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/teacherhub"
-          ><p class="linktext">Teacher</p>
+          ><p class="link-text">Teacher</p>
           <i class="fas fa-school"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/amaview"
-          ><p class="linktext">AMA</p>
+          ><p class="link-text">AMA</p>
           <i class="fas fa-question-circle"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/rotitool"
-          ><p class="linktext">ROTI</p>
+          ><p class="link-text">ROTI</p>
           <i class="fas fa-clock"></i
         ></router-link>
       </li>
       <li class="cbe__nav-element">
         <router-link to="/lessonrecordings"
-          ><p class="linktext">Recordings</p>
+          ><p class="link-text">Recordings</p>
+          <i class="fas fa-video"></i
+        ></router-link>
+      </li>
+      <li class="cbe__nav-element">
+        <CBEUserLogin />
+      </li>
+    </ul>
+  </nav>
+  <nav class="cbe__mobile-nav">
+    <img
+      class="header-logo"
+      alt="Coding Bootcamp Europe Logo"
+      src="@/assets/cbe-logo-plain.png"
+    />
+    <ul class="cbe__nav-list" v-show="this.$store.getters.getUserLoginState">
+      <li class="cbe__nav-element" v-if="this.$store.getters.getUserLoginState">
+        <router-link
+          :to="{
+            name: 'Student-Profile',
+            params: {
+              studentKey: this.$store.getters.getCurrentUserID,
+            },
+          }"
+          ><p class="link-text">Profile</p>
+          <i class="fas fa-user-circle"></i
+        ></router-link>
+      </li>
+      <li class="cbe__nav-element">
+        <router-link to="/teacherhub"
+          ><p class="link-text">Teacher</p>
+          <i class="fas fa-school"></i
+        ></router-link>
+      </li>
+      <li class="cbe__nav-element">
+        <router-link to="/amaview"
+          ><p class="link-text">AMA</p>
+          <i class="fas fa-question-circle"></i
+        ></router-link>
+      </li>
+      <li class="cbe__nav-element">
+        <router-link to="/rotitool"
+          ><p class="link-text">ROTI</p>
+          <i class="fas fa-clock"></i
+        ></router-link>
+      </li>
+      <li class="cbe__nav-element">
+        <router-link to="/lessonrecordings"
+          ><p class="link-text">Recordings</p>
           <i class="fas fa-video"></i
         ></router-link>
       </li>
@@ -64,8 +112,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cbe__mobile-nav {
+  display: none;
+}
 nav {
-  .linktext {
+  .link-text {
     margin: 0;
     padding: 0;
   }
@@ -127,13 +178,79 @@ nav {
     font-size: 1.2em;
     margin-right: 0.4rem;
   }
-  .linktext {
+  .link-text {
     display: none;
   }
   nav {
     .cbe__nav-list {
       _margin: 1rem 2rem 1rem 2.5rem;
       padding: 0.5em 0;
+    }
+  }
+}
+
+@media screen and (max-width: 555px) {
+  i {
+    color: black;
+  }
+  .cbe__main-nav {
+    display: none;
+  }
+  .header-logo {
+    max-width: 3rem;
+    padding: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  .cbe__mobile-nav {
+    display: block;
+    z-index: 1;
+    width: 4rem;
+    height: 100vh;
+    position: fixed;
+    background-color: whitesmoke;
+    transition: 200ms ease-in-out;
+    box-shadow: var(--primary-color) 0px 0.5px 1.5px,
+      rgba(0, 0, 0, 0.24) 0px 0.5px 1px;
+  }
+  .cbe__mobile-nav:hover {
+    width: 14rem;
+    .link-text {
+      display: block;
+      justify-content: baseline;
+      align-items: baseline;
+    }
+    .header-logo {
+      max-width: 3rem;
+      padding: 0.25rem;
+    }
+    .cbe__nav-element {
+      text-align: center;
+      min-width: 80%;
+    }
+  }
+  .cbe__nav-list {
+    all: unset;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  nav {
+    .cbe__nav-list {
+      flex-flow: column;
+      align-items: null;
+      margin: 0.5rem;
+    }
+    .cbe__nav-element {
+      max-width: 95%;
+      min-width: 2.5rem;
+      margin: 0.5rem 0.125rem;
+      a {
+        margin: 0;
+      }
     }
   }
 }

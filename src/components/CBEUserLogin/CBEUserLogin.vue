@@ -1,7 +1,9 @@
 <template>
   <div class="login">
     <div class="user-logged-in" v-show="this.$store.getters.getUserLoginState">
-      <button @click="signOut" class="btn-git-logout">Logout</button>
+      <button @click="signOut" class="btn-git-logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
       <p class="user-name">{{ this.$store.getters.getCurrentUserName }}</p>
     </div>
     <div

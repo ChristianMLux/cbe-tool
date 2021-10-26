@@ -1,5 +1,5 @@
 <template>
-  <CBEMainHeader />
+  <CBEMainHeader class="main-header" />
   <CBEMainNavigation />
   <main>
     <router-view />
@@ -57,6 +57,7 @@ html {
   }
 }
 body {
+  margin: 0;
   max-width: 100ch;
   min-width: 350px;
 }
@@ -83,6 +84,25 @@ body {
   }
   h3 {
     font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 555px) {
+  main,
+  header,
+  footer {
+    margin-left: 4rem;
+  }
+  .main-header {
+    display: none;
+  }
+  .app-style {
+    display: grid;
+    height: 100vh;
+  }
+  footer {
+    display: grid;
+    align-items: end;
   }
 }
 </style>

@@ -200,4 +200,14 @@ export default {
 .hidebtn {
   margin: 1rem;
 }
+
+@media screen and (max-width: 555px) {
+  .sp__profile-section {
+    margin: 0;
+    padding: 0.5rem;
+  }
+  .lp__entry-link {
+    margin: 0;
+  }
+}
 </style>
