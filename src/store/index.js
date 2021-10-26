@@ -70,9 +70,6 @@ export default createStore({
     setUserRotis(state, payload) {
       state.userRotis = payload.userRotis;
     },
-    setCurrentStudentRepos(state, payload) {
-      state.currentStudentRepos = payload.currentStudentRepos;
-    },
     setStudentIssues(state, payload) {
       state.studentIssues = payload.studentIssues;
     },
@@ -181,14 +178,6 @@ export default createStore({
         });
       });
     },
-    async setCurrentStudentRepos(state) {
-      onSnapshot(
-        doc(firestore, "all-users", state.getters.getCurrentUserID),
-        (doc) => {
-          console.log("Current data: ", doc.data());
-        }
-      );
-    },
     async setStudentIssues(state) {
       state.getters.getAllStudents.forEach((student) => {
         GitAPIService.printIssues(
@@ -247,7 +236,7 @@ export default createStore({
         collection(firestore, "all-users")
       );
       userTableSnapshot.forEach((student) => {
-        console.log(student.data());
+        //console.log(student.data());
         if (student.data().userRole === "student") {
           _students.push({
             studentKey: student.id,

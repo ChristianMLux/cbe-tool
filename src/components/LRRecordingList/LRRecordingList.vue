@@ -55,7 +55,7 @@ export default {
           },
         });
       });
-      console.log(this.lrRecordingsArray);
+      //console.log(this.lrRecordingsArray);
     },
   },
   async mounted() {
@@ -65,10 +65,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lr__recordig-section {
+  margin: 0 4rem 0 2.5rem;
+}
 .lr__recording-list {
   list-style-type: none;
   display: grid;
   gap: 0.5rem;
+  padding: 0;
 }
 .lr__recording-list > li {
   display: grid;
