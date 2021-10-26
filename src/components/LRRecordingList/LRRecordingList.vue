@@ -80,4 +80,10 @@ export default {
 .lr__recording-list > li:nth-child(2n + 2) {
   background: var(--light-grey);
 }
+
+@media screen and (max-width: 555px) {
+  .lr__recording-list {
+    padding: 0.125rem;
+  }
+}
 </style>

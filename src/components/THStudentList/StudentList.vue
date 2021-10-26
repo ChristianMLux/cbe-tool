@@ -32,6 +32,8 @@ export default {
 
 <style lang="scss" scoped>
 ul {
+  max-width: 95%;
+  margin: 0.25rem auto;
   padding: 0;
   border: 1px solid var(--primary-color);
   border-radius: 0.25rem;
@@ -39,5 +41,6 @@ ul {
 li {
   display: flex;
   flex-flow: row;
+  justify-content: space-between;
 }
 </style>

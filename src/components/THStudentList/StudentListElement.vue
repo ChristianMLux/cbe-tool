@@ -1,8 +1,8 @@
 <template>
   <li class="outer-li">
     <ul class="th__list-wrapper">
-      <li>
-        <p class="th__student-name">{{ gitDisplayName }}</p>
+      <li class="th__student-name">
+        <a :href="gitURL" class="th__student-name">{{ gitDisplayName }}</a>
       </li>
       <li>
         <p><a :href="userScheduleURL" target="_blank">CBE-Schedule</a></p>
@@ -38,11 +38,6 @@
           >
             Details</router-link
           >
-        </p>
-      </li>
-      <li>
-        <p>
-          <a :href="gitURL" target="_blank"><i class="fa fa-github"></i></a>
         </p>
       </li>
     </ul>
@@ -91,6 +86,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .outer-li {
+  max-width: 95%;
   border: 1px solid var(--secondary-color);
   border-radius: 0.25rem;
   margin: 0.5rem;
@@ -106,7 +102,7 @@ i {
 .th__list-wrapper {
   padding: 0;
   list-style-type: none;
-  width: 100%;
+  max-width: 43.5%;
   display: flex;
   justify-content: space-between;
 }
@@ -119,6 +115,8 @@ li > p > a {
   color: var(--font-color);
 }
 .th__list-wrapper > li {
+  min-width: 46%;
+  max-width: 100%;
   text-align: center;
   padding: 0 0.5rem;
 }
@@ -129,5 +127,13 @@ li > p > a {
 .th__list-wrapper > li:nth-child(2n + 1) {
   height: 100%;
   background: #f3f3f3;
+}
+.th__student-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-decoration-color: var(--secondary-color);
+  color: var(--font-color);
 }
 </style>

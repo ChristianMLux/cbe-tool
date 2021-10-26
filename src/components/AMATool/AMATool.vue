@@ -1,8 +1,6 @@
 <template>
-  <section>
-    <AskQuestion />
-    <QuestionList />
-  </section>
+  <AskQuestion />
+  <QuestionList />
 </template>
 <script>
 import AskQuestion from "./AskQuestion.vue";
@@ -12,3 +10,9 @@ export default {
   components: { AskQuestion, QuestionList },
 };
 </script>
+
+<style lang="scss" scoped>
+section {
+  margin: 0;
+}
+</style>
