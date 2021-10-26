@@ -196,6 +196,9 @@ nav {
   .cbe__main-nav {
     display: none;
   }
+  .cbe__mobile-nav > * {
+    margin: 0 auto;
+  }
   .header-logo {
     max-width: 3rem;
     padding: 0.25rem;
@@ -213,7 +216,7 @@ nav {
       rgba(0, 0, 0, 0.24) 0px 0.5px 1px;
   }
   .cbe__mobile-nav:hover {
-    width: 14rem;
+    width: 12rem;
     .link-text {
       display: block;
       justify-content: baseline;
@@ -225,14 +228,19 @@ nav {
     }
     .cbe__nav-element {
       text-align: center;
-      min-width: 80%;
+      min-width: 95%;
+      a {
+        &:hover {
+          width: 100%;
+        }
+      }
     }
   }
   .cbe__nav-list {
     all: unset;
     list-style: none;
     display: flex;
-    flex-direction: column;
+    flex-flow: column;
     align-items: center;
     margin: 0;
     padding: 0;
@@ -241,15 +249,32 @@ nav {
   nav {
     .cbe__nav-list {
       flex-flow: column;
-      align-items: null;
       margin: 0.5rem;
     }
     .cbe__nav-element {
       max-width: 95%;
       min-width: 2.5rem;
       margin: 0.5rem 0.125rem;
+      transition: width 1s ease-in-out;
+      &:hover {
+        width: 100%;
+      }
       a {
         margin: 0;
+        transition: 0.25s ease-in-out;
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row;
+        &:hover {
+          background: var(--primary-color);
+          color: var(--background-color);
+          font-weight: bold;
+          i {
+            color: var(--background-color);
+            font-size: 1.2em;
+            margin-right: 0.4rem;
+          }
+        }
       }
     }
   }
