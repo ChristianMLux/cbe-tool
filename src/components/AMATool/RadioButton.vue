@@ -233,7 +233,7 @@ input[type="radio"]:checked + .category-sonstiges-input {
   }
 }
 
-@media screen and (max-width: 669px) {
+@media screen and (max-width: 720px) {
   .button-area {
     min-width: 18rem;
     width: 82vw;

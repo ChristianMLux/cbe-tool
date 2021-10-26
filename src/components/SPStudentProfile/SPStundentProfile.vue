@@ -11,22 +11,28 @@
           >Open Issues: {{ this.$store.getters.getspUser.userIssues }}</span
         >
       </div>
-      <div class="lp__link-wrapper">
-        <router-link class="lp__entry-link" to="/learnprogress"
-          >Erstelle Lernfortschritt-Eintrag
-          <i class="fas fa-chalkboard-teacher"></i
-        ></router-link>
+      <div class="button-wrapper">
+        <div class="lp__link-wrapper">
+          <router-link class="lp__entry-link" to="/learnprogress"
+            >Erstelle Lernfortschritt-Eintrag
+            <i class="fas fa-chalkboard-teacher"></i
+          ></router-link>
+        </div>
+        <cbe-main-btn
+          id="showAmaBtn"
+          class="margin-left hidebtn"
+          buttonClass="secondary"
+          @click="showQuestions"
+          >{{ questionBtnText }}
+        </cbe-main-btn>
+        <cbe-main-btn
+          id="showRotiBtn"
+          class="margin-left hidebtn"
+          buttonClass="secondary"
+          @click="showRotis"
+          >{{ rotiBtnText }}
+        </cbe-main-btn>
       </div>
-      <ul class="sp__lp-list">
-        <li>Ich bin ein LearnProgress Entry</li>
-      </ul>
-      <cbe-main-btn
-        id="showAmaBtn"
-        class="margin-left hidebtn"
-        buttonClass="secondary"
-        @click="showQuestions"
-        >{{ questionBtnText }}
-      </cbe-main-btn>
       <ul class="list sp__student-question-list" v-if="questionsShown">
         <legend>AMA - Questions</legend>
         <li
@@ -46,13 +52,7 @@
           </p>
         </li>
       </ul>
-      <cbe-main-btn
-        id="showRotiBtn"
-        class="margin-left hidebtn"
-        buttonClass="secondary"
-        @click="showRotis"
-        >{{ rotiBtnText }}
-      </cbe-main-btn>
+
       <ul class="list sp__student-roti-list" v-if="rotisShown">
         <legend>Roti-Liste</legend>
         <li
@@ -126,27 +126,41 @@ export default {
   border-radius: 0.25rem;
 }
 .lp__entry-link {
-  margin: 5rem;
-  padding: 1rem;
-  border: 1px solid var(--primary-color);
+  color: var(--background-color);
+  font-weight: bold;
+  background-color: var(--primary-color);
+  border: 2.5px solid transparent;
   border-radius: 0.25rem;
+  padding: 1.17rem 0.7rem;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  line-height: 1.5rem;
+}
+.button-wrapper {
+  display: grid;
+  grid-template-columns: 60% 20% 20%;
 }
 .lp__link-wrapper {
-  margin: 2rem;
-  align-items: left;
+  place-self: center;
   a {
-    color: var(--font-color);
+    color: var(--background-color);
     text-decoration: none;
   }
   i {
-    color: var(--secondary-color);
+    color: var(--background-color);
   }
 }
 .list {
-  border: 0.5px solid var(--secondary-color);
+  border: 0.5px dotted var(--secondary-color);
   border-radius: 0.25rem;
   padding: 0;
   list-style-type: none;
+  p {
+    margin-bottom: 0;
+  }
+}
+li {
+  border-top: 0.5px solid var(--primary-color);
 }
 .list > li:first-child {
   border-top-left-radius: 0.25rem;
@@ -157,10 +171,18 @@ export default {
   border-bottom-right-radius: 0.25rem;
 }
 .list > li:nth-child(1n + 1) {
-  background: snow;
+  background: var(--background-color);
+  p {
+    background: whitesmoke;
+    margin-top: 0;
+    padding: 1rem 0.25rem;
+  }
 }
 .list > li:nth-child(2n + 2) {
-  background: var(--light-grey);
+  background: whitesmoke;
+  div {
+    background: var(--background-color);
+  }
 }
 
 .roti-list-entry {
@@ -201,8 +223,30 @@ export default {
 .hidebtn {
   margin: 1rem;
 }
-
+@media screen and (max-width: 720px) {
+  .lp__entry-link {
+    padding: 0.65rem 0.7rem;
+  }
+}
+@media screen and (max-width: 650px) {
+  .button-wrapper {
+    grid-template-columns: 80vw;
+  }
+  .lp__entry-link {
+    font-size: 0.7em;
+  }
+}
 @media screen and (max-width: 555px) {
+  .sp__student-info-wrapper {
+    display: grid;
+    max-width: 95%;
+    grid-template-columns: 100%;
+    gap: 1rem;
+    text-align: left;
+  }
+  .sp__student-name {
+    width: 100%;
+  }
   .sp__profile-section {
     margin: 0;
     padding: 0.5rem;
@@ -210,6 +254,19 @@ export default {
   }
   .lp__entry-link {
     margin: 0;
+  }
+  .list {
+    max-width: 95%;
+  }
+  .question-title {
+    padding: 0.25rem;
+    padding-top: 0;
+    text-align: left;
+  }
+  .question-date,
+  .question-cat,
+  .question-description {
+    padding: 0.25rem;
   }
 }
 </style>

@@ -54,7 +54,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 669px) {
+@media screen and (max-width: 720px) {
   .secondary {
     font-size: 0.55rem;
     line-height: 1rem;
