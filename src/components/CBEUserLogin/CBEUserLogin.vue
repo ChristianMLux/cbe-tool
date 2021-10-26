@@ -60,6 +60,11 @@ export default {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
+        this.$store.commit("setCurrentUser", JSON.stringify(result.user));
+        this.$store.commit({
+          type: "setUserLoginState",
+          isLoggedIn: true,
+        });
         this.isUserInDB(result.user.uid).then((user) => {
           if (user === true) {
             // USER EXISTS
@@ -78,7 +83,6 @@ export default {
             });
           }
         });
-        this.$store.commit("setCurrentUser", result.user);
         if (result.user.displayName != null) {
           this.$store.commit({
             type: "setCurrentUserName",
@@ -120,10 +124,6 @@ export default {
         this.$store.commit({
           type: "setCurrentUser",
           userToken: result.user,
-        });
-        this.$store.commit({
-          type: "setUserLoginState",
-          isLoggedIn: true,
         });
         // put the user informations in the database
         this.user = result.user;

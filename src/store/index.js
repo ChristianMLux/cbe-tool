@@ -117,6 +117,7 @@ export default createStore({
       state.cbeClasses = payload;
     },
     setCurrentUser(state, payload) {
+      Cookies.set("user", JSON.stringify(payload));
       state.currentUser = payload;
     },
     setCurrentUserRole(state, payload) {

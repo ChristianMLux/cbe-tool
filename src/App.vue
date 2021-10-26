@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
 import CBEMainFooter from "@/components/CBEMainFooter/CBEMainFooter.vue";
 import CBEMainHeader from "@/components/CBEMainHeader/CBEMainHeader.vue";
 import CBEMainNavigation from "@/components/CBEMainNavigation/CBEMainNavigation.vue";
@@ -16,6 +17,10 @@ export default {
   components: { CBEMainNavigation, CBEMainHeader, CBEMainFooter },
   async created() {
     await this.$store.dispatch("setAllStudents");
+    this.$store.commit("setCurrentUser", JSON.parse(Cookies.get("user")));
+  },
+  beforeUpdate() {
+    this.$store.commit("setCurrentUser", this.$store.getters.getCurrentUser);
   },
 };
 </script>
