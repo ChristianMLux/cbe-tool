@@ -2,7 +2,9 @@
   <li class="outer-li">
     <ul class="th__list-wrapper">
       <li class="th__student-name">
-        <a :href="gitURL" class="th__student-name">{{ gitDisplayName }}</a>
+        <a :href="gitURL" class="th__student-name"
+          >{{ gitDisplayName }}<i class="fa fa-github"></i
+        ></a>
       </li>
       <li>
         <p><a :href="userScheduleURL" target="_blank">CBE-Schedule</a></p>
@@ -105,6 +107,7 @@ i {
   max-width: 43.5%;
   display: flex;
   justify-content: space-between;
+  font-size: 0.8rem;
 }
 .th__list-wrapper > li > * {
   text-align: center;
@@ -130,10 +133,15 @@ li > p > a {
 }
 .th__student-name {
   display: flex;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  font-size: 0.95em;
   text-decoration-color: var(--secondary-color);
   color: var(--font-color);
+  i {
+    font-size: 1rem;
+  }
 }
 </style>

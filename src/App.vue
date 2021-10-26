@@ -64,6 +64,9 @@ body {
 .btn {
   margin: 0.5rem 0;
 }
+.mobile-heading {
+  display: none;
+}
 @media screen and (max-width: 975px) {
   h1 {
     font-size: 2rem;
@@ -99,6 +102,11 @@ body {
   .app-style {
     display: grid;
     height: 100vh;
+  }
+  .mobile-heading {
+    display: inherit;
+    text-align: left;
+    margin-left: 0.5rem;
   }
   footer {
     display: grid;

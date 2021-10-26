@@ -1,5 +1,6 @@
 <template>
   <section class="add-roti__section">
+    <h2 class="mobile-heading">Return of Time invested</h2>
     <RotiRating
       rotiLegend="Was gibst du dem Tag für ein Roti?"
       roti__labelGroupName="roti__rating"

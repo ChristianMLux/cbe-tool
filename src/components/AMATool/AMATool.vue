@@ -1,4 +1,5 @@
 <template>
+  <h2 class="mobile-heading">Ask Me Anything</h2>
   <AskQuestion />
   <QuestionList />
 </template>

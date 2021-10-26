@@ -35,7 +35,7 @@ export default {
       user: {},
       userID: "",
       userName: "",
-      userRole: "student",
+      userRole: "guest",
       currentTokenId: null,
       bool: false,
     };
@@ -46,6 +46,7 @@ export default {
       const docRef = doc(firestore, "all-users", accessToken);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
+        this.$store.commit("setCurrentUserRole", docSnap.data().userRole);
         return true;
       } else {
         return false;

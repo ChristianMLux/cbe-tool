@@ -26,11 +26,10 @@ export default createStore({
         removeItem: (key) => Cookies.remove(key),
       },
     }),
-    // python komibinieren mit anderen bekannten sprachen
-    // Firebase / Functions
   ],
   state: {
     currentUser: {},
+    currentUserRole: "",
     currentUserName: "",
     currentUserID: "",
     currentUserToken: "",
@@ -122,6 +121,9 @@ export default createStore({
     },
     setCurrentUser(state, payload) {
       state.currentUser = payload;
+    },
+    setCurrentUserRole(state, payload) {
+      state.currentUserRole = payload;
     },
     setCurrentUserScreenname(state, payload) {
       state.currentUserScreenname = payload.userScreenname;
@@ -245,10 +247,15 @@ export default createStore({
         collection(firestore, "all-users")
       );
       userTableSnapshot.forEach((student) => {
-        _students.push({
-          studentKey: student.id,
-          studentData: student.data(),
-        });
+        console.log(student.data());
+        if (student.data().userRole === "student") {
+          _students.push({
+            studentKey: student.id,
+            studentData: student.data(),
+          });
+        } else {
+          console.error("no teachers or guests are allowed in the list");
+        }
       });
       state.commit({
         type: "setAllStudents",
@@ -386,6 +393,9 @@ export default createStore({
     },
     getCurrentUser(state) {
       return state.currentUser;
+    },
+    getCurrentUserRole(state) {
+      return state.currentUserRole;
     },
     getCurrentUserName(state) {
       return state.currentUserName;

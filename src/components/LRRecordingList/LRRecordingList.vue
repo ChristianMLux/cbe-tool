@@ -1,6 +1,6 @@
 <template>
   <section class="lr__recordig-section">
-    <h2>Lesson Recordings</h2>
+    <h2 class="mobile-heading">Lesson Recordings</h2>
     <div class="filter-wrapper"></div>
     <ul class="lr__recording-list">
       <LRListElement

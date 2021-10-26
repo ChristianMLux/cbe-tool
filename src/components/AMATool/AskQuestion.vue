@@ -458,7 +458,6 @@ textarea {
 @media screen and (max-width: 555px) {
   .wrapper {
     margin-right: 0.5rem;
-    padding-top: 1rem;
   }
 }
 </style>

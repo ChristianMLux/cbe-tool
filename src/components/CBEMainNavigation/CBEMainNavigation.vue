@@ -48,8 +48,11 @@
       alt="Coding Bootcamp Europe Logo"
       src="@/assets/cbe-logo-plain.png"
     />
-    <ul class="cbe__nav-list" v-show="this.$store.getters.getUserLoginState">
-      <li class="cbe__nav-element" v-if="this.$store.getters.getUserLoginState">
+    <ul
+      class="cbe__nav-list"
+      v-if="!isGuest && this.$store.getters.getUserLoginState"
+    >
+      <li class="cbe__nav-element" v-if="isStudent">
         <router-link
           :to="{
             name: 'Student-Profile',
@@ -61,7 +64,7 @@
           <i class="fas fa-user-circle"></i
         ></router-link>
       </li>
-      <li class="cbe__nav-element">
+      <li class="cbe__nav-element" v-if="isTeacher">
         <router-link to="/teacherhub"
           ><p class="link-text">Teacher</p>
           <i class="fas fa-school"></i
@@ -102,6 +105,21 @@ export default {
     return {
       userLoginState: Cookies.get("userLoginState"),
     };
+  },
+  computed: {
+    isTeacher() {
+      return this.$store.getters.getCurrentUserRole === "teacher"
+        ? true
+        : false;
+    },
+    isGuest() {
+      return this.$store.getters.getCurrentUserRole === "guest" ? true : false;
+    },
+    isStudent() {
+      return this.$store.getters.getCurrentUserRole === "student"
+        ? true
+        : false;
+    },
   },
   components: {
     CBEUserLogin,

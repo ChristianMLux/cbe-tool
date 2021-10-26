@@ -36,7 +36,11 @@
       </ul>
     </fieldset>
 
-    <IssuesAnalyze :gitScreenName="gitScreenName" :gitToken="gitToken" />
+    <IssuesAnalyze
+      :gitScreenName="gitScreenName"
+      :gitToken="gitToken"
+      class="gliss-analyze"
+    />
   </section>
 </template>
 
@@ -130,5 +134,15 @@ section {
   text-align: left;
   border-radius: 0.25rem;
   border: 1px dotted var(--primary-color);
+}
+
+@media screen and (max-width: 555px) {
+  section {
+    margin: 0;
+    padding: 0 1rem 2rem 0.5rem;
+  }
+  .gliss-analyze {
+    display: none;
+  }
 }
 </style>

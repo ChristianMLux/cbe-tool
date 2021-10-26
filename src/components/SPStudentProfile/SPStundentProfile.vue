@@ -1,5 +1,6 @@
 <template>
   <section class="sp__profile-section">
+    <h2 class="mobile-heading">Your Profile</h2>
     <div class="sp__profile-wrapper">
       <div class="sp__student-info-wrapper">
         <p class="sp__student-name">
@@ -205,6 +206,7 @@ export default {
   .sp__profile-section {
     margin: 0;
     padding: 0.5rem;
+    padding-top: 0;
   }
   .lp__entry-link {
     margin: 0;

@@ -1,5 +1,6 @@
 <template>
   <section class="th__section">
+    <h2 class="mobile-heading">Teacher-Hub</h2>
     <StudentList />
   </section>
 </template>
