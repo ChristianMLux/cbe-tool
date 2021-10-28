@@ -26,10 +26,6 @@ export default createStore({
     currentUserEmail: "",
     currentUserGitURL: "",
     currentUserScheduleURL: "",
-    userLoginState: false,
-    cbeClasses: [],
-    cbeClassCollection: [],
-    currentClassMembers: [],
     currentIssuesCounter: 0,
     currentReposCounter: 0,
     issuesInfo: [],
@@ -41,7 +37,6 @@ export default createStore({
     allStudents: [],
     studentRepos: 0,
     studentIssues: 0,
-    currentStudentRepos: 0,
     allQuestions: [],
     usersVotedQuestion: [],
     questionFilterStatus: "All",
@@ -55,10 +50,6 @@ export default createStore({
     },
     setspUser(state, payload) {
       state.spUser = payload.user;
-    },
-    setUserRotis(state, payload) {
-      sessionStorage.setItem("userRotis", JSON.stringify(payload.userRotis));
-      state.userRotis = payload.userRotis;
     },
     setStudentIssues(state, payload) {
       state.studentIssues = payload.studentIssues;
@@ -100,12 +91,6 @@ export default createStore({
     setCurrentReposCounter(state, payload) {
       state.currentReposCounter = payload.currentReposCounter;
     },
-    setCurrentClassMembers(state, payload) {
-      state.currentClassMembers = payload;
-    },
-    setCBEClasses(state, payload) {
-      state.cbeClasses = payload;
-    },
     setCurrentUser(state, payload) {
       sessionStorage.setItem("currentUser", JSON.stringify(payload));
       state.currentUser = payload;
@@ -137,6 +122,10 @@ export default createStore({
     setCurrentUserToken(state, payload) {
       sessionStorage.setItem("currentUserToken", payload.userToken);
       state.currentUserToken = payload.userToken;
+    },
+    setUserRotis(state, payload) {
+      sessionStorage.setItem("userRotis", JSON.stringify(payload.userRotis));
+      state.userRotis = payload.userRotis;
     },
     setUserLoginState(state, payload) {
       sessionStorage.setItem("userLoginState", payload.isLoggedIn);
@@ -235,7 +224,6 @@ export default createStore({
         collection(firestore, "all-users")
       );
       userTableSnapshot.forEach((student) => {
-        //console.log(student.data());
         if (student.data().userRole === "student") {
           _students.push({
             studentKey: student.id,
@@ -334,9 +322,6 @@ export default createStore({
     getUserRotis(state) {
       return state.userRotis;
     },
-    getCurrentStudentRepos(state) {
-      return state.currentStudentRepos;
-    },
     getStudentIssues(state) {
       return state.studentIssues;
     },
@@ -372,12 +357,6 @@ export default createStore({
     },
     getCurrentReposCounter(state) {
       return state.currentReposCounter;
-    },
-    getCBEClasses(state) {
-      return state.cbeClasses;
-    },
-    getCurrentClassMembers(state) {
-      return state.currentClassMembers;
     },
     getCurrentUser(state) {
       return state.currentUser;
