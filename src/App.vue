@@ -50,7 +50,13 @@ export default {
       "setCurrentUserRole",
       sessionStorage.getItem("currentUserRole")
     );
-    this.$store.commit("setCurrentUser", sessionStorage.getItem("currentUser"));
+    this.$store.commit(
+      "setCurrentUser",
+      JSON.parse(sessionStorage.getItem("currentUser"))
+    );
+    this.$store.commit("setUserRotis", {
+      userRotis: JSON.parse(sessionStorage.getItem("userRotis")),
+    });
   },
 };
 </script>

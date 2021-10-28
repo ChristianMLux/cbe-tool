@@ -1,6 +1,4 @@
 import { createStore } from "vuex";
-import Cookies from "js-cookie";
-import createPersistedState from "vuex-persistedstate";
 import firestore from "@/firestore";
 
 import {
@@ -17,16 +15,7 @@ import GitAPIService from "@/services/GitAPIService.js";
 
 const allTeamsURL = "https://api.github.com/orgs/coding-bootcamps-eu/teams";
 export default createStore({
-  plugins: [
-    createPersistedState({
-      storage: {
-        getItem: (key) => Cookies.get(key),
-        setItem: (key, value) =>
-          Cookies.set(key, value, { expires: 3, secure: true }),
-        removeItem: (key) => Cookies.remove(key),
-      },
-    }),
-  ],
+  plugins: [],
   state: {
     currentUser: {},
     currentUserRole: "",
@@ -68,6 +57,7 @@ export default createStore({
       state.spUser = payload.user;
     },
     setUserRotis(state, payload) {
+      sessionStorage.setItem("userRotis", JSON.stringify(payload.userRotis));
       state.userRotis = payload.userRotis;
     },
     setStudentIssues(state, payload) {
@@ -117,7 +107,7 @@ export default createStore({
       state.cbeClasses = payload;
     },
     setCurrentUser(state, payload) {
-      sessionStorage.setItem("currentUser", payload);
+      sessionStorage.setItem("currentUser", JSON.stringify(payload));
       state.currentUser = payload;
     },
     setCurrentUserRole(state, payload) {
