@@ -34,11 +34,6 @@ export default {
       userRole: "guest",
     };
   },
-  computed: {
-    isLoggedIn() {
-      return sessionStorage.getItem("userLoginState") === true ? false : true;
-    },
-  },
   methods: {
     async isUserInDB(accessToken) {
       const docRef = doc(firestore, "all-users", accessToken);
@@ -102,8 +97,6 @@ export default {
           type: "setCurrentUserToken",
           userToken: token,
         });
-        sessionStorage.setItem("user", JSON.stringify(result.user));
-        sessionStorage.setItem("userLoginState", true);
 
         // put the user informations in the database
         this.isUserInDB(result.user.uid).then((user) => {

@@ -17,6 +17,41 @@ export default {
   async created() {
     await this.$store.dispatch("setAllStudents");
   },
+  mounted() {
+    this.$store.commit({
+      type: "setUserLoginState",
+      isLoggedIn: sessionStorage.getItem("userLoginState"),
+    });
+    this.$store.commit({
+      type: "setCurrentUserToken",
+      userToken: sessionStorage.getItem("currentUserToken"),
+    });
+    this.$store.commit({
+      type: "setCurrentUserID",
+      userID: sessionStorage.getItem("currentUserID"),
+    });
+    this.$store.commit({
+      type: "setCurrentUserName",
+      userName: sessionStorage.getItem("currentUserName"),
+    });
+    this.$store.commit({
+      type: "setCurrentUserGitURL",
+      gitURL: sessionStorage.getItem("currentUserGitURL"),
+    });
+    this.$store.commit({
+      type: "setCurrentUserEmail",
+      mail: sessionStorage.getItem("currentUserEmail"),
+    });
+    this.$store.commit({
+      type: "setCurrentUserScreenname",
+      userScreenname: sessionStorage.getItem("currentUserScreenname"),
+    });
+    this.$store.commit(
+      "setCurrentUserRole",
+      sessionStorage.getItem("currentUserRole")
+    );
+    this.$store.commit("setCurrentUser", sessionStorage.getItem("currentUser"));
+  },
 };
 </script>
 

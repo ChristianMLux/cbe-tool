@@ -117,30 +117,39 @@ export default createStore({
       state.cbeClasses = payload;
     },
     setCurrentUser(state, payload) {
+      sessionStorage.setItem("currentUser", payload);
       state.currentUser = payload;
     },
     setCurrentUserRole(state, payload) {
+      sessionStorage.setItem("currentUserRole", payload);
       state.currentUserRole = payload;
     },
     setCurrentUserScreenname(state, payload) {
+      sessionStorage.setItem("currentUserScreenname", payload.userScreenname);
       state.currentUserScreenname = payload.userScreenname;
     },
     setCurrentUserEmail(state, payload) {
+      sessionStorage.setItem("currentUserEmail", payload.mail);
       state.currentUserEmail = payload.mail;
     },
     setCurrentUserGitURL(state, payload) {
+      sessionStorage.setItem("currentUserGitURL", payload.gitURL);
       state.currentUserGitURL = payload.gitURL;
     },
     setCurrentUserName(state, payload) {
+      sessionStorage.setItem("currentUserName", payload.userName);
       state.currentUserName = payload.userName;
     },
     setCurrentUserID(state, payload) {
+      sessionStorage.setItem("currentUserID", payload.userID);
       state.currentUserID = payload.userID;
     },
     setCurrentUserToken(state, payload) {
+      sessionStorage.setItem("currentUserToken", payload.userToken);
       state.currentUserToken = payload.userToken;
     },
     setUserLoginState(state, payload) {
+      sessionStorage.setItem("userLoginState", payload.isLoggedIn);
       state.userLoginState = payload.isLoggedIn;
     },
   },
