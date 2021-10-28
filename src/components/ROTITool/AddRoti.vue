@@ -2,6 +2,7 @@
   <section class="add-roti__section">
     <h2 class="mobile-heading">Return of Time invested</h2>
     <RotiRating
+      v-if="userAllowedToGiveRoti"
       rotiLegend="Was gibst du dem Tag für ein Roti?"
       roti__labelGroupName="roti__rating"
       roti__vModelGroupName="roti__vRating"
@@ -16,6 +17,10 @@
       @getRating="setRating"
       @initRoti="initRoti()"
     />
+    <p v-else>
+      Du hast heute schon ein Roti abgegeben, warte bitte bis morgen, bevor du
+      ein weiteres Roti abgeben kannst.
+    </p>
   </section>
 </template>
 
@@ -35,6 +40,7 @@ export default {
   components: { RotiRating },
   data() {
     return {
+      currentDate: new Date(),
       currentRoti: {
         rotiRating: 0,
         rotiMessage: "",
@@ -43,6 +49,15 @@ export default {
         rotiDate: "",
       },
     };
+  },
+  computed: {
+    userAllowedToGiveRoti() {
+      return this.$store.getters.getUserRotis.find(
+        (roti) => roti.rotiDate === this.currentDate
+      )
+        ? false
+        : true;
+    },
   },
   methods: {
     async addRotiToUser(roti) {
@@ -73,6 +88,16 @@ export default {
     setRotiMessage(message) {
       this.currentRoti.rotiMessage = message;
     },
+    setCurrentDate() {
+      let date = new Date();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      let year = date.getFullYear();
+      this.currentDate = `${day}.${month}.${year}`;
+    },
+  },
+  created() {
+    this.setCurrentDate();
   },
 };
 </script>

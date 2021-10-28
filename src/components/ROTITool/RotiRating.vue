@@ -1,75 +1,72 @@
 <template>
-  <form>
-    <fieldset class="roti__fieldset">
-      <legend>{{ rotiLegend }}</legend>
-      <div class="roti__label-wrapper rating-fieldset">
-        <label class="rating-fieldset__grouplabel"
-          >1<input
-            type="radio"
-            :name="roti__labelGroupName"
-            @click="getRating"
-            :v-model="roti__vModelGroupName"
-            value="1"
-            :id="roti__idOne"
-        /></label>
-        <label class="rating-fieldset__grouplabel"
-          >2<input
-            type="radio"
-            :name="roti__labelGroupName"
-            @click="getRating"
-            :v-model="roti__vModelGroupName"
-            value="2"
-            :id="roti__idTwo"
-        /></label>
-        <label
-          class="rating-fieldset__grouplabel rating-fieldset__grouplabel--red"
-          >3<input
-            type="radio"
-            :name="roti__labelGroupName"
-            @click="getRating"
-            :v-model="roti__vModelGroupName"
-            value="3"
-            :id="roti__idThree"
-        /></label>
-        <label
-          >4<input
-            type="radio"
-            :name="roti__labelGroupName"
-            @click="getRating"
-            :v-model="roti__vModelGroupName"
-            value="4"
-            :id="roti__idFour"
-        /></label>
-        <label
-          >5<input
-            type="radio"
-            :name="roti__labelGroupName"
-            @click="getRating"
-            :v-model="roti__vModelGroupName"
-            value="5"
-            :id="roti__idFive"
-        /></label>
-      </div>
-      <textarea
-        name="roti__labelGroupName-message"
-        class="roti__progress-message-input"
-        :v-model="rotiMessage"
-        :id="roti__messageID"
-        @keydown="getRotiMessage"
-        @keyup="getRotiMessage"
-        placeholder="Bitte gebe einen zusätzlichen Kommentar ab"
-      />
-      <cbe-main-btn
-        id="send-roti-btn"
-        class="margin-left"
-        buttonClass="secondary"
-        data-cy="send-button"
-        @click="$emit('initRoti')"
-        >SENDEN
-      </cbe-main-btn>
-      <button type="reset">Reset</button>
-    </fieldset>
-  </form>
+  <fieldset class="roti__fieldset">
+    <legend>{{ rotiLegend }}</legend>
+    <div class="roti__label-wrapper rating-fieldset">
+      <label class="rating-fieldset__grouplabel"
+        >1<input
+          type="radio"
+          :name="roti__labelGroupName"
+          @click="getRating"
+          :v-model="roti__vModelGroupName"
+          value="1"
+          :id="roti__idOne"
+      /></label>
+      <label class="rating-fieldset__grouplabel"
+        >2<input
+          type="radio"
+          :name="roti__labelGroupName"
+          @click="getRating"
+          :v-model="roti__vModelGroupName"
+          value="2"
+          :id="roti__idTwo"
+      /></label>
+      <label
+        class="rating-fieldset__grouplabel rating-fieldset__grouplabel--red"
+        >3<input
+          type="radio"
+          :name="roti__labelGroupName"
+          @click="getRating"
+          :v-model="roti__vModelGroupName"
+          value="3"
+          :id="roti__idThree"
+      /></label>
+      <label
+        >4<input
+          type="radio"
+          :name="roti__labelGroupName"
+          @click="getRating"
+          :v-model="roti__vModelGroupName"
+          value="4"
+          :id="roti__idFour"
+      /></label>
+      <label
+        >5<input
+          type="radio"
+          :name="roti__labelGroupName"
+          @click="getRating"
+          :v-model="roti__vModelGroupName"
+          value="5"
+          :id="roti__idFive"
+      /></label>
+    </div>
+    <textarea
+      name="roti__labelGroupName-message"
+      class="roti__progress-message-input"
+      :v-model="rotiMessage"
+      :id="roti__messageID"
+      @keydown="getRotiMessage"
+      @keyup="getRotiMessage"
+      placeholder="Bitte gebe einen zusätzlichen Kommentar ab"
+    />
+    <cbe-main-btn
+      id="send-roti-btn"
+      class="margin-left"
+      buttonClass="secondary"
+      data-cy="send-button"
+      @click="$emit('initRoti')"
+      >SENDEN
+    </cbe-main-btn>
+  </fieldset>
 </template>
 
 <script>

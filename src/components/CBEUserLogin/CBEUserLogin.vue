@@ -67,7 +67,7 @@ export default {
         });
         this.isUserInDB(result.user.uid).then((user) => {
           if (user === true) {
-            // USER EXISTS
+            // user exists
           } else {
             setDoc(doc(firestore, "all-users", result.user.uid), {
               id: this.$store.getters.getCurrentUserID,
@@ -94,6 +94,7 @@ export default {
             userName: result._tokenResponse.screenName,
           });
         }
+        this.$store.dispatch("setUserRotis", result.user.uid);
         this.$store.commit({
           type: "setCurrentUserID",
           userID: result.user.uid,
