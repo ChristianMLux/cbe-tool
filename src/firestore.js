@@ -6,7 +6,6 @@ const firebaseFirestore = initializeApp({
   authDomain: "coding-bootcamps-eu.firebaseapp.com",
   projectId: "coding-bootcamps-eu",
 });
-// datentabelle auslesen, über ergebnis iterieren, map -> neues doc (key umbennennen, values gleich, speichern)
 const firestoreDB = getFirestore(firebaseFirestore);
 
 export default firestoreDB;

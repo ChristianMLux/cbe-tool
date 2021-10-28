@@ -26,21 +26,19 @@ import {
 } from "firebase/auth";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 import firestore from "@/firestore";
-import Cookies from "js-cookie";
 
 export default {
   name: "CBEUserLogin",
   data() {
     return {
-      user: {},
-      userID: "",
-      userName: "",
       userRole: "guest",
-      currentTokenId: null,
-      bool: false,
     };
   },
-
+  computed: {
+    isLoggedIn() {
+      return sessionStorage.getItem("userLoginState") === true ? false : true;
+    },
+  },
   methods: {
     async isUserInDB(accessToken) {
       const docRef = doc(firestore, "all-users", accessToken);
@@ -60,28 +58,10 @@ export default {
       signInWithPopup(auth, provider).then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        this.$store.commit("setCurrentUser", JSON.stringify(result.user));
+        this.$store.commit("setCurrentUser", result.user);
         this.$store.commit({
           type: "setUserLoginState",
           isLoggedIn: true,
-        });
-        this.isUserInDB(result.user.uid).then((user) => {
-          if (user === true) {
-            // user exists
-          } else {
-            setDoc(doc(firestore, "all-users", result.user.uid), {
-              id: this.$store.getters.getCurrentUserID,
-              gitDisplayName: this.$store.getters.getCurrentUserName,
-              gitScreenName: this.$store.getters.getCurrentUserScreenname,
-              gitToken: this.$store.getters.getCurrentUserToken,
-              gitURL: this.$store.getters.getCurrentUserGitURL,
-              userScheduleURL: this.$store.getters.getCurrentUserScheduleURL,
-              email: this.$store.getters.getCurrentUserEmail,
-              userIssues: 0,
-              userRepos: 0,
-              userRole: this.userRole,
-            });
-          }
         });
         if (result.user.displayName != null) {
           this.$store.commit({
@@ -122,34 +102,41 @@ export default {
           type: "setCurrentUserToken",
           userToken: token,
         });
-        this.$store.commit({
-          type: "setCurrentUser",
-          userToken: result.user,
-        });
+        sessionStorage.setItem("user", JSON.stringify(result.user));
+        sessionStorage.setItem("userLoginState", true);
+
         // put the user informations in the database
-        this.user = result.user;
-        this.userID = result.user.uid;
-        this.userName = result.user.displayName;
-        Cookies.set("CurrentUser", result.user);
-        Cookies.set("CurrentUserID", result.user.uid);
-        Cookies.set("CurrentUserName", result.user.displayName);
-        Cookies.set("userLoginState", true);
+        this.isUserInDB(result.user.uid).then((user) => {
+          if (user === true) {
+            // user exists
+          } else {
+            setDoc(doc(firestore, "all-users", result.user.uid), {
+              id: this.$store.getters.getCurrentUserID,
+              gitDisplayName: this.$store.getters.getCurrentUserName,
+              gitScreenName: this.$store.getters.getCurrentUserScreenname,
+              gitToken: this.$store.getters.getCurrentUserToken,
+              gitURL: this.$store.getters.getCurrentUserGitURL,
+              userScheduleURL: this.$store.getters.getCurrentUserScheduleURL,
+              email: this.$store.getters.getCurrentUserEmail,
+              userIssues: 0,
+              userRepos: 0,
+              userRole: this.userRole,
+            });
+          }
+        });
         this.$router.push("/");
-        this.currentTokenId = null;
       });
     },
     signOut() {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          this.user = null;
-          Cookies.set("userLoginState", false);
-          Cookies.remove("vuex");
           this.$router.push("/loggedout");
           this.$store.commit({
             type: "setUserLoginState",
             isLoggedIn: false,
           });
+          sessionStorage.clear();
         })
         .catch((error) => {
           console.error("Error: ", error);

@@ -100,15 +100,8 @@
 <script>
 import CBEUserLogin from "@/components/CBEUserLogin/CBEUserLogin.vue";
 
-import Cookies from "js-cookie";
-
 export default {
   name: "CBEMainNavigation",
-  data() {
-    return {
-      userLoginState: Cookies.get("userLoginState"),
-    };
-  },
   computed: {
     isTeacher() {
       return this.$store.getters.getCurrentUserRole === "teacher"
@@ -126,9 +119,6 @@ export default {
   },
   components: {
     CBEUserLogin,
-  },
-  mounted() {
-    //console.log(this.userLoginState);
   },
 };
 </script>
