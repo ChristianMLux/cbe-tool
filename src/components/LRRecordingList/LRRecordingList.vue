@@ -30,6 +30,11 @@ export default {
   },
   components: { LRListElement },
   methods: {
+    compareDates(a, b) {
+      if (a.recordingData.date < b.recordingData.date) return -1;
+      if (a.recordingData.date > b.recordingData.date) return 1;
+      return 0;
+    },
     async getAllRecordings() {
       const querySnapshot = await getDocs(
         collection(firestore, "zoom-recordings")
@@ -55,7 +60,9 @@ export default {
           },
         });
       });
-      //console.log(this.lrRecordingsArray);
+      this.lrRecordingsArray = this.lrRecordingsArray
+        .slice(0)
+        .sort(this.compareDates);
     },
   },
   async mounted() {
