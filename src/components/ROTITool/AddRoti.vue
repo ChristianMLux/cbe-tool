@@ -20,6 +20,7 @@
 </template>
 
 <script>
+//todo: add 24h lock
 import firestore from "@/firestore";
 import {
   collection,

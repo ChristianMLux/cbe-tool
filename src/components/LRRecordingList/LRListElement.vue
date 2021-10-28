@@ -6,6 +6,7 @@
       <a target="_blank" :href="playURL || shareURL" class="play">Play</a>
       <a :href="downloadURL" class="download">Download</a>
     </div>
+    <p class="description">Test</p>
   </li>
 </template>
 
