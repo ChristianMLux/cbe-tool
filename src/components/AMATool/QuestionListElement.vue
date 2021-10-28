@@ -21,14 +21,19 @@
       <cbe-main-btn
         id="answer-question-btn"
         buttonClass="secondary"
-        v-if="!questionIsDone"
+        v-if="
+          !questionIsDone &&
+          this.$store.getters.getCurrentUserRole === 'teacher'
+        "
         @click="$emit('answer')"
         >BEANTWORTEN
       </cbe-main-btn>
       <cbe-main-btn
         id="takeback-question-btn"
         buttonClass="secondary"
-        v-if="questionIsDone"
+        v-if="
+          questionIsDone && this.$store.getters.getCurrentUserRole === 'teacher'
+        "
         @click="$emit('takebackanswer')"
         >ZURÜCKZIEHEN
       </cbe-main-btn>
