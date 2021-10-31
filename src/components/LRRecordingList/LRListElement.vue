@@ -5,7 +5,13 @@
     <p class="description">Beschreibung: {{ description }}</p>
     <div class="link-wrapper">
       <a target="_blank" :href="playURL || shareURL" class="play">Play</a>
-      <a :href="downloadURL" class="download">Download</a>
+      <a target="_blank" :href="downloadURL" class="download">Download</a>
+      <button
+        @click="$emit('removeRecording')"
+        v-if="this.$store.getters.getCurrentUserRole === 'teacher'"
+      >
+        Remove
+      </button>
     </div>
   </li>
 </template>
@@ -13,6 +19,7 @@
 <script>
 export default {
   name: "LRListElement",
+  emits: ["removeRecording"],
   props: {
     date: {
       type: String,

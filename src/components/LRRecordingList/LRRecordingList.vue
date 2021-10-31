@@ -18,6 +18,7 @@
         :playURL="recording.recordingData.recordingFilesPlayUrl"
         :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
         :shareURL="recording.recordingData.recordingFilesPlayUrl"
+        @removeRecording="deleteRecording(recording.recordingKey)"
         v-bind="recording"
       />
     </ul>
@@ -31,6 +32,7 @@
         :playURL="recording.recordingData.recordingFilesPlayUrl"
         :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
         :shareURL="recording.recordingData.recordingFilesPlayUrl"
+        @removeRecording="deleteRecording(recording.recordingKey)"
         v-bind="recording"
       />
     </ul>
@@ -38,7 +40,7 @@
 </template>
 <script>
 import firestore from "@/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 
 import LRListElement from "@/components/LRRecordingList/LRListElement";
 import LRFilter from "./LRFilter.vue";
@@ -66,6 +68,10 @@ export default {
     },
   },
   methods: {
+    async deleteRecording(recordingKey) {
+      await deleteDoc(doc(firestore, "zoom-recordings", recordingKey));
+      location.reload();
+    },
     getFilterResults(result) {
       this.userFilterQuery = result;
     },
