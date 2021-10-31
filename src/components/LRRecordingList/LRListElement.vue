@@ -6,18 +6,20 @@
     <div class="link-wrapper">
       <a target="_blank" :href="playURL || shareURL" class="play">Play</a>
       <a target="_blank" :href="downloadURL" class="download">Download</a>
-      <button
+      <cbe-main-btn
+        buttonClass="secondary"
         @click="$emit('removeRecording')"
         v-if="this.$store.getters.getCurrentUserRole === 'teacher'"
       >
         Remove
-      </button>
-      <button
+      </cbe-main-btn>
+      <cbe-main-btn
+        buttonClass="primary"
         @click="$emit('addDescription')"
         v-if="this.$store.getters.getCurrentUserRole === 'teacher'"
       >
         Add description
-      </button>
+      </cbe-main-btn>
     </div>
   </li>
 </template>
