@@ -4,7 +4,7 @@
     <input
       v-model="filterRequest"
       @keyup="sendFilterToList"
-      placeholder="Gib den Titel oder Wörter aus dem Titel ein.."
+      :placeholder="placeholder"
     />
   </div>
 </template>
@@ -15,6 +15,9 @@ export default {
   emits: ["filter-result"],
   props: {
     filterHeading: {
+      type: String,
+    },
+    placeholder: {
       type: String,
     },
   },

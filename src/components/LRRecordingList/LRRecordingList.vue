@@ -4,7 +4,8 @@
     <div class="filter-wrapper">
       <LRFilter
         @filter-result="getFilterResults"
-        filterHeading="Suche nach Titel"
+        filterHeading="Suche nach Titel oder Beschreibung"
+        placeholder="Gebe ein Suchbegriff ein..."
       />
     </div>
     <ul class="lr__recording-list" v-if="userFilterQuery">
@@ -13,6 +14,7 @@
         :key="recording.recordingKey"
         :date="recording.recordingData.date"
         :topic="recording.recordingData.topic"
+        :description="recording.recordingData.description"
         :playURL="recording.recordingData.recordingFilesPlayUrl"
         :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
         :shareURL="recording.recordingData.recordingFilesPlayUrl"
@@ -25,6 +27,7 @@
         :key="recording.recordingKey"
         :date="recording.recordingData.date"
         :topic="recording.recordingData.topic"
+        :description="recording.recordingData.description"
         :playURL="recording.recordingData.recordingFilesPlayUrl"
         :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
         :shareURL="recording.recordingData.recordingFilesPlayUrl"
@@ -55,7 +58,10 @@ export default {
     filteredRecordings: function () {
       let recordingFilterStatus = this.userFilterQuery;
       return this.lrRecordingsArray.filter((recording) => {
-        return recording.recordingData.topic.includes(recordingFilterStatus);
+        return (
+          recording.recordingData.topic.includes(recordingFilterStatus) ||
+          recording.recordingData.description.includes(recordingFilterStatus)
+        );
       });
     },
   },
@@ -86,6 +92,7 @@ export default {
               doc.data().recordingFilesPlayUrl,
             shareUrl: doc.data()["share-url"] || doc.data().shareUrl,
             topic: doc.data().topic,
+            description: doc.data().description,
             uuid: doc.data().uuid,
             videoFilesDownloadUrl:
               doc.data()["video-files-download-url"] ||

@@ -1,12 +1,12 @@
 <template>
   <li class="lr__element-wrapper">
-    <p class="lesson-topic">{{ topic }}</p>
+    <p class="lesson-topic">Titel: {{ topic }}</p>
     <p class="lesson-date">{{ date }}</p>
+    <p class="description">Beschreibung: {{ description }}</p>
     <div class="link-wrapper">
       <a target="_blank" :href="playURL || shareURL" class="play">Play</a>
       <a :href="downloadURL" class="download">Download</a>
     </div>
-    <p class="description">Test</p>
   </li>
 </template>
 
@@ -27,6 +27,9 @@ export default {
       type: String,
     },
     shareURL: {
+      type: String,
+    },
+    description: {
       type: String,
     },
   },
@@ -74,5 +77,9 @@ export default {
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   line-height: 1.5rem;
+}
+.description {
+  text-align: left;
+  margin-left: 0.5rem;
 }
 </style>
