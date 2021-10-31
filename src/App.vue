@@ -98,8 +98,8 @@ html {
   }
 }
 body {
-  margin: 0;
-  max-width: 100ch;
+  margin: 0 auto;
+  max-width: 120ch;
   min-width: 350px;
 }
 .btn {
