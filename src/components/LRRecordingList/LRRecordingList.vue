@@ -19,6 +19,7 @@
         :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
         :shareURL="recording.recordingData.recordingFilesPlayUrl"
         @removeRecording="deleteRecording(recording.recordingKey)"
+        @addDescription="addDescription(recording.recordingKey)"
         v-bind="recording"
       />
     </ul>
@@ -33,6 +34,7 @@
         :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
         :shareURL="recording.recordingData.recordingFilesPlayUrl"
         @removeRecording="deleteRecording(recording.recordingKey)"
+        @addDescription="addDescription(recording.recordingKey)"
         v-bind="recording"
       />
     </ul>
@@ -40,7 +42,13 @@
 </template>
 <script>
 import firestore from "@/firestore";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import LRListElement from "@/components/LRRecordingList/LRListElement";
 import LRFilter from "./LRFilter.vue";
@@ -68,6 +76,20 @@ export default {
     },
   },
   methods: {
+    async addDescription(recordingKey) {
+      let _description;
+      let description = prompt("Please enter a description", "Description..");
+      if (description == null || description == "") {
+        _description = "User cancelled the prompt.";
+      } else {
+        _description = description;
+      }
+      const recordingRef = doc(firestore, "zoom-recordings", recordingKey);
+      await updateDoc(recordingRef, {
+        description: _description,
+      });
+      location.reload();
+    },
     async deleteRecording(recordingKey) {
       await deleteDoc(doc(firestore, "zoom-recordings", recordingKey));
       location.reload();

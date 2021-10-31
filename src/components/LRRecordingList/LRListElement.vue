@@ -12,6 +12,12 @@
       >
         Remove
       </button>
+      <button
+        @click="$emit('addDescription')"
+        v-if="this.$store.getters.getCurrentUserRole === 'teacher'"
+      >
+        Add description
+      </button>
     </div>
   </li>
 </template>
@@ -19,7 +25,7 @@
 <script>
 export default {
   name: "LRListElement",
-  emits: ["removeRecording"],
+  emits: ["removeRecording", "addDescription"],
   props: {
     date: {
       type: String,
