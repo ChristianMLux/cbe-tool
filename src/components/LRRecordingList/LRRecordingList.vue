@@ -1,8 +1,25 @@
 <template>
   <section class="lr__recordig-section">
     <h2 class="mobile-heading">Lesson Recordings</h2>
-    <div class="filter-wrapper"></div>
-    <ul class="lr__recording-list">
+    <div class="filter-wrapper">
+      <LRFilter
+        @filter-result="getFilterResults"
+        filterHeading="Suche nach Titel"
+      />
+    </div>
+    <ul class="lr__recording-list" v-if="userFilterQuery">
+      <LRListElement
+        v-for="recording in filteredRecordings"
+        :key="recording.recordingKey"
+        :date="recording.recordingData.date"
+        :topic="recording.recordingData.topic"
+        :playURL="recording.recordingData.recordingFilesPlayUrl"
+        :downloadURL="recording.recordingData.recordingFilesDownloadUrl"
+        :shareURL="recording.recordingData.recordingFilesPlayUrl"
+        v-bind="recording"
+      />
+    </ul>
+    <ul class="lr__recording-list" v-else>
       <LRListElement
         v-for="recording in lrRecordingsArray"
         :key="recording.recordingKey"
@@ -21,15 +38,31 @@ import firestore from "@/firestore";
 import { collection, getDocs } from "firebase/firestore";
 
 import LRListElement from "@/components/LRRecordingList/LRListElement";
+import LRFilter from "./LRFilter.vue";
 export default {
   name: "LRRecordingList",
   data() {
     return {
       lrRecordingsArray: [],
+      userFilterQuery: "",
     };
   },
-  components: { LRListElement },
+  components: {
+    LRListElement,
+    LRFilter,
+  },
+  computed: {
+    filteredRecordings: function () {
+      let recordingFilterStatus = this.userFilterQuery;
+      return this.lrRecordingsArray.filter((recording) => {
+        return recording.recordingData.topic.includes(recordingFilterStatus);
+      });
+    },
+  },
   methods: {
+    getFilterResults(result) {
+      this.userFilterQuery = result;
+    },
     compareDates(a, b) {
       if (a.recordingData.date < b.recordingData.date) return -1;
       if (a.recordingData.date > b.recordingData.date) return 1;
@@ -90,6 +123,10 @@ export default {
 }
 .lr__recording-list > li:nth-child(2n + 2) {
   background: var(--light-grey);
+}
+
+.filter-wrapper {
+  min-width: 33%;
 }
 
 @media screen and (max-width: 555px) {
