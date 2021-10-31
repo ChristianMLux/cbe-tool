@@ -81,6 +81,7 @@ export default {
       this.currentRoti.autorID = this.$store.getters.getCurrentUserID;
       addDoc(collection(firestore, "student-roti"), this.currentRoti);
       this.addRotiToUser(this.currentRoti);
+      alert("Danke dass du dein Roti abgegeben hast :)");
     },
     setRating(ratingValue) {
       this.currentRoti.rotiRating = ratingValue;
